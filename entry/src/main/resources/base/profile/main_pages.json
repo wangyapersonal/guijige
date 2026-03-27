@@ -4,6 +4,7 @@
     "pages/LoginPage",
     "pages/TripListPage",
     "pages/CreateTripPage",
-    "pages/TripDetailPage"
+    "pages/TripDetailPage",
+    "pages/RecordPage"
   ]
 }
