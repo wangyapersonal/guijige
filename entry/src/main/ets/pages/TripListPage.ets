@@ -25,7 +25,7 @@ struct TripListPage {
     try {
       this.isLoading = true;
       this.trips = await this.tripService.getAllTrips();
-    } catch (error) {
+    } catch (error: Error) {
       console.error('Load trips error', error);
     } finally {
       this.isLoading = false;
@@ -101,12 +101,16 @@ struct TripListPage {
       } else {
         // 行程列表
         List() {
-          ForEach(this.trips, (trip: Trip) => {
-            ListItem() {
-              this.TripCard(trip)
-            }
-            .margin({ top: 12 })
-          })
+          ForEach(
+            this.trips,
+            (trip: Trip) => {
+              ListItem() {
+                this.TripCard(trip)
+              }
+              .margin({ top: 12 })
+            },
+            (trip: Trip) => trip.id
+          )
         }
         .width('100%')
         .layoutWeight(1)

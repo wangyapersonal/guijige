@@ -52,15 +52,20 @@ export class LocationService {
   // 位置过滤阈值
   private readonly ACCURACY_THRESHOLD = 100;  // 精度低于100m的点丢弃
   private readonly SPEED_THRESHOLD = 200;     // 速度超过200km/h视为异常
-  
+
+  // 绑定的处理函数
+  private boundHandleLocationChange: (location: geoLocationManager.Location) => void;
+
   static getInstance(): LocationService {
     if (!LocationService.instance) {
       LocationService.instance = new LocationService();
     }
     return LocationService.instance;
   }
-  
-  private constructor() {}
+
+  private constructor() {
+    this.boundHandleLocationChange = this.handleLocationChange.bind(this);
+  }
   
   /**
    * 初始化（需要 AbilityContext）
@@ -134,13 +139,13 @@ export class LocationService {
         timeInterval: config.timeInterval,
         distanceInterval: config.distanceInterval
       };
-      
-      geoLocationManager.on('locationChange', requestInfo, this.handleLocationChange.bind(this));
-      
+
+      geoLocationManager.on('locationChange', requestInfo, this.boundHandleLocationChange);
+
       this.isTracking = true;
       this.locationHistory = [];
       this.totalDistance = 0;
-      
+
       console.info('LocationService', 'startContinuousTracking success', mode);
       return true;
     } catch (error) {
@@ -209,7 +214,7 @@ export class LocationService {
     }
     
     try {
-      geoLocationManager.off('locationChange', this.handleLocationChange);
+      geoLocationManager.off('locationChange', this.boundHandleLocationChange);
     } catch (e) {
       console.warn('LocationService', 'Failed to unregister location listener');
     }

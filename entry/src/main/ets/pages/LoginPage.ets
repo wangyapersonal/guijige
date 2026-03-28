@@ -1,10 +1,9 @@
 /**
  * 登录页 - 集成华为账号登录
  */
-
 import { AuthService } from '../services/AuthService';
 import { Router } from '@kit.ArkUI';
-import { common } from '@kit.Ability';
+import common from '@ohos.ability.common';
 
 @Entry
 @Component

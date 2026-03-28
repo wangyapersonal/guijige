@@ -2,9 +2,8 @@
  * 认证服务 - 集成华为账号登录
  * 使用 HarmonyOS NEXT @kit.AccountKit
  */
-
 import { authentication } from '@kit.AccountKit';
-import { common } from '@kit.Ability';
+import common from '@ohos.ability.common';
 import { UserInfo, LoginStatus } from '../models/User';
 import { StorageService } from './StorageService';
 import { STORAGE_KEYS } from '../common/constants/Constants';
@@ -16,9 +15,10 @@ export class AuthService {
   
   // Token刷新阈值（提前5分钟）
   private readonly REFRESH_THRESHOLD = 5 * 60 * 1000;
-  
+
   // 是否使用模拟登录（开发阶段）
-  private readonly USE_MOCK_LOGIN: boolean = true;
+  // ⚠️ 生产环境必须设置为 false
+  private readonly USE_MOCK_LOGIN: boolean = false;
   
   static getInstance(): AuthService {
     if (!AuthService.instance) {
@@ -89,13 +89,12 @@ export class AuthService {
         
         this.userInfo = user;
         await this.saveUserInfo(user);
-        
-        console.info('AuthService', 'Huawei login success', user.uid);
+
+        console.info('AuthService', 'Huawei login success');
         return user;
       }
       
       return null;
-      
     } catch (error) {
       console.error('AuthService', 'Huawei login error', error);
       // 降级到模拟登录
@@ -143,7 +142,6 @@ export class AuthService {
       await this.storageService.remove(STORAGE_KEYS.USER_INFO);
       await this.storageService.remove(STORAGE_KEYS.ACCESS_TOKEN);
       await this.storageService.remove(STORAGE_KEYS.REFRESH_TOKEN);
-      
       console.info('AuthService', 'logout success');
     } catch (error) {
       console.error('AuthService', 'logout error', error);
@@ -226,7 +224,6 @@ export class AuthService {
         console.info('AuthService', 'Token refreshed');
         return true;
       }
-      
       return false;
     } catch (error) {
       console.error('AuthService', 'refresh token error', error);

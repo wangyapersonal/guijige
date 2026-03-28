@@ -29,7 +29,7 @@
         }
       },
       {
-        "name": "ohos.permission.LOCATION_ALWAYS",
+        "name": "ohos.permission.LOCATION_IN_BACKGROUND",
         "reason": "$string:background_location_reason",
         "usedScene": {
           "abilities": ["EntryAbility"],

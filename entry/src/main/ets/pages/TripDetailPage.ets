@@ -51,7 +51,7 @@ struct TripDetailPage {
           tripId: this.tripId
         });
       }
-    } catch (error) {
+    } catch (error: Error) {
       console.error('Load data error', error);
     } finally {
       this.isLoading = false;
@@ -249,38 +249,42 @@ struct TripDetailPage {
                 .width('100%')
                 .padding(40)
               } else {
-                ForEach(this.checkInPoints, (point: CheckInPoint) => {
-                  Row() {
-                    Column() {
-                      Row() {
-                        Text(this.getTypeIcon(point.type))
-                          .fontSize(16)
-                        
-                        Text(point.placeName || point.address || '未命名地点')
-                          .fontSize(16)
-                          .fontWeight(FontWeight.Medium)
-                          .fontColor('#212121')
-                          .margin({ left: 8 })
+                ForEach(
+                  this.checkInPoints,
+                  (point: CheckInPoint) => {
+                    Row() {
+                      Column() {
+                        Row() {
+                          Text(this.getTypeIcon(point.type))
+                            .fontSize(16)
+
+                          Text(point.placeName || point.address || '未命名地点')
+                            .fontSize(16)
+                            .fontWeight(FontWeight.Medium)
+                            .fontColor('#212121')
+                            .margin({ left: 8 })
+                        }
+
+                        Text(TimeUtils.formatDateTime(point.timestamp))
+                          .fontSize(12)
+                          .fontColor('#757575')
+                          .margin({ top: 4 })
                       }
-                      
-                      Text(TimeUtils.formatDateTime(point.timestamp))
-                        .fontSize(12)
-                        .fontColor('#757575')
-                        .margin({ top: 4 })
+                      .alignItems(HorizontalAlign.Start)
+                      .layoutWeight(1)
+
+                      Text('→')
+                        .fontSize(16)
+                        .fontColor('#9E9E9E')
                     }
-                    .alignItems(HorizontalAlign.Start)
-                    .layoutWeight(1)
-                    
-                    Text('→')
-                      .fontSize(16)
-                      .fontColor('#9E9E9E')
-                  }
-                  .width('100%')
-                  .padding(16)
-                  .backgroundColor(Color.White)
-                  .borderRadius(8)
-                  .margin({ bottom: 8 })
-                })
+                    .width('100%')
+                    .padding(16)
+                    .backgroundColor(Color.White)
+                    .borderRadius(8)
+                    .margin({ bottom: 8 })
+                  },
+                  (point: CheckInPoint) => point.id
+                )
               }
             }
             .width('92%')

@@ -1,13 +1,35 @@
+
 /**
  * 应用常量定义
  */
+// 类型定义
+export interface LocationConfig {
+  INTERVAL: number;
+  STAY_DISTANCE: number;
+  STAY_MIN_DURATION: number;
+  MAX_CACHE_POINTS: number;
+}
+
+export interface ApiConfig {
+  BASE_URL: string;
+  VERSION: string;
+  TIMEOUT: number;
+}
+
+export interface StorageKeys {
+  USER_INFO: string;
+  ACCESS_TOKEN: string;
+  REFRESH_TOKEN: string;
+  CURRENT_TRIP: string;
+  LAST_LOCATION: string;
+}
 
 // 应用信息
 export const APP_NAME = '轨迹哥';
 export const APP_VERSION = '1.0.0';
 
 // 定位相关
-export const LOCATION_CONFIG = {
+export const LOCATION_CONFIG: LocationConfig = {
   // 定位间隔（毫秒）
   INTERVAL: 60 * 1000, // 1分钟
   // 停留点判定距离（米）
@@ -38,16 +60,14 @@ export enum RecordMode {
   CYCLING = 'cycling',  // 骑行
   WALKING = 'walking'   // 步行
 }
-
 // API配置
-export const API_CONFIG = {
+export const API_CONFIG: ApiConfig = {
   BASE_URL: 'https://api.traveltracker.com',
   VERSION: 'v1',
   TIMEOUT: 30000
 };
-
 // 存储Key
-export const STORAGE_KEYS = {
+export const STORAGE_KEYS: StorageKeys = {
   USER_INFO: 'user_info',
   ACCESS_TOKEN: 'access_token',
   REFRESH_TOKEN: 'refresh_token',

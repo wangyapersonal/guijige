@@ -8,34 +8,36 @@ import { RecordMode } from '../common/constants/Constants';
 export interface RecordSegment {
   id: string;
   tripId: string;
-  
+
   // 时间
   startTime: number;
   endTime?: number;
-  
+
   // 模式
   mode: RecordMode;
-  
+
   // 统计
   totalDistance: number;   // 距离（米）
   duration: number;        // 时长（秒）
-  
+  distance: number;        // 距离（米）- 兼容字段
+
   // 关联数据
   trackPointCount: number;
   stayPointCount: number;
+  trackPoints: TrackPoint[]; // 轨迹点数组
 }
 
 // 轨迹点
 export interface TrackPoint {
   id: string;
   segmentId: string;
-  
+
   latitude: number;
   longitude: number;
   altitude?: number;
   accuracy?: number;
   speed?: number;
-  
+
   timestamp: number;
 }
 
@@ -43,15 +45,15 @@ export interface TrackPoint {
 export interface StayPoint {
   id: string;
   segmentId: string;
-  
+
   latitude: number;
   longitude: number;
   altitude?: number;
-  
+
   startTime: number;
   endTime: number;
   duration: number;        // 停留时长（秒）
-  
+
   mergedPointCount: number; // 合并的点数
   address?: string;
 }

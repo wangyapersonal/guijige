@@ -112,7 +112,8 @@ struct ImportPhotoPage {
                       GridItem() {
                         this.PhotoItem(photo)
                       }
-                    }
+                    },
+                    (photo: PhotoInfo) => photo.uri
                   )
                 }
                 .columnsTemplate('1fr 1fr 1fr')
@@ -142,12 +143,21 @@ struct ImportPhotoPage {
                     Row() {
                       Text('⬜')
                         .fontSize(16)
-                      
+
                       Text(photo.fileName)
                         .fontSize(14)
                         .fontColor('#757575')
                         .margin({ left: 8 })
                         .layoutWeight(1)
+                    }
+                    .width('100%')
+                    .padding(12)
+                    .backgroundColor('#FFF3E0')
+                    .borderRadius(6)
+                    .margin({ bottom: 6 })
+                  },
+                  (photo: PhotoInfo) => photo.uri
+                )
                       
                       Text('(不在目的地范围)')
                         .fontSize(12)

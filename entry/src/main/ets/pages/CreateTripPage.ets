@@ -164,24 +164,28 @@ struct CreateTripPage {
             // 已选择的目的地
             if (this.selectedDestinations.length > 0) {
               Row() {
-                ForEach(this.selectedDestinations, (dest: string) => {
-                  Row() {
-                    Text(dest)
-                      .fontSize(14)
-                      .fontColor('#2196F3')
-                    
-                    Text(' ×')
-                      .fontSize(14)
-                      .fontColor('#2196F3')
-                      .onClick(() => {
-                        this.selectedDestinations = this.selectedDestinations.filter(d => d !== dest);
-                      })
-                  }
-                  .padding({ left: 12, right: 8, top: 6, bottom: 6 })
-                  .backgroundColor('#E3F2FD')
-                  .borderRadius(16)
-                  .margin({ right: 8, bottom: 8 })
-                })
+                ForEach(
+                  this.selectedDestinations,
+                  (dest: string) => {
+                    Row() {
+                      Text(dest)
+                        .fontSize(14)
+                        .fontColor('#2196F3')
+
+                      Text(' ×')
+                        .fontSize(14)
+                        .fontColor('#2196F3')
+                        .onClick(() => {
+                          this.selectedDestinations = this.selectedDestinations.filter(d => d !== dest);
+                        })
+                    }
+                    .padding({ left: 12, right: 8, top: 6, bottom: 6 })
+                    .backgroundColor('#E3F2FD')
+                    .borderRadius(16)
+                    .margin({ right: 8, bottom: 8 })
+                  },
+                  (dest: string) => dest
+                )
               }
               .width('100%')
               .flexWrap(FlexWrap.Wrap)
@@ -190,24 +194,32 @@ struct CreateTripPage {
             
             // 省份网格
             Grid() {
-              ForEach(this.provinces, (province: string) => {
-                GridItem() {
-                  Row() {
-                    if (this.selectedDestinations.includes(province)) {
-                      Text('●')
-                        .fontSize(12)
-                        .fontColor('#2196F3')
-                        .margin({ right: 4 })
+              ForEach(
+                this.provinces,
+                (province: string) => {
+                  GridItem() {
+                    Row() {
+                      if (this.selectedDestinations.includes(province)) {
+                        Text('●')
+                          .fontSize(12)
+                          .fontColor('#2196F3')
+                          .margin({ right: 4 })
+                      }
+
+                      Text(province)
+                        .fontSize(14)
+                        .fontColor(this.selectedDestinations.includes(province) ? '#2196F3' : '#424242')
                     }
-                    
-                    Text(province)
-                      .fontSize(14)
-                      .fontColor(this.selectedDestinations.includes(province) ? '#2196F3' : '#424242')
+                    .width('100%')
+                    .height(44)
+                    .justifyContent(FlexAlign.Center)
+                    .backgroundColor(this.selectedDestinations.includes(province) ? '#E3F2FD' : '#F5F5F5')
+                    .borderRadius(8)
                   }
-                  .width('100%')
-                  .height(44)
-                  .justifyContent(FlexAlign.Center)
-                  .backgroundColor(this.selectedDestinations.includes(province) ? '#E3F2FD' : '#F5F5F5')
+                },
+                (province: string) => province
+              )
+            }
                   .borderRadius(8)
                   .onClick(() => {
                     if (this.selectedDestinations.includes(province)) {
@@ -291,7 +303,7 @@ struct CreateTripPage {
         // 创建成功，返回
         router.back();
       }
-    } catch (error) {
+    } catch (error: Error) {
       console.error('Create trip error', error);
     } finally {
       this.isCreating = false;

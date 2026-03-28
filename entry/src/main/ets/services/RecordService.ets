@@ -331,26 +331,33 @@ export class RecordService {
   private async updateTripStats(tripId: string) {
     const store = this.dbService.getStore();
     if (!store) return;
-    
+
     // 统计轨迹段数
-    const result = await store.querySql(
-      `SELECT COUNT(*) as count, SUM(total_distance) as distance FROM record_segments WHERE trip_id = '${tripId}'`
-    );
-    
-    if (result.goToFirstRow()) {
-      const segmentCount = result.getLong(result.getColumnIndex('count'));
-      const totalDistance = result.getDouble(result.getColumnIndex('distance'));
+    const predicates = new relationalStore.RdbPredicates('record_segments');
+    predicates.equalTo('trip_id', tripId);
+    const result = await store.query(predicates);
+
+    let segmentCount = 0;
+    let totalDistance = 0;
+    try {
+      while (result.goToNextRow()) {
+        segmentCount++;
+        totalDistance += result.getDouble(result.getColumnIndex('total_distance'));
+      }
+    } finally {
       result.close();
-      
+    }
+
+    if (segmentCount > 0) {
       const valueBucket: relationalStore.ValuesBucket = {
         track_segment_count: segmentCount,
         total_distance: totalDistance,
         updated_at: Date.now()
       };
-      
-      const predicates = new relationalStore.RdbPredicates('trips');
-      predicates.equalTo('id', tripId);
-      await store.update(valueBucket, predicates);
+
+      const tripPredicates = new relationalStore.RdbPredicates('trips');
+      tripPredicates.equalTo('id', tripId);
+      await store.update(valueBucket, tripPredicates);
     }
   }
   

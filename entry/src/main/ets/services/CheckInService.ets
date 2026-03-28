@@ -55,7 +55,7 @@ export class CheckInService {
   /**
    * 打卡（核心方法）
    */
-  private async checkIn(params: CreateCheckInParams): Promise<CheckInPoint | null> {
+  async checkIn(params: CreateCheckInParams): Promise<CheckInPoint | null> {
     try {
       // 获取当前位置
       const location = params.latitude && params.longitude
@@ -154,32 +154,38 @@ export class CheckInService {
     
     const resultSet = await store.query(predicates);
     const points: CheckInPoint[] = [];
-    
-    while (resultSet.goToNextRow()) {
-      const point: CheckInPoint = {
-        id: resultSet.getString(resultSet.getColumnIndex('id')),
-        tripId: resultSet.getString(resultSet.getColumnIndex('trip_id')),
-        latitude: resultSet.getDouble(resultSet.getColumnIndex('latitude')),
-        longitude: resultSet.getDouble(resultSet.getColumnIndex('longitude')),
-        altitude: resultSet.getDouble(resultSet.getColumnIndex('altitude')) || undefined,
-        accuracy: resultSet.getDouble(resultSet.getColumnIndex('accuracy')) || undefined,
-        address: resultSet.getString(resultSet.getColumnIndex('address')) || undefined,
-        placeName: resultSet.getString(resultSet.getColumnIndex('place_name')) || undefined,
-        note: resultSet.getString(resultSet.getColumnIndex('note')) || undefined,
-        timestamp: resultSet.getLong(resultSet.getColumnIndex('timestamp')),
-        date: resultSet.getString(resultSet.getColumnIndex('date')),
-        type: resultSet.getString(resultSet.getColumnIndex('type')) as CheckInType,
-        photoPath: resultSet.getString(resultSet.getColumnIndex('photo_path')) || undefined,
-        thumbnailPath: resultSet.getString(resultSet.getColumnIndex('thumbnail_path')) || undefined,
-        isAnomaly: resultSet.getLong(resultSet.getColumnIndex('is_anomaly')) === 1,
-        anomalyReason: resultSet.getString(resultSet.getColumnIndex('anomaly_reason')) || undefined
-      };
-      
-      points.push(point);
+
+    try {
+      while (resultSet.goToNextRow()) {
+        const point: CheckInPoint = {
+          id: resultSet.getString(resultSet.getColumnIndex('id')),
+          tripId: resultSet.getString(resultSet.getColumnIndex('trip_id')),
+          latitude: resultSet.getDouble(resultSet.getColumnIndex('latitude')),
+          longitude: resultSet.getDouble(resultSet.getColumnIndex('longitude')),
+          altitude: resultSet.getDouble(resultSet.getColumnIndex('altitude')) || undefined,
+          accuracy: resultSet.getDouble(resultSet.getColumnIndex('accuracy')) || undefined,
+          address: resultSet.getString(resultSet.getColumnIndex('address')) || undefined,
+          placeName: resultSet.getString(resultSet.getColumnIndex('place_name')) || undefined,
+          note: resultSet.getString(resultSet.getColumnIndex('note')) || undefined,
+          timestamp: resultSet.getLong(resultSet.getColumnIndex('timestamp')),
+          date: resultSet.getString(resultSet.getColumnIndex('date')),
+          type: resultSet.getString(resultSet.getColumnIndex('type')) as CheckInType,
+          photoPath: resultSet.getString(resultSet.getColumnIndex('photo_path')) || undefined,
+          thumbnailPath: resultSet.getString(resultSet.getColumnIndex('thumbnail_path')) || undefined,
+          isAnomaly: resultSet.getLong(resultSet.getColumnIndex('is_anomaly')) === 1,
+          anomalyReason: resultSet.getString(resultSet.getColumnIndex('anomaly_reason')) || undefined
+        };
+
+        points.push(point);
+      }
+
+      return points;
+    } catch (error) {
+      console.error('CheckInService', 'getCheckInPoints error', error);
+      return [];
+    } finally {
+      resultSet.close();
     }
-    
-    resultSet.close();
-    return points;
   }
   
   /**
@@ -204,24 +210,28 @@ export class CheckInService {
   private async updateTripStats(tripId: string): Promise<void> {
     const store = this.dbService.getStore();
     if (!store) return;
-    
+
     // 统计打卡点数
     const predicates = new relationalStore.RdbPredicates('check_in_points');
     predicates.equalTo('trip_id', tripId);
-    const count = await store.querySql(
-      `SELECT COUNT(*) as count FROM check_in_points WHERE trip_id = '${tripId}'`
-    );
-    
-    if (count.goToFirstRow()) {
-      const checkInCount = count.getLong(count.getColumnIndex('count'));
+    const count = await store.query(predicates);
+
+    let checkInCount = 0;
+    try {
+      while (count.goToNextRow()) {
+        checkInCount++;
+      }
+    } finally {
       count.close();
-      
+    }
+
+    if (checkInCount > 0) {
       // 更新行程表
       const valueBucket: relationalStore.ValuesBucket = {
         check_in_count: checkInCount,
         updated_at: Date.now()
       };
-      
+
       const tripPredicates = new relationalStore.RdbPredicates('trips');
       tripPredicates.equalTo('id', tripId);
       await store.update(valueBucket, tripPredicates);

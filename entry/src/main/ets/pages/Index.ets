@@ -52,8 +52,7 @@ struct IndexPage {
       if (location) {
         this.addressText = `${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}`;
       }
-      
-    } catch (error) {
+    } catch (error: Error) {
       console.error('Load data error', error);
     } finally {
       this.isLoading = false;
@@ -336,7 +335,7 @@ struct IndexPage {
         console.info('CheckIn success', point.id);
         await this.loadData();
       }
-    } catch (error) {
+    } catch (error: Error) {
       console.error('CheckIn error', error);
     }
   }

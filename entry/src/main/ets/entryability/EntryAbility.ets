@@ -46,8 +46,7 @@ export default class EntryAbility extends UIAbility {
       const syncService = SyncService.getInstance();
       await syncService.init();
       hilog.info(DOMAIN, TAG, 'SyncService initialized');
-      
-    } catch (error) {
+    } catch (error: Error) {
       hilog.error(DOMAIN, TAG, 'Service initialization failed: %{public}s', JSON.stringify(error));
     }
     

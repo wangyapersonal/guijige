@@ -33,11 +33,12 @@ struct RecordPage {
   @State currentLocation: Location | null = null;
   @State recordedPoints: Location[] = [];
   @State mapController?: map.MapComponentController;
-  
+
   private locationService: LocationService = LocationService.getInstance();
   private mapService: MapService = MapService.getInstance();
   private anomalyDetector: AnomalyDetector = AnomalyDetector.getInstance();
   private recordService: RecordService | null = null;
+  private timerId: number = -1;
   
   aboutToAppear() {
     const params = router.getParams() as RecordParams;
@@ -50,6 +51,10 @@ struct RecordPage {
   aboutToDisappear() {
     if (this.isRecording) {
       this.locationService.stopContinuousTracking();
+    }
+    if (this.timerId !== -1) {
+      clearInterval(this.timerId);
+      this.timerId = -1;
     }
   }
   
@@ -415,7 +420,10 @@ struct RecordPage {
   }
   
   private startTimer() {
-    setInterval(() => {
+    if (this.timerId !== -1) {
+      clearInterval(this.timerId);
+    }
+    this.timerId = setInterval(() => {
       if (this.isRecording && !this.isPaused) {
         this.duration = Math.floor((Date.now() - this.startTime) / 1000);
       }

@@ -1,9 +1,8 @@
 /**
  * 数据库服务
  */
-
 import { relationalStore } from '@kit.ArkData';
-import common from '@kit.AbilityKit';
+import common from '@ohos.ability.common';
 
 export class DatabaseService {
   private static instance: DatabaseService;
@@ -20,10 +19,9 @@ export class DatabaseService {
     }
     return DatabaseService.instance;
   }
-  
   private constructor() {
     // 获取context
-    this.context = getContext(this) as common.UIAbilityContext;
+    this.context = getContext(this) as common.Context;
   }
   
   /**
@@ -41,7 +39,7 @@ export class DatabaseService {
       console.info('DatabaseService', 'Database initialized');
     } catch (error) {
       console.error('DatabaseService', 'Failed to init database', error);
-      throw error;
+      throw new Error('Database initialization failed');
     }
   }
   
@@ -145,7 +143,7 @@ export class DatabaseService {
     await this.rdbStore.executeSql(createSegmentsTable);
     await this.rdbStore.executeSql(createTrackPointsTable);
     await this.rdbStore.executeSql(createStayPointsTable);
-    
+
     // 创建索引
     await this.rdbStore.executeSql(
       'CREATE INDEX IF NOT EXISTS idx_checkin_trip ON check_in_points(trip_id)'
@@ -154,9 +152,21 @@ export class DatabaseService {
       'CREATE INDEX IF NOT EXISTS idx_checkin_date ON check_in_points(date)'
     );
     await this.rdbStore.executeSql(
+      'CREATE INDEX IF NOT EXISTS idx_checkin_timestamp ON check_in_points(timestamp)'
+    );
+    await this.rdbStore.executeSql(
       'CREATE INDEX IF NOT EXISTS idx_segments_trip ON record_segments(trip_id)'
     );
-    
+    await this.rdbStore.executeSql(
+      'CREATE INDEX IF NOT EXISTS idx_track_segment ON track_points(segment_id)'
+    );
+    await this.rdbStore.executeSql(
+      'CREATE INDEX IF NOT EXISTS idx_stay_segment ON stay_points(segment_id)'
+    );
+    await this.rdbStore.executeSql(
+      'CREATE INDEX IF NOT EXISTS idx_trips_status ON trips(status)'
+    );
+
     console.info('DatabaseService', 'Tables created');
   }
   

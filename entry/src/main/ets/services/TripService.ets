@@ -76,34 +76,39 @@ export class TripService {
     if (!store) {
       throw new Error('Database not initialized');
     }
-    
+
     const predicates = new relationalStore.RdbPredicates('trips');
     predicates.equalTo('id', id);
-    
+
     const resultSet = await store.query(predicates);
-    
-    if (resultSet.goToFirstRow()) {
-      const trip: Trip = {
-        id: resultSet.getString(resultSet.getColumnIndex('id')),
-        name: resultSet.getString(resultSet.getColumnIndex('name')),
-        description: resultSet.getString(resultSet.getColumnIndex('description')) || undefined,
-        destinations: JSON.parse(resultSet.getString(resultSet.getColumnIndex('destinations'))),
-        startTime: resultSet.getLong(resultSet.getColumnIndex('start_time')),
-        endTime: resultSet.getLong(resultSet.getColumnIndex('end_time')) || undefined,
-        status: resultSet.getString(resultSet.getColumnIndex('status')) as TripStatus,
-        totalDistance: resultSet.getDouble(resultSet.getColumnIndex('total_distance')),
-        trackSegmentCount: resultSet.getLong(resultSet.getColumnIndex('track_segment_count')),
-        checkInCount: resultSet.getLong(resultSet.getColumnIndex('check_in_count')),
-        createdAt: resultSet.getLong(resultSet.getColumnIndex('created_at')),
-        updatedAt: resultSet.getLong(resultSet.getColumnIndex('updated_at'))
-      };
-      
+
+    try {
+      if (resultSet.goToFirstRow()) {
+        const trip: Trip = {
+          id: resultSet.getString(resultSet.getColumnIndex('id')),
+          name: resultSet.getString(resultSet.getColumnIndex('name')),
+          description: resultSet.getString(resultSet.getColumnIndex('description')) || undefined,
+          destinations: JSON.parse(resultSet.getString(resultSet.getColumnIndex('destinations'))),
+          startTime: resultSet.getLong(resultSet.getColumnIndex('start_time')),
+          endTime: resultSet.getLong(resultSet.getColumnIndex('end_time')) || undefined,
+          status: resultSet.getString(resultSet.getColumnIndex('status')) as TripStatus,
+          totalDistance: resultSet.getDouble(resultSet.getColumnIndex('total_distance')),
+          trackSegmentCount: resultSet.getLong(resultSet.getColumnIndex('track_segment_count')),
+          checkInCount: resultSet.getLong(resultSet.getColumnIndex('check_in_count')),
+          createdAt: resultSet.getLong(resultSet.getColumnIndex('created_at')),
+          updatedAt: resultSet.getLong(resultSet.getColumnIndex('updated_at'))
+        };
+
+        return trip;
+      }
+
+      return null;
+    } catch (error) {
+      console.error('TripService', 'getTrip error', error);
+      return null;
+    } finally {
       resultSet.close();
-      return trip;
     }
-    
-    resultSet.close();
-    return null;
   }
   
   /**
@@ -114,34 +119,40 @@ export class TripService {
     if (!store) {
       throw new Error('Database not initialized');
     }
-    
+
     const predicates = new relationalStore.RdbPredicates('trips');
     predicates.orderByDesc('created_at');
-    
+
     const resultSet = await store.query(predicates);
     const trips: Trip[] = [];
-    
-    while (resultSet.goToNextRow()) {
-      const trip: Trip = {
-        id: resultSet.getString(resultSet.getColumnIndex('id')),
-        name: resultSet.getString(resultSet.getColumnIndex('name')),
-        description: resultSet.getString(resultSet.getColumnIndex('description')) || undefined,
-        destinations: JSON.parse(resultSet.getString(resultSet.getColumnIndex('destinations'))),
-        startTime: resultSet.getLong(resultSet.getColumnIndex('start_time')),
-        endTime: resultSet.getLong(resultSet.getColumnIndex('end_time')) || undefined,
-        status: resultSet.getString(resultSet.getColumnIndex('status')) as TripStatus,
-        totalDistance: resultSet.getDouble(resultSet.getColumnIndex('total_distance')),
-        trackSegmentCount: resultSet.getLong(resultSet.getColumnIndex('track_segment_count')),
-        checkInCount: resultSet.getLong(resultSet.getColumnIndex('check_in_count')),
-        createdAt: resultSet.getLong(resultSet.getColumnIndex('created_at')),
-        updatedAt: resultSet.getLong(resultSet.getColumnIndex('updated_at'))
-      };
-      
-      trips.push(trip);
+
+    try {
+      while (resultSet.goToNextRow()) {
+        const trip: Trip = {
+          id: resultSet.getString(resultSet.getColumnIndex('id')),
+          name: resultSet.getString(resultSet.getColumnIndex('name')),
+          description: resultSet.getString(resultSet.getColumnIndex('description')) || undefined,
+          destinations: JSON.parse(resultSet.getString(resultSet.getColumnIndex('destinations'))),
+          startTime: resultSet.getLong(resultSet.getColumnIndex('start_time')),
+          endTime: resultSet.getLong(resultSet.getColumnIndex('end_time')) || undefined,
+          status: resultSet.getString(resultSet.getColumnIndex('status')) as TripStatus,
+          totalDistance: resultSet.getDouble(resultSet.getColumnIndex('total_distance')),
+          trackSegmentCount: resultSet.getLong(resultSet.getColumnIndex('track_segment_count')),
+          checkInCount: resultSet.getLong(resultSet.getColumnIndex('check_in_count')),
+          createdAt: resultSet.getLong(resultSet.getColumnIndex('created_at')),
+          updatedAt: resultSet.getLong(resultSet.getColumnIndex('updated_at'))
+        };
+
+        trips.push(trip);
+      }
+
+      return trips;
+    } catch (error) {
+      console.error('TripService', 'getAllTrips error', error);
+      return [];
+    } finally {
+      resultSet.close();
     }
-    
-    resultSet.close();
-    return trips;
   }
   
   /**

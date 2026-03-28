@@ -1,9 +1,8 @@
 /**
  * 存储服务 - 封装Preferences
  */
-
 import preferences from '@ohos.data.preferences';
-import common from '@kit.AbilityKit';
+import common from '@ohos.ability.common';
 
 export class StorageService {
   private static instance: StorageService;
@@ -18,9 +17,8 @@ export class StorageService {
     }
     return StorageService.instance;
   }
-  
   private constructor() {
-    this.context = getContext(this) as common.UIAbilityContext;
+    this.context = getContext(this) as common.Context;
   }
   
   /**
@@ -32,7 +30,7 @@ export class StorageService {
       console.info('StorageService', 'initialized');
     } catch (error) {
       console.error('StorageService', 'init error', error);
-      throw error;
+      throw new Error('Storage service initialization failed');
     }
   }
   
@@ -41,90 +39,140 @@ export class StorageService {
    */
   async putString(key: string, value: string): Promise<void> {
     if (!this.preferences) return;
-    await this.preferences.put(key, value);
-    await this.preferences.flush();
+    try {
+      await this.preferences.put(key, value);
+      await this.preferences.flush();
+    } catch (error) {
+      console.error('StorageService', 'putString error', error);
+      throw error;
+    }
   }
-  
+
   /**
    * 获取字符串
    */
   async getString(key: string, defaultValue: string = ''): Promise<string> {
     if (!this.preferences) return defaultValue;
-    return await this.preferences.get(key, defaultValue) as string;
+    try {
+      return await this.preferences.get(key, defaultValue) as string;
+    } catch (error) {
+      console.error('StorageService', 'getString error', error);
+      return defaultValue;
+    }
   }
-  
+
   /**
    * 保存数字
    */
   async putNumber(key: string, value: number): Promise<void> {
     if (!this.preferences) return;
-    await this.preferences.put(key, value);
-    await this.preferences.flush();
+    try {
+      await this.preferences.put(key, value);
+      await this.preferences.flush();
+    } catch (error) {
+      console.error('StorageService', 'putNumber error', error);
+      throw error;
+    }
   }
-  
+
   /**
    * 获取数字
    */
   async getNumber(key: string, defaultValue: number = 0): Promise<number> {
     if (!this.preferences) return defaultValue;
-    return await this.preferences.get(key, defaultValue) as number;
+    try {
+      return await this.preferences.get(key, defaultValue) as number;
+    } catch (error) {
+      console.error('StorageService', 'getNumber error', error);
+      return defaultValue;
+    }
   }
-  
+
   /**
    * 保存布尔值
    */
   async putBoolean(key: string, value: boolean): Promise<void> {
     if (!this.preferences) return;
-    await this.preferences.put(key, value);
-    await this.preferences.flush();
+    try {
+      await this.preferences.put(key, value);
+      await this.preferences.flush();
+    } catch (error) {
+      console.error('StorageService', 'putBoolean error', error);
+      throw error;
+    }
   }
-  
+
   /**
    * 获取布尔值
    */
   async getBoolean(key: string, defaultValue: boolean = false): Promise<boolean> {
     if (!this.preferences) return defaultValue;
-    return await this.preferences.get(key, defaultValue) as boolean;
+    try {
+      return await this.preferences.get(key, defaultValue) as boolean;
+    } catch (error) {
+      console.error('StorageService', 'getBoolean error', error);
+      return defaultValue;
+    }
   }
-  
+
   /**
    * 保存对象（JSON序列化）
    */
   async putObject<T>(key: string, value: T): Promise<void> {
     if (!this.preferences) return;
-    await this.preferences.put(key, JSON.stringify(value));
-    await this.preferences.flush();
+    try {
+      await this.preferences.put(key, JSON.stringify(value));
+      await this.preferences.flush();
+    } catch (error) {
+      console.error('StorageService', 'putObject error', error);
+      throw error;
+    }
   }
-  
+
   /**
    * 获取对象
    */
   async getObject<T>(key: string, defaultValue: T): Promise<T> {
     if (!this.preferences) return defaultValue;
-    const str = await this.preferences.get(key, '') as string;
-    if (!str) return defaultValue;
     try {
-      return JSON.parse(str) as T;
-    } catch {
+      const str = await this.preferences.get(key, '') as string;
+      if (!str) return defaultValue;
+      try {
+        return JSON.parse(str) as T;
+      } catch {
+        return defaultValue;
+      }
+    } catch (error) {
+      console.error('StorageService', 'getObject error', error);
       return defaultValue;
     }
   }
-  
+
   /**
    * 删除
    */
   async remove(key: string): Promise<void> {
     if (!this.preferences) return;
-    await this.preferences.delete(key);
-    await this.preferences.flush();
+    try {
+      await this.preferences.delete(key);
+      await this.preferences.flush();
+    } catch (error) {
+      console.error('StorageService', 'remove error', error);
+      throw error;
+    }
   }
-  
+
   /**
    * 清空所有
    */
   async clear(): Promise<void> {
     if (!this.preferences) return;
-    await this.preferences.clear();
-    await this.preferences.flush();
+    try {
+      await this.preferences.clear();
+      await this.preferences.flush();
+    } catch (error) {
+      console.error('StorageService', 'clear error', error);
+      throw error;
+    }
   }
 }
