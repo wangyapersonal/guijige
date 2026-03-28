@@ -1,0 +1,224 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "轨迹哥"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "轨迹哥"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "轨迹哥"
+    },
+    {
+      "name": "trip_list_title",
+      "value": "我的行程"
+    },
+    {
+      "name": "trip_detail_title",
+      "value": "行程详情"
+    },
+    {
+      "name": "record_title",
+      "value": "记录轨迹"
+    },
+    {
+      "name": "create_trip",
+      "value": "新建行程"
+    },
+    {
+      "name": "trip_name",
+      "value": "行程名称"
+    },
+    {
+      "name": "trip_name_placeholder",
+      "value": "请输入行程名称"
+    },
+    {
+      "name": "trip_type",
+      "value": "出行方式"
+    },
+    {
+      "name": "trip_type_driving",
+      "value": "自驾"
+    },
+    {
+      "name": "trip_type_cycling",
+      "value": "骑行"
+    },
+    {
+      "name": "trip_type_walking",
+      "value": "徒步"
+    },
+    {
+      "name": "trip_type_other",
+      "value": "其他"
+    },
+    {
+      "name": "trip_destination",
+      "value": "目的地"
+    },
+    {
+      "name": "trip_destination_placeholder",
+      "value": "请选择目的地"
+    },
+    {
+      "name": "trip_start_date",
+      "value": "开始日期"
+    },
+    {
+      "name": "trip_end_date",
+      "value": "结束日期"
+    },
+    {
+      "name": "trip_notes",
+      "value": "备注"
+    },
+    {
+      "name": "trip_notes_placeholder",
+      "value": "请输入备注信息"
+    },
+    {
+      "name": "save",
+      "value": "保存"
+    },
+    {
+      "name": "cancel",
+      "value": "取消"
+    },
+    {
+      "name": "delete",
+      "value": "删除"
+    },
+    {
+      "name": "edit",
+      "value": "编辑"
+    },
+    {
+      "name": "confirm_delete",
+      "value": "确认删除"
+    },
+    {
+      "name": "confirm_delete_message",
+      "value": "确定要删除此行程吗？"
+    },
+    {
+      "name": "start_recording",
+      "value": "开始记录"
+    },
+    {
+      "name": "stop_recording",
+      "value": "停止记录"
+    },
+    {
+      "name": "pause_recording",
+      "value": "暂停"
+    },
+    {
+      "name": "resume_recording",
+      "value": "继续"
+    },
+    {
+      "name": "check_in",
+      "value": "打卡"
+    },
+    {
+      "name": "check_in_name",
+      "value": "打卡点名称"
+    },
+    {
+      "name": "check_in_name_placeholder",
+      "value": "请输入打卡点名称"
+    },
+    {
+      "name": "check_in_type",
+      "value": "打卡类型"
+    },
+    {
+      "name": "check_in_type_manual",
+      "value": "手动打卡"
+    },
+    {
+      "name": "check_in_type_auto",
+      "value": "自动打卡"
+    },
+    {
+      "name": "distance",
+      "value": "距离"
+    },
+    {
+      "name": "duration",
+      "value": "时长"
+    },
+    {
+      "name": "check_in_points",
+      "value": "打卡点"
+    },
+    {
+      "name": "track_points",
+      "value": "轨迹点"
+    },
+    {
+      "name": "no_trip",
+      "value": "暂无行程"
+    },
+    {
+      "name": "no_trip_hint",
+      "value": "点击右上角创建您的第一个行程"
+    },
+    {
+      "name": "no_check_in",
+      "value": "暂无打卡记录"
+    },
+    {
+      "name": "no_track",
+      "value": "暂无轨迹记录"
+    },
+    {
+      "name": "loading",
+      "value": "加载中..."
+    },
+    {
+      "name": "error",
+      "value": "错误"
+    },
+    {
+      "name": "success",
+      "value": "成功"
+    },
+    {
+      "name": "network_error",
+      "value": "网络错误"
+    },
+    {
+      "name": "location_error",
+      "value": "定位失败"
+    },
+    {
+      "name": "permission_denied",
+      "value": "权限被拒绝"
+    },
+    {
+      "name": "please_enable_location",
+      "value": "请开启定位权限"
+    },
+    {
+      "name": "recording",
+      "value": "记录中"
+    },
+    {
+      "name": "paused",
+      "value": "已暂停"
+    },
+    {
+      "name": "stopped",
+      "value": "已停止"
+    },
+    {
+      "name": "permission_reason_location",
+      "value": "需要获取您的位置信息，用于记录旅行轨迹"
+    }
+  ]
+}
