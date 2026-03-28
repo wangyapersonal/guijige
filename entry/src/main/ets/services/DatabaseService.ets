@@ -1,17 +1,17 @@
 import { relationalStore } from '@kit.ArkData';
-import common from '@ohos.ability.common';
+import { Context } from '@kit.AbilityKit';
 import { DB_NAME, DB_VERSION, TRIP_TABLE, CHECKIN_TABLE, RECORD_TABLE, TRACK_TABLE } from '../common/constants/Constants';
 
 export class DatabaseService {
   private static instance: DatabaseService;
   private rdbStore: relationalStore.RdbStore | null = null;
-  private context: common.Context;
+  private context: Context;
 
-  private constructor(context: common.Context) {
+  private constructor(context: Context) {
     this.context = context;
   }
 
-  static getInstance(context: common.Context): DatabaseService {
+  static getInstance(context: Context): DatabaseService {
     if (!DatabaseService.instance) {
       DatabaseService.instance = new DatabaseService(context);
     }

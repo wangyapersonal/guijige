@@ -1,7 +1,5 @@
-import { hapTasks } from '@ohos/hvigor-ohos-plugin';
-import { OhosTestPlugin } from '@ohos/hypium/index';
+const { hapTasks } = require('@ohos/hvigor-ohos-plugin');
 
-export default {
-  system: hapTasks,
-  plugins: [new OhosTestPlugin()]
+module.exports = {
+  system: hapTasks
 }

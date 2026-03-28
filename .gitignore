@@ -1,3 +1,16 @@
 # os
 .DS_Store
 Thumbs.db
+
+# ide
+.idea/
+.vscode/
+
+# build
+build/
+node_modules/
+oh_modules/
+.hvigor/
+
+# temp
+*.log

@@ -7,29 +7,30 @@ struct Index {
     setTimeout(() => {
       router.replaceUrl({
         url: 'pages/TripListPage'
-      })
+      });
     }, 2000);
   }
 
   build() {
     Column() {
-      Image($r('sys.media.ohos_ic_public_app_logo'))
+      Image($r('app.media.icon'))
         .objectFit(ImageFit.Contain)
-        .height($r('app.integer.login_logo_image_height'))
-        .width($r('app.integer.login_logo_image_width'))
-        .margin({ top: $r('app.integer.login_logo_margin_top'), bottom: $r('app.integer.login_logo_margin_bottom') })
-      Text($r('app.string.login_page'))
-        .fontSize($r('app.integer.login_page_font_size'))
+        .height(120)
+        .width(120)
+        .margin({ top: 200, bottom: 40 })
+      Text('轨迹记录')
+        .fontSize(24)
         .fontWeight(500)
-        .lineHeight($r('app.integer.login_page_text_height'))
-        .margin({ bottom: $r('app.integer.login_page_margin_bottom') })
-      Text($r('app.string.login_page'))
-        .fontSize($r('app.integer.login_page_font_size'))
-        .fontWeight(500)
-        .lineHeight($r('app.integer.login_page_text_height'))
-        .margin({ bottom: $r('app.integer.login_page_margin_bottom') })
+        .lineHeight(32)
+        .margin({ bottom: 20 })
+      Text('正在加载...')
+        .fontSize(16)
+        .fontWeight(400)
+        .lineHeight(24)
+        .margin({ bottom: 40 })
     }
     .height('100%')
-    .padding({ left: $r('app.integer.login_page_padding_left'), right: $r('app.integer.login_page_padding_right') })
+    .padding({ left: 40, right: 40 })
+    .justifyContent(FlexAlign.Center)
   }
 }

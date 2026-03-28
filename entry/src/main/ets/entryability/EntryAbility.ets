@@ -47,10 +47,9 @@ export default class EntryAbility extends UIAbility {
     hilog.info(DOMAIN, TAG, 'Ability onWindowStageWillDestroy');
   }
 
-  onContinue(wantParam?: Record<string, Object>) {
+  onContinue(wantParam: Record<string, Object>): AbilityConstant.OnContinueResult {
     hilog.info(DOMAIN, TAG, `Ability onContinue`);
-    let abilityContinuation = this.context.continueState;
-    abilityContinuation?.continue();
+    return AbilityConstant.OnContinueResult.AGREE;
   }
 
   onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam) {

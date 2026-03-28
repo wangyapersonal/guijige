@@ -45,8 +45,8 @@
         "exported": true,
         "skills": [
           {
-            "skills": ['system.action'],
-            "entities": ['entity.system.home']
+            "actions": ["action.system.home"],
+            "entities": ["entity.system.home"]
           }
         ]
       }

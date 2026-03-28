@@ -1,9 +1,28 @@
 {
-  "apiType": "stageMode",
-  "buildOption": {},
-  "targets": [
+  "app": {
+    "signingConfigs": [],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "bundleName": "com.wyhm.guijige",
+        "bundleType": "app",
+        "targetSdkVersion": "5.0.0(12)",
+        "compatibleSdkVersion": "5.0.0(12)",
+        "runtimeOS": "HarmonyOS"
+      }
+    ]
+  },
+  "modules": [
     {
-      "name": "default"
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": ["default"]
+        }
+      ]
     }
   ]
 }
