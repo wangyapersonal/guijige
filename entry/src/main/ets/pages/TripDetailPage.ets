@@ -1,15 +1,17 @@
 /**
- * 行程详情页
+ * 行程详情页 - 集成地图
  */
 
 import { TripService } from '../services/TripService';
 import { CheckInService } from '../services/CheckInService';
+import { MapService } from '../services/MapService';
 import { Trip } from '../models/Trip';
 import { CheckInPoint } from '../models/CheckInPoint';
 import { TripStatus } from '../common/constants/Constants';
 import { TimeUtils } from '../common/utils/TimeUtils';
 import { GeoUtils } from '../common/utils/GeoUtils';
 import router from '@ohos.router';
+import { MapComponent, mapCommon, map } from '@kit.MapKit';
 
 interface TripDetailParams {
   tripId: string;
@@ -21,9 +23,11 @@ struct TripDetailPage {
   @State trip: Trip | null = null;
   @State checkInPoints: CheckInPoint[] = [];
   @State isLoading: boolean = true;
+  @State mapController?: map.MapComponentController;
   
   private tripService: TripService = TripService.getInstance();
   private checkInService: CheckInService = CheckInService.getInstance();
+  private mapService: MapService = MapService.getInstance();
   private tripId: string = '';
   
   async aboutToAppear() {
@@ -95,19 +99,30 @@ struct TripDetailPage {
           Column() {
             // 地图区域
             Column() {
-              Text('🗺️')
-                .fontSize(60)
-              
-              Text('轨迹地图')
-                .fontSize(14)
-                .fontColor('#757575')
-                .margin({ top: 8 })
+              MapComponent({
+                mapOptions: {
+                  position: {
+                    target: {
+                      latitude: this.checkInPoints[0]?.latitude || 39.9042,
+                      longitude: this.checkInPoints[0]?.longitude || 116.4074
+                    },
+                    zoom: 12
+                  },
+                  mapType: mapCommon.MapType.NORMAL,
+                  zoomControlsEnabled: false
+                },
+                callBack: (controller: map.MapComponentController) => {
+                  this.mapController = controller;
+                  this.mapService.setMapController(controller);
+                  this.loadMapMarkers();
+                }
+              })
+                .width('100%')
+                .height('100%')
+                .borderRadius(16)
             }
             .width('100%')
             .height(250)
-            .backgroundColor('#E0E0E0')
-            .justifyContent(FlexAlign.Center)
-            .borderRadius(16)
             .margin(16)
             
             // 行程信息
@@ -312,6 +327,40 @@ struct TripDetailPage {
         return '📷';
       default:
         return '📍';
+    }
+  }
+  
+  /**
+   * 加载地图标记
+   */
+  private async loadMapMarkers(): Promise<void> {
+    if (!this.mapController || this.checkInPoints.length === 0) {
+      return;
+    }
+    
+    // 添加打卡点标记
+    for (const point of this.checkInPoints) {
+      await this.mapService.addMarker({
+        id: point.id,
+        latitude: point.latitude,
+        longitude: point.longitude,
+        title: point.placeName || '',
+        snippet: point.address || ''
+      });
+    }
+    
+    // 调整视野
+    const locations = this.checkInPoints.map(p => ({
+      latitude: p.latitude,
+      longitude: p.longitude,
+      altitude: 0,
+      accuracy: 0,
+      speed: 0,
+      timestamp: p.timestamp
+    }));
+    
+    if (locations.length > 0) {
+      await this.mapService.fitBounds(locations, 80);
     }
   }
 }

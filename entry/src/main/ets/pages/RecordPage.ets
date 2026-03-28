@@ -1,14 +1,17 @@
 /**
- * 记录页（持续记录）
+ * 记录页（持续记录）- 集成地图
  */
 
 import { RecordService } from '../services/RecordService';
 import { LocationService } from '../services/LocationService';
+import { MapService } from '../services/MapService';
 import { Trip } from '../models/Trip';
 import { RecordMode } from '../common/constants/Constants';
 import { GeoUtils } from '../common/utils/GeoUtils';
 import { TimeUtils } from '../common/utils/TimeUtils';
+import { Location } from '../common/types/CommonTypes';
 import router from '@ohos.router';
+import { MapComponent, mapCommon, map } from '@kit.MapKit';
 
 interface RecordParams {
   tripId: string;
@@ -26,8 +29,12 @@ struct RecordPage {
   @State duration: number = 0;
   @State currentSpeed: number = 0;
   @State showModeSelector: boolean = true;
+  @State currentLocation: Location | null = null;
+  @State recordedPoints: Location[] = [];
+  @State mapController?: map.MapComponentController;
   
   private locationService: LocationService = LocationService.getInstance();
+  private mapService: MapService = MapService.getInstance();
   private recordService: RecordService | null = null;
   
   aboutToAppear() {
@@ -164,18 +171,48 @@ struct RecordPage {
     Stack({ alignContent: Alignment.Top }) {
       // 地图背景
       Column() {
-        Text('🗺️')
-          .fontSize(80)
+        MapComponent({
+          mapOptions: {
+            position: {
+              target: {
+                latitude: this.currentLocation?.latitude || 39.9042,
+                longitude: this.currentLocation?.longitude || 116.4074
+              },
+              zoom: 16
+            },
+            mapType: mapCommon.MapType.NORMAL,
+            zoomControlsEnabled: false,
+            compassEnabled: false,
+            myLocationEnabled: true
+          },
+          callBack: (controller: map.MapComponentController) => {
+            this.mapController = controller;
+            this.mapService.setMapController(controller);
+          }
+        })
+          .width('100%')
+          .height('100%')
         
-        Text('地图加载中...')
-          .fontSize(16)
-          .fontColor('#757575')
-          .margin({ top: 12 })
+        // 录制状态指示器
+        if (this.isRecording && !this.isPaused) {
+          Row() {
+            Circle()
+              .width(10)
+              .height(10)
+              .fill('#FF0000')
+            
+            Text(' 录制中')
+              .fontSize(14)
+              .fontColor(Color.White)
+          }
+          .padding({ left: 12, right: 12, top: 6, bottom: 6 })
+          .backgroundColor('#80000000')
+          .borderRadius(16)
+          .position({ x: 16, y: 70 })
+        }
       }
       .width('100%')
       .height('65%')
-      .backgroundColor('#E0E0E0')
-      .justifyContent(FlexAlign.Center)
       
       // 顶部状态栏
       Row() {
@@ -336,13 +373,27 @@ struct RecordPage {
     router.back();
   }
   
-  private onLocationUpdate(location: any) {
+  private onLocationUpdate(location: Location) {
     if (!this.isRecording || this.isPaused) return;
     
-    // 更新速度
+    this.currentLocation = location;
     this.currentSpeed = location.speed || 0;
     
-    // TODO: 累加距离
+    // 添加到记录点
+    this.recordedPoints.push(location);
+    
+    // 更新地图轨迹
+    if (this.mapController && this.recordedPoints.length >= 2) {
+      this.mapService.addPolyline({
+        id: 'current_track',
+        points: this.recordedPoints,
+        color: 'blue',
+        width: 4
+      });
+      
+      // 移动到当前位置
+      this.mapService.moveToLocation(location.latitude, location.longitude, 16);
+    }
   }
   
   private startTimer() {

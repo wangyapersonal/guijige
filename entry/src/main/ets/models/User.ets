@@ -11,6 +11,8 @@ export interface UserInfo {
   refreshToken: string;         // 刷新令牌
   expiresIn: number;            // 过期时间（秒）
   loggedInAt: number;           // 登录时间
+  openId?: string;              // 华为OpenID
+  unionId?: string;             // 华为UnionID
 }
 
 // 登录状态
