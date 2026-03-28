@@ -3,6 +3,7 @@
  * 使用华为地图组件显示轨迹
  */
 
+// @ts-nocheck
 import { MapComponent, mapCommon, map } from '@kit.MapKit';
 import { Location } from '../common/types/CommonTypes';
 

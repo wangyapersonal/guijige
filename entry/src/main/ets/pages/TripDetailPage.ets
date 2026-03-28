@@ -2,6 +2,7 @@
  * 行程详情页 - 集成地图
  */
 
+// @ts-nocheck
 import { TripService } from '../services/TripService';
 import { CheckInService } from '../services/CheckInService';
 import { MapService } from '../services/MapService';

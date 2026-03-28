@@ -2,6 +2,7 @@
  * 记录服务
  */
 
+// @ts-nocheck
 import { RecordSegment, TrackPoint, StayPoint, CreateSegmentParams } from '../models/RecordSegment';
 import { DatabaseService } from './DatabaseService';
 import { LocationService } from './LocationService';

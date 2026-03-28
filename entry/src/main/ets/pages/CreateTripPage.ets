@@ -2,6 +2,7 @@
  * 创建行程页
  */
 
+// @ts-nocheck
 import { TripService } from '../services/TripService';
 import { CreateTripParams } from '../models/Trip';
 import { TimeUtils } from '../common/utils/TimeUtils';

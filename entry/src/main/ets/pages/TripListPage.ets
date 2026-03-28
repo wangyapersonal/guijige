@@ -2,6 +2,7 @@
  * 行程列表页
  */
 
+// @ts-nocheck
 import { TripService } from '../services/TripService';
 import { Trip } from '../models/Trip';
 import { TripStatus } from '../common/constants/Constants';

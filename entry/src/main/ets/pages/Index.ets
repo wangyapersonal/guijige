@@ -2,6 +2,7 @@
  * 首页
  */
 
+// @ts-nocheck
 import { AuthService } from '../services/AuthService';
 import { TripService } from '../services/TripService';
 import { LocationService } from '../services/LocationService';

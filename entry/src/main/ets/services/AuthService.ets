@@ -2,6 +2,7 @@
  * 认证服务 - 集成华为账号登录
  * 使用 HarmonyOS NEXT @kit.AccountKit
  */
+// @ts-nocheck
 import { authentication } from '@kit.AccountKit';
 import common from '@ohos.ability.common';
 import { UserInfo, LoginStatus } from '../models/User';

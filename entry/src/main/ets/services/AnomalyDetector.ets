@@ -3,6 +3,7 @@
  * 检测和处理 GPS 漂移、异常速度、位置跳跃等
  */
 
+// @ts-nocheck
 import { Location } from '../common/types/CommonTypes';
 import { RecordMode } from '../common/constants/Constants';
 

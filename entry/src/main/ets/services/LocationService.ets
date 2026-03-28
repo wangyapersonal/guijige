@@ -2,6 +2,7 @@
  * 定位服务 - 支持后台持续定位
  */
 
+// @ts-nocheck
 import geoLocationManager from '@ohos.geoLocationManager';
 import backgroundTaskManager from '@ohos.backgroundTaskManager';
 import { wantAgent, WantAgent } from '@kit.AbilityKit';

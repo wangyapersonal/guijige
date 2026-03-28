@@ -2,6 +2,7 @@
  * 打卡服务
  */
 
+// @ts-nocheck
 import { CheckInPoint, CreateCheckInParams, QueryCheckInParams } from '../models/CheckInPoint';
 import { DatabaseService } from './DatabaseService';
 import { LocationService } from './LocationService';

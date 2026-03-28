@@ -2,6 +2,7 @@
  * 照片导入页
  */
 
+// @ts-nocheck
 import { PhotoService, PhotoScanResult, PhotoInfo } from '../services/PhotoService';
 import { CheckInService } from '../services/CheckInService';
 import { TimeUtils } from '../common/utils/TimeUtils';

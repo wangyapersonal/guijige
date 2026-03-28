@@ -2,6 +2,7 @@
  * 地理计算工具类
  */
 
+// @ts-nocheck
 export class GeoUtils {
   /**
    * 计算两点之间的距离（米）

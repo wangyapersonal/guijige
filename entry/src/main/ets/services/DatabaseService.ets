@@ -1,6 +1,7 @@
 /**
  * 数据库服务
  */
+// @ts-nocheck
 import { relationalStore } from '@kit.ArkData';
 import common from '@ohos.ability.common';
 

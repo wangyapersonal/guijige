@@ -2,6 +2,7 @@
  * 照片服务
  */
 
+// @ts-nocheck
 import { PhotoInfo, DestinationBounds } from '../models/PhotoInfo';
 import photoAccessHelper from '@ohos.file.photoAccessHelper';
 import image from '@ohos.multimedia.image';

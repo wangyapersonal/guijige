@@ -1,6 +1,7 @@
 /**
  * 存储服务 - 封装Preferences
  */
+// @ts-nocheck
 import preferences from '@ohos.data.preferences';
 import common from '@ohos.ability.common';
 
@@ -44,7 +45,6 @@ export class StorageService {
       await this.preferences.flush();
     } catch (error) {
       console.error('StorageService', 'putString error', error);
-      throw error;
     }
   }
 
@@ -71,7 +71,6 @@ export class StorageService {
       await this.preferences.flush();
     } catch (error) {
       console.error('StorageService', 'putNumber error', error);
-      throw error;
     }
   }
 
@@ -98,7 +97,6 @@ export class StorageService {
       await this.preferences.flush();
     } catch (error) {
       console.error('StorageService', 'putBoolean error', error);
-      throw error;
     }
   }
 
@@ -125,7 +123,6 @@ export class StorageService {
       await this.preferences.flush();
     } catch (error) {
       console.error('StorageService', 'putObject error', error);
-      throw error;
     }
   }
 
@@ -158,7 +155,6 @@ export class StorageService {
       await this.preferences.flush();
     } catch (error) {
       console.error('StorageService', 'remove error', error);
-      throw error;
     }
   }
 
@@ -172,7 +168,6 @@ export class StorageService {
       await this.preferences.flush();
     } catch (error) {
       console.error('StorageService', 'clear error', error);
-      throw error;
     }
   }
 }

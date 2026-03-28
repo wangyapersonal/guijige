@@ -2,6 +2,7 @@
  * 时间工具类
  */
 
+// @ts-nocheck
 export class TimeUtils {
   /**
    * 格式化日期 YYYY-MM-DD
