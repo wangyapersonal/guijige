@@ -136,29 +136,27 @@ struct ImportPhotoPage {
                 }
                 .width('100%')
                 .margin({ bottom: 8 })
-                
+
                 ForEach(
                   this.scanResult.photos.filter(p => p.isAnomaly),
                   (photo: PhotoInfo) => {
-                    Row() {
-                      Text('⬜')
-                        .fontSize(16)
+                    Column() {
+                      Row() {
+                        Text('⬜')
+                          .fontSize(16)
 
-                      Text(photo.fileName)
-                        .fontSize(14)
-                        .fontColor('#757575')
-                        .margin({ left: 8 })
-                        .layoutWeight(1)
-                    }
-                    .width('100%')
-                    .padding(12)
-                    .backgroundColor('#FFF3E0')
-                    .borderRadius(6)
-                    .margin({ bottom: 6 })
-                  },
-                  (photo: PhotoInfo) => photo.uri
-                )
-                      
+                        Text(photo.fileName)
+                          .fontSize(14)
+                          .fontColor('#757575')
+                          .margin({ left: 8 })
+                          .layoutWeight(1)
+                      }
+                      .width('100%')
+                      .padding(12)
+                      .backgroundColor('#FFF3E0')
+                      .borderRadius(6)
+                      .margin({ bottom: 6 })
+
                       Text('(不在目的地范围)')
                         .fontSize(12)
                         .fontColor('#9E9E9E')
@@ -168,7 +166,8 @@ struct ImportPhotoPage {
                     .backgroundColor('#FFF8E1')
                     .borderRadius(8)
                     .margin({ bottom: 4 })
-                  }
+                  },
+                  (photo: PhotoInfo) => photo.uri
                 )
               }
               .width('100%')
