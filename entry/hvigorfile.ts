@@ -1,6 +1,7 @@
 import { hapTasks } from '@ohos/hvigor-ohos-plugin';
+import { OhosTestPlugin } from '@ohos/hypium/index';
 
 export default {
-  system: hapTasks, /* Built-in plugin of Hvigor. It cannot be modified. */
-  plugins: []       /* Custom plugin to extend the functionality of Hvigor. */
+  system: hapTasks,
+  plugins: [new OhosTestPlugin()]
 }

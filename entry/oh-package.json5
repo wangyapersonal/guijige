@@ -1,9 +1,12 @@
 {
   "name": "entry",
   "version": "1.0.0",
-  "description": "Please describe the basic information.",
+  "description": "轨迹哥",
   "main": "",
   "author": "",
-  "license": "",
-  "dependencies": {}
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@ohos/hypium": "1.0.18"
+  }
 }

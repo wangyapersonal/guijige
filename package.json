@@ -1,0 +1,12 @@
+{
+  "name": "guijige-new",
+  "version": "1.0.0",
+  "description": "轨迹哥 - HarmonyOS NEXT应用",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {},
+  "devDependencies": {
+    "@ohos/hypium": "1.0.18"
+  }
+}
