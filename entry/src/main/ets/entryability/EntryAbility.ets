@@ -4,6 +4,8 @@ import { window } from '@kit.ArkUI';
 import { DatabaseService } from '../services/DatabaseService';
 import { StorageService } from '../services/StorageService';
 import { AuthService } from '../services/AuthService';
+import { LocationService } from '../services/LocationService';
+import { SyncService } from '../services/SyncService';
 
 const DOMAIN = 0x0000;
 const TAG = 'EntryAbility';
@@ -34,6 +36,16 @@ export default class EntryAbility extends UIAbility {
       await authService.init();
       hilog.info(DOMAIN, TAG, 'AuthService initialized, isLoggedIn: %{public}s', 
         authService.isLoggedIn().toString());
+      
+      // 定位服务
+      const locationService = LocationService.getInstance();
+      locationService.init(this.context);
+      hilog.info(DOMAIN, TAG, 'LocationService initialized');
+      
+      // 同步服务
+      const syncService = SyncService.getInstance();
+      await syncService.init();
+      hilog.info(DOMAIN, TAG, 'SyncService initialized');
       
     } catch (error) {
       hilog.error(DOMAIN, TAG, 'Service initialization failed: %{public}s', JSON.stringify(error));

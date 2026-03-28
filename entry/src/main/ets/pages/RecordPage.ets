@@ -1,10 +1,11 @@
 /**
- * 记录页（持续记录）- 集成地图
+ * 记录页（持续记录）- 集成地图和后台定位
  */
 
 import { RecordService } from '../services/RecordService';
 import { LocationService } from '../services/LocationService';
 import { MapService } from '../services/MapService';
+import { AnomalyDetector, AnomalyType } from '../services/AnomalyDetector';
 import { Trip } from '../models/Trip';
 import { RecordMode } from '../common/constants/Constants';
 import { GeoUtils } from '../common/utils/GeoUtils';
@@ -35,6 +36,7 @@ struct RecordPage {
   
   private locationService: LocationService = LocationService.getInstance();
   private mapService: MapService = MapService.getInstance();
+  private anomalyDetector: AnomalyDetector = AnomalyDetector.getInstance();
   private recordService: RecordService | null = null;
   
   aboutToAppear() {
@@ -343,10 +345,13 @@ struct RecordPage {
     this.distance = 0;
     this.duration = 0;
     
-    // 开始持续定位
-    await this.locationService.startContinuousTracking((location) => {
+    // 重置异常检测器
+    this.anomalyDetector.reset();
+    
+    // 开始后台持续定位（使用长时任务）
+    await this.locationService.startBackgroundTracking((location) => {
       this.onLocationUpdate(location);
-    });
+    }, this.recordMode);
     
     // 开始计时
     this.startTimer();
@@ -376,11 +381,24 @@ struct RecordPage {
   private onLocationUpdate(location: Location) {
     if (!this.isRecording || this.isPaused) return;
     
+    // 异常点检测
+    const anomalyResult = this.anomalyDetector.detect(location, this.recordMode);
+    if (anomalyResult.isAnomaly) {
+      console.warn('RecordPage', 'Anomaly detected', anomalyResult.type, anomalyResult.description);
+      // 高严重度异常跳过该点
+      if (anomalyResult.severity === 'high') {
+        return;
+      }
+    }
+    
     this.currentLocation = location;
     this.currentSpeed = location.speed || 0;
     
     // 添加到记录点
     this.recordedPoints.push(location);
+    
+    // 更新距离（从 LocationService 获取累计距离）
+    this.distance = this.locationService.getTotalDistance();
     
     // 更新地图轨迹
     if (this.mapController && this.recordedPoints.length >= 2) {
