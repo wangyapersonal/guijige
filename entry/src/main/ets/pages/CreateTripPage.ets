@@ -215,21 +215,17 @@ struct CreateTripPage {
                     .justifyContent(FlexAlign.Center)
                     .backgroundColor(this.selectedDestinations.includes(province) ? '#E3F2FD' : '#F5F5F5')
                     .borderRadius(8)
+                    .onClick(() => {
+                      if (this.selectedDestinations.includes(province)) {
+                        this.selectedDestinations = this.selectedDestinations.filter(d => d !== province);
+                      } else {
+                        this.selectedDestinations = [...this.selectedDestinations, province];
+                      }
+                    })
                   }
                 },
                 (province: string) => province
               )
-            }
-                  .borderRadius(8)
-                  .onClick(() => {
-                    if (this.selectedDestinations.includes(province)) {
-                      this.selectedDestinations = this.selectedDestinations.filter(d => d !== province);
-                    } else {
-                      this.selectedDestinations = [...this.selectedDestinations, province];
-                    }
-                  })
-                }
-              })
             }
             .columnsTemplate('1fr 1fr 1fr')
             .rowsGap(8)
