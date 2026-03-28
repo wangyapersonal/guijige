@@ -1,8 +1,14 @@
 import { LocationService } from '../services/LocationService';
 import { RecordService } from '../services/RecordService';
 import { router } from '@kit.ArkUI';
-import { TrackPoint } from '../models/RecordSegment';
+import { TrackPoint, RecordSegment } from '../models/RecordSegment';
 import { BusinessError } from '@kit.BasicServicesKit';
+import { TripService } from '../services/TripService';
+import { Trip, TripStatus } from '../models/Trip';
+
+function generateId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}
 
 @Entry
 @Component
@@ -14,6 +20,7 @@ struct RecordPage {
   @State duration: number = 0;
   @State trackPoints: TrackPoint[] = [];
   @State locationService: LocationService = LocationService.getInstance();
+  @State tripId: string = '';
 
   private startTimer() {
     if (this.timerId !== -1) {
@@ -69,6 +76,8 @@ struct RecordPage {
   }
 
   aboutToAppear(): void {
+    const params = router.getParams() as Record<string, string>;
+    this.tripId = params.tripId;
     this.startTimer();
   }
 
@@ -79,6 +88,34 @@ struct RecordPage {
     if (this.timerId !== -1) {
       clearInterval(this.timerId);
       this.timerId = -1;
+    }
+  }
+
+  private async saveRecord(): Promise<void> {
+    if (this.trackPoints.length === 0) {
+      return;
+    }
+
+    const record: RecordSegment = {
+      id: generateId(),
+      tripId: this.tripId,
+      startTime: this.trackPoints[0].timestamp,
+      endTime: this.trackPoints[this.trackPoints.length - 1].timestamp,
+      distance: this.calculateTotalDistance(this.trackPoints),
+      trackPoints: this.trackPoints,
+      createdAt: Date.now()
+    };
+
+    await RecordService.getInstance().createRecord(record);
+    await RecordService.getInstance().addTrackPoints(this.trackPoints, record.id);
+  }
+
+  private async updateTripStatus(): Promise<void> {
+    const trip = await TripService.getInstance().getTripById(this.tripId);
+    if (trip) {
+      trip.status = TripStatus.ACTIVE;
+      trip.updatedAt = Date.now();
+      await TripService.getInstance().updateTrip(trip);
     }
   }
 
@@ -146,6 +183,9 @@ struct RecordPage {
             this.locationService.stopContinuousTracking();
             this.trackPoints = this.locationService.getTrackPoints();
             this.stopTimer();
+            this.saveRecord();
+            this.updateTripStatus();
+            router.back();
           })
       }
       .layoutWeight(1)
@@ -161,6 +201,7 @@ struct RecordPage {
     }
     .width('100%')
     .height('100%')
+    .backgroundColor(Color.White)
     .padding({
       bottom: 24
     })

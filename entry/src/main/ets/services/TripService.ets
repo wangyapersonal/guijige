@@ -23,14 +23,20 @@ export class TripService {
       'id': trip.id,
       'name': trip.name,
       'type': trip.type,
-      'destination': trip.destination,
       'startDate': trip.startDate,
-      'endDate': trip.endDate,
-      'notes': trip.notes,
       'status': trip.status,
       'createdAt': trip.createdAt,
       'updatedAt': trip.updatedAt
     };
+    if (trip.destination !== undefined) {
+      valueBucket['destination'] = trip.destination;
+    }
+    if (trip.endDate !== undefined) {
+      valueBucket['endDate'] = trip.endDate;
+    }
+    if (trip.notes !== undefined) {
+      valueBucket['notes'] = trip.notes;
+    }
     try {
       await rdbStore?.insert(TRIP_TABLE, valueBucket);
     } catch (err) {
@@ -44,15 +50,23 @@ export class TripService {
     const valueBucket: relationalStore.ValuesBucket = {
       'name': trip.name,
       'type': trip.type,
-      'destination': trip.destination,
       'startDate': trip.startDate,
-      'endDate': trip.endDate,
-      'notes': trip.notes,
       'status': trip.status,
       'updatedAt': trip.updatedAt
     };
+    if (trip.destination !== undefined) {
+      valueBucket['destination'] = trip.destination;
+    }
+    if (trip.endDate !== undefined) {
+      valueBucket['endDate'] = trip.endDate;
+    }
+    if (trip.notes !== undefined) {
+      valueBucket['notes'] = trip.notes;
+    }
+    const predicates = new relationalStore.RdbPredicates(TRIP_TABLE);
+    predicates.equalTo('id', trip.id);
     try {
-      await rdbStore?.update(valueBucket, TRIP_TABLE, `id = ?`, [trip.id]);
+      await rdbStore?.update(valueBucket, predicates);
     } catch (err) {
       let error = err as BusinessError;
       console.error(`errCode:${error.code},errMessage:${error.message}`);
@@ -61,8 +75,10 @@ export class TripService {
 
   async deleteTrip(id: string): Promise<void> {
     const rdbStore = DatabaseService.getInstance().getRdbStore();
+    const predicates = new relationalStore.RdbPredicates(TRIP_TABLE);
+    predicates.equalTo('id', id);
     try {
-      await rdbStore?.delete(TRIP_TABLE, `id = ?`, [id]);
+      await rdbStore?.delete(predicates);
     } catch (err) {
       let error = err as BusinessError;
       console.error(`errCode:${error.code},errMessage:${error.message}`);

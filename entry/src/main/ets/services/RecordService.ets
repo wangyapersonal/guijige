@@ -23,10 +23,12 @@ export class RecordService {
       'id': record.id,
       'tripId': record.tripId,
       'startTime': record.startTime,
-      'endTime': record.endTime,
       'distance': record.distance,
       'createdAt': record.createdAt
     };
+    if (record.endTime !== undefined) {
+      valueBucket['endTime'] = record.endTime;
+    }
     try {
       await rdbStore?.insert(RECORD_TABLE, valueBucket);
     } catch (err) {
@@ -38,11 +40,15 @@ export class RecordService {
   async updateRecord(record: RecordSegment): Promise<void> {
     const rdbStore = DatabaseService.getInstance().getRdbStore();
     const valueBucket: relationalStore.ValuesBucket = {
-      'endTime': record.endTime,
       'distance': record.distance
     };
+    if (record.endTime !== undefined) {
+      valueBucket['endTime'] = record.endTime;
+    }
+    const predicates = new relationalStore.RdbPredicates(RECORD_TABLE);
+    predicates.equalTo('id', record.id);
     try {
-      await rdbStore?.update(valueBucket, RECORD_TABLE, `id = ?`, [record.id]);
+      await rdbStore?.update(valueBucket, predicates);
     } catch (err) {
       let error = err as BusinessError;
       console.error(`errCode:${error.code},errMessage:${error.message}`);
@@ -53,16 +59,25 @@ export class RecordService {
     const rdbStore = DatabaseService.getInstance().getRdbStore();
     const valueBuckets: relationalStore.ValuesBucket[] = [];
     trackPoints.forEach((trackPoint) => {
-      valueBuckets.push({
+      const valueBucket: relationalStore.ValuesBucket = {
         'segmentId': segmentId,
         'latitude': trackPoint.latitude,
         'longitude': trackPoint.longitude,
-        'altitude': trackPoint.altitude,
-        'speed': trackPoint.speed,
-        'bearing': trackPoint.bearing,
-        'accuracy': trackPoint.accuracy,
         'timestamp': trackPoint.timestamp
-      });
+      };
+      if (trackPoint.altitude !== undefined) {
+        valueBucket['altitude'] = trackPoint.altitude;
+      }
+      if (trackPoint.speed !== undefined) {
+        valueBucket['speed'] = trackPoint.speed;
+      }
+      if (trackPoint.bearing !== undefined) {
+        valueBucket['bearing'] = trackPoint.bearing;
+      }
+      if (trackPoint.accuracy !== undefined) {
+        valueBucket['accuracy'] = trackPoint.accuracy;
+      }
+      valueBuckets.push(valueBucket);
     });
     try {
       await rdbStore?.batchInsert(TRACK_TABLE, valueBuckets);

@@ -28,12 +28,27 @@ struct TripListPage {
           .width('100%')
           .color(Color.Grey)
 
+        Button('新建行程')
+          .width('60%')
+          .height(40)
+          .fontSize(16)
+          .fontWeight(500)
+          .backgroundColor('#0A59F7')
+          .margin({ top: 12, bottom: 12 })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/CreateTripPage'
+            })
+          })
+
         if (this.trips.length === 0) {
           Column() {
             Text('暂无行程')
               .fontSize(18)
+              .fontColor('#99182431')
           }
           .width('100%')
+          .justifyContent(FlexAlign.Center)
         } else {
           List({ space: 12 }) {
             ForEach(this.trips, (item: Trip) => {
@@ -84,5 +99,6 @@ struct TripListPage {
     }
     .width('100%')
     .height('100%')
+    .backgroundColor(Color.White)
   }
 }

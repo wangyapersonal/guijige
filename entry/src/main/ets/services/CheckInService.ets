@@ -39,8 +39,10 @@ export class CheckInService {
 
   async deleteCheckIn(id: string): Promise<void> {
     const rdbStore = DatabaseService.getInstance().getRdbStore();
+    const predicates = new relationalStore.RdbPredicates(CHECKIN_TABLE);
+    predicates.equalTo('id', id);
     try {
-      await rdbStore?.delete(CHECKIN_TABLE, `id = ?`, [id]);
+      await rdbStore?.delete(predicates);
     } catch (err) {
       let error = err as BusinessError;
       console.error(`errCode:${error.code},errMessage:${error.message}`);

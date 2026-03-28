@@ -15,7 +15,7 @@ export class TimeUtils {
   }
 
   static formatDateTime(timestamp: number): string {
-    return `${this.formatDate(timestamp)} ${this.formatTime(timestamp)}`;
+    return `${TimeUtils.formatDate(timestamp)} ${TimeUtils.formatTime(timestamp)}`;
   }
 
   static formatDuration(seconds: number): string {

@@ -1,5 +1,9 @@
 {
   "src": [
-    "pages/Index"
+    "pages/Index",
+    "pages/TripListPage",
+    "pages/TripDetailPage",
+    "pages/RecordPage",
+    "pages/CreateTripPage"
   ]
 }

@@ -50,7 +50,7 @@ export class LocationService {
         longitude: location.longitude,
         altitude: location.altitude,
         speed: location.speed,
-        bearing: location.angle,
+        bearing: location.direction ?? 0,
         accuracy: location.accuracy,
         timestamp: Date.now()
       });

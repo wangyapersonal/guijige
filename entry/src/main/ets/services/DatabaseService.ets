@@ -11,8 +11,11 @@ export class DatabaseService {
     this.context = context;
   }
 
-  static getInstance(context: Context): DatabaseService {
+  static getInstance(context?: Context): DatabaseService {
     if (!DatabaseService.instance) {
+      if (!context) {
+        throw new Error('DatabaseService requires context on first initialization');
+      }
       DatabaseService.instance = new DatabaseService(context);
     }
     return DatabaseService.instance;

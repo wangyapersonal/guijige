@@ -47,8 +47,10 @@ struct TripDetailPage {
               Column() {
                 Text('暂无打卡记录')
                   .fontSize(18)
+                  .fontColor('#99182431')
               }
               .width('100%')
+              .justifyContent(FlexAlign.Center)
             } else {
               List({ space: 12 }) {
                 ForEach(this.checkInPoints, (item: CheckInPoint) => {
@@ -97,8 +99,10 @@ struct TripDetailPage {
               Column() {
                 Text('暂无轨迹记录')
                   .fontSize(18)
+                  .fontColor('#99182431')
               }
               .width('100%')
+              .justifyContent(FlexAlign.Center)
             } else {
               List({ space: 12 }) {
                 ForEach(this.recordSegments, (item: RecordSegment) => {
@@ -167,6 +171,7 @@ struct TripDetailPage {
     }
     .width('100%')
     .height('100%')
+    .backgroundColor(Color.White)
     .padding({
       bottom: 24
     })
