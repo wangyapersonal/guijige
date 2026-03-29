@@ -26,83 +26,32 @@
         "BUILD_OPTION": {
           "debuggable": true
         }
-      },
-      "ohosTest": {
-        "SOURCE_ROOT": "/Users/wang/DevEcoStudioProjects/guijige/entry/src/ohosTest",
-        "RESOURCES_PATH": [
-          "/Users/wang/DevEcoStudioProjects/guijige/entry/src/ohosTest/resources"
-        ],
-        "BUILD_PATH": {
-          "OUTPUT_PATH": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/outputs/ohosTest",
-          "INTERMEDIA_PATH": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates",
-          "JS_ASSETS_PATH": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/loader_out/ohosTest",
-          "JS_LITE_ASSETS_PATH": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/loader_out_lite/ohosTest",
-          "RES_PATH": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/res/ohosTest",
-          "RES_PROFILE_PATH": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/res/ohosTest/resources/base/profile",
-          "ETS_SUPER_VISUAL_PATH": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/cache/ohosTest/ohosTest@OhosTestCompileArkTS/esmodule",
-          "JS_SUPER_VISUAL_PATH": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/cache/ohosTest/ohosTest@OhosTestCompileJS/jsbundle",
-          "WORKER_LOADER": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/loader/ohosTest/loader.json",
-          "MANIFEST_JSON": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/manifest/ohosTest",
-          "OUTPUT_METADATA_JSON": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/hap_metadata/ohosTest/output_metadata.json",
-          "SOURCE_MAP_DIR": "/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/source_map/ohosTest"
-        },
-        "BUILD_OPTION": {
-          "debuggable": true
-        }
       }
     },
     "BUILD_OPTION": {
       "default-default": {
         "debuggable": true,
         "copyFrom": "default",
-        "strictMode": {
-          "caseSensitiveCheck": true,
-          "useNormalizedOHMUrl": true
-        },
-        "resOptions": {
-          "copyCodeResource": {
-            "enable": false
-          }
-        },
         "name": "debug"
       }
     },
     "BUILD_PROFILE_OPT": {
       "apiType": "stageMode",
-      "buildOption": {
-        "resOptions": {
-          "copyCodeResource": {
-            "enable": false
-          }
-        }
-      },
+      "buildOption": {},
       "buildOptionSet": [
-        {
-          "name": "release",
-          "arkOptions": {
-            "obfuscation": {
-              "ruleOptions": {
-                "enable": false,
-                "files": [
-                  "./obfuscation-rules.txt"
-                ]
-              }
-            }
-          }
-        },
         {
           "name": "default"
         },
         {
           "name": "debug"
+        },
+        {
+          "name": "release"
         }
       ],
       "targets": [
         {
           "name": "default"
-        },
-        {
-          "name": "ohosTest"
         }
       ]
     },
@@ -134,28 +83,30 @@
     ],
     "PROFILE_OPT": {
       "app": {
-        "signingConfigs": [],
+        "signingConfigs": [
+          {
+            "name": "default",
+            "type": "HarmonyOS",
+            "material": {
+              "certpath": "/Users/wang/.ohos/config/default_guijige_ennzvCYY59WoKE1TqsucoFXj6Wusn8pclBp1_GjYgXs=.cer",
+              "keyAlias": "debugKey",
+              "keyPassword": "0000001B2C93942E7E360F6AD2E7DFC0F69E6A1302400E27C17CBB49034C286DAF49BF507ED8277AAD72C6",
+              "profile": "/Users/wang/.ohos/config/default_guijige_ennzvCYY59WoKE1TqsucoFXj6Wusn8pclBp1_GjYgXs=.p7b",
+              "signAlg": "SHA256withECDSA",
+              "storeFile": "/Users/wang/.ohos/config/default_guijige_ennzvCYY59WoKE1TqsucoFXj6Wusn8pclBp1_GjYgXs=.p12",
+              "storePassword": "0000001BA5FC2079C04C4CD10AA3CABAA8A1738B93241A9A1E2ED219818E0F332F4E810B86D52B4251F580"
+            }
+          }
+        ],
         "products": [
           {
             "name": "default",
             "signingConfig": "default",
-            "targetSdkVersion": "6.0.2(22)",
-            "compatibleSdkVersion": "6.0.2(22)",
-            "runtimeOS": "HarmonyOS",
-            "buildOption": {
-              "strictMode": {
-                "caseSensitiveCheck": true,
-                "useNormalizedOHMUrl": true
-              }
-            }
-          }
-        ],
-        "buildModeSet": [
-          {
-            "name": "debug"
-          },
-          {
-            "name": "release"
+            "bundleName": "com.wyhm.guijige",
+            "bundleType": "app",
+            "targetSdkVersion": "5.0.0(12)",
+            "compatibleSdkVersion": "5.0.0(12)",
+            "runtimeOS": "HarmonyOS"
           }
         ]
       },

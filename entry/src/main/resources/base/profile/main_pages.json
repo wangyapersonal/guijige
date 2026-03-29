@@ -3,7 +3,8 @@
     "pages/Index",
     "pages/TripListPage",
     "pages/TripDetailPage",
+    "pages/CreateTripPage",
     "pages/RecordPage",
-    "pages/CreateTripPage"
+    "pages/PunchRecordPage"
   ]
 }

@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/wang/.ohos/config/default_guijige_ennzvCYY59WoKE1TqsucoFXj6Wusn8pclBp1_GjYgXs=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B2C93942E7E360F6AD2E7DFC0F69E6A1302400E27C17CBB49034C286DAF49BF507ED8277AAD72C6",
+          "profile": "/Users/wang/.ohos/config/default_guijige_ennzvCYY59WoKE1TqsucoFXj6Wusn8pclBp1_GjYgXs=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/wang/.ohos/config/default_guijige_ennzvCYY59WoKE1TqsucoFXj6Wusn8pclBp1_GjYgXs=.p12",
+          "storePassword": "0000001BA5FC2079C04C4CD10AA3CABAA8A1738B93241A9A1E2ED219818E0F332F4E810B86D52B4251F580"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
@@ -20,7 +34,9 @@
       "targets": [
         {
           "name": "default",
-          "applyToProducts": ["default"]
+          "applyToProducts": [
+            "default"
+          ]
         }
       ]
     }

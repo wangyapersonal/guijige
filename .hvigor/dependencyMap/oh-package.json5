@@ -1,1 +1,1 @@
-{"modelVersion":"6.0.2","description":"Please describe the basic information.","dependencies":{},"devDependencies":{"@ohos/hypium":"1.0.25","@ohos/hamock":"1.0.0"}}
+{"name":"guijige-new","version":"1.0.0","description":"轨迹哥 - HarmonyOS NEXT应用","main":"","author":"","license":"ISC","type":"module","modelVersion":"5.0.0","dependencies":{},"devDependencies":{"@ohos/hvigor":"^1.0.0","@ohos/hvigor-ohos-plugin":"^1.0.0","@ohos/hypium":"1.0.25"}}
