@@ -14297,3 +14297,446 @@ RollupError: Unexpected token (Note that you need plugins to import files that a
 [2026-03-29T22:40:14.091] [DEBUG] debug-file - worker[8] exits with exit code 1.
 [2026-03-29T22:40:14.091] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
 [2026-03-29T22:40:14.091] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2026-03-29T22:59:43.824] [DEBUG] debug-file - session manager: set active socket. socketId=JjN-YK7j_18y9UQkAAAN
+[2026-03-29T22:59:43.826] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2026-03-29T22:59:43.829] [DEBUG] debug-file - Workers' log level updated to INFO
+[2026-03-29T22:59:43.832] [DEBUG] debug-file - Hvigor init with startParameters:{
+  hvigorfileTypeCheck: false,
+  parallelExecution: true,
+  incrementalExecution: true,
+  printStackTrace: true,
+  daemon: true,
+  analyze: 0,
+  logLevel: Level { level: 20000, levelStr: 'INFO', colour: 'green' },
+  optimizationStrategy: 'memory',
+  hotCompile: undefined,
+  hotReloadBuild: undefined,
+  customizedParam: undefined
+}
+[2026-03-29T22:59:43.835] [DEBUG] debug-file - Cache service initialization finished in 3 ms 
+[2026-03-29T22:59:43.836] [DEBUG] debug-file - hvigorfile, resolving /Users/wang/DevEcoStudioProjects/guijige/hvigorfile.ts
+[2026-03-29T22:59:43.842] [DEBUG] debug-file - hvigorfile, require result:  { default: {} }
+[2026-03-29T22:59:43.842] [DEBUG] debug-file - hvigorfile, binding system plugins null
+[2026-03-29T22:59:43.842] [DEBUG] debug-file - Starting plugin build process
+[2026-03-29T22:59:43.843] [DEBUG] debug-file - App plugin prepare start...
+[2026-03-29T22:59:43.843] [DEBUG] debug-file - App plugin prepare end...
+[2026-03-29T22:59:43.843] [DEBUG] debug-file - App plugin creating...
+[2026-03-29T22:59:43.846] [DEBUG] debug-file - App plugin register hook start...
+[2026-03-29T22:59:43.846] [DEBUG] debug-file - App plugin register hook end...
+[2026-03-29T22:59:43.846] [DEBUG] debug-file - Plugin build process completed
+[2026-03-29T22:59:43.846] [DEBUG] debug-file - Start initialize project's product build option map with build mode debug.
+[2026-03-29T22:59:43.846] [DEBUG] debug-file - Picking option from product 'default' with build mode 'debug'.
+[2026-03-29T22:59:43.846] [DEBUG] debug-file - Product 'default' build option initialized
+[2026-03-29T22:59:43.846] [DEBUG] debug-file - End initialize project's product build option map with build mode 'debug'.
+[2026-03-29T22:59:43.847] [DEBUG] debug-file - Obtain build option for product 'default'in this build.
+[2026-03-29T22:59:43.847] [DEBUG] debug-file - /Users/wang/DevEcoStudioProjects/guijige/build/cache/default/remote_hsp/remoteHspCache.json not exists.
+[2026-03-29T22:59:43.848] [DEBUG] debug-file - Start recording SDK configuration permission data.
+[2026-03-29T22:59:43.863] [DEBUG] debug-file - Sdk init in 16 ms 
+[2026-03-29T22:59:43.864] [DEBUG] debug-file - Project task initialization takes 2 ms 
+[2026-03-29T22:59:43.865] [DEBUG] debug-file - hvigorfile, binding custom plugins undefined
+[2026-03-29T22:59:43.865] [DEBUG] debug-file - hvigorfile, no custom plugins were found in /Users/wang/DevEcoStudioProjects/guijige/hvigorfile.ts
+[2026-03-29T22:59:43.865] [DEBUG] debug-file - hvigorfile, resolve finished /Users/wang/DevEcoStudioProjects/guijige/hvigorfile.ts
+[2026-03-29T22:59:43.865] [DEBUG] debug-file - hvigorfile, resolving /Users/wang/DevEcoStudioProjects/guijige/entry/hvigorfile.ts
+[2026-03-29T22:59:43.868] [DEBUG] debug-file - hvigorfile, require result:  {}
+[2026-03-29T22:59:43.868] [DEBUG] debug-file - hvigorfile, binding system plugins {}
+[2026-03-29T22:59:43.868] [DEBUG] debug-file - Starting plugin build process
+[2026-03-29T22:59:43.868] [DEBUG] debug-file - Hap plugin creating...
+[2026-03-29T22:59:43.868] [DEBUG] debug-file - failed to load cangjie to dynamically generate schemas: Error: Cannot find module '@ohos/cangjie-build-support/index'
+Require stack:
+- /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/src/plugin/hooks/cangjie-register.js
+- /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/src/plugin/strategy/stage-init-strategy.js
+- /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/src/plugin/builder/abstract-plugin-builder.js
+- /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/src/plugin/builder/app-plugin-builder.js
+- /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/src/plugin/factory/plugin-factory.js
+- /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/index.js
+- /Users/wang/DevEcoStudioProjects/guijige/hvigorfile.ts
+- /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor/src/base/internal/lifecycle/configuration.js
+- /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor/src/base/boot/index.js
+- /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor/src/base/daemon/cluster/worker-process-lifecycle.js
+- /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor/src/base/daemon/process/daemon-process-boot-script.js
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=release
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - Target 'default' config initialized
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=debug
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - Target 'default' config initialized
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=debug
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - Target 'default' config initialized
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2026-03-29T22:59:43.869] [DEBUG] debug-file - Obtain build option for module 'entry' target 'default'in this build.
+[2026-03-29T22:59:43.870] [DEBUG] debug-file - Module entry task initialization takes 1 ms 
+[2026-03-29T22:59:43.870] [DEBUG] debug-file - Hap plugin register hook start...
+[2026-03-29T22:59:43.870] [DEBUG] debug-file - Hap plugin register hook end...
+[2026-03-29T22:59:43.870] [DEBUG] debug-file - Plugin build process completed
+[2026-03-29T22:59:43.870] [DEBUG] debug-file - hvigorfile, resolve finished /Users/wang/DevEcoStudioProjects/guijige/entry/hvigorfile.ts
+[2026-03-29T22:59:43.904] [DEBUG] debug-file - hvigorfile, resolve hvigorfile dependencies in 35 ms 
+[2026-03-29T22:59:43.904] [DEBUG] debug-file - project has submodules:entry
+[2026-03-29T22:59:43.905] [DEBUG] debug-file - start to load updatedOhPackageInfo to the disk
+[2026-03-29T22:59:43.906] [DEBUG] debug-file - load to the disk finished
+[2026-03-29T22:59:43.907] [DEBUG] debug-file - Start to initialize dependency information.
+[2026-03-29T22:59:43.907] [WARN] debug-file - The current module 'guijige' has dependency which is not installed at its oh-package.json5.
+[2026-03-29T22:59:43.907] [WARN] debug-file - The current module 'guijige' has dependency which is not installed at its oh-package.json5.
+[2026-03-29T22:59:43.907] [DEBUG] debug-file - Module guijige Collected Dependency: 
+[2026-03-29T22:59:43.907] [DEBUG] debug-file - Module guijige's total dependency: 0
+[2026-03-29T22:59:43.907] [DEBUG] debug-file - Start to initialize dependency information.
+[2026-03-29T22:59:43.908] [DEBUG] debug-file - Module entry Collected Dependency: 
+[2026-03-29T22:59:43.908] [DEBUG] debug-file - Module entry's total dependency: 0
+[2026-03-29T22:59:43.908] [DEBUG] debug-file - Configuration phase cost:74 ms 
+[2026-03-29T22:59:43.909] [DEBUG] debug-file - Configuration task cost before running: 79 ms 
+[2026-03-29T22:59:43.909] [DEBUG] debug-file - Executing task :entry:default@ColdReloadArkTS
+[2026-03-29T22:59:43.909] [DEBUG] debug-file - obfuscationOptions: undefined
+[2026-03-29T22:59:43.909] [DEBUG] debug-file - Task 'entry:default@ColdReloadArkTS' cost while wrapping incremental declarations: 1 ms 
+[2026-03-29T22:59:43.912] [DEBUG] debug-file - coldReload build config: [object Object]
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - default@ColdReloadArkTS work[12] is submitted.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - default@ColdReloadArkTS work[12] is pushed to ready queue.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - A work dispatched to worker[9] failed because unable to get work from ready queue.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - A work dispatched to worker[8] failed because unable to get work from ready queue.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - A work dispatched to worker[7] failed because unable to get work from ready queue.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - A work dispatched to worker[6] failed because unable to get work from ready queue.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - A work dispatched to worker[5] failed because unable to get work from ready queue.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - default@ColdReloadArkTS work[12] has been dispatched to worker[4].
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - default@ColdReloadArkTS work[12] is dispatched.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - CopyResources startTime: 85986996065458
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - default@ColdReloadArkTS work[13] is submitted.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - default@ColdReloadArkTS work[13] is pushed to ready queue.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - A work dispatched to worker[9] failed because unable to get work from ready queue.
+[2026-03-29T22:59:43.913] [DEBUG] debug-file - Create  resident worker with id: 8.
+[2026-03-29T22:59:43.914] [DEBUG] debug-file - default@ColdReloadArkTS work[13] has been dispatched to worker[8].
+[2026-03-29T22:59:43.914] [DEBUG] debug-file - default@ColdReloadArkTS work[13] is dispatched.
+[2026-03-29T22:59:43.914] [DEBUG] debug-file - entry : default@ColdReloadArkTS cost memory 1.146209716796875
+[2026-03-29T22:59:43.915] [DEBUG] debug-file - Executing task :entry:default@PreBuild
+[2026-03-29T22:59:43.915] [DEBUG] debug-file - Task 'entry:default@PreBuild' cost while wrapping incremental declarations: 1 ms 
+[2026-03-29T22:59:43.916] [DEBUG] debug-file - Incremental task entry:default@PreBuild pre-execution cost: 1 ms .
+[2026-03-29T22:59:43.916] [DEBUG] debug-file - entry : default@PreBuild cost memory 0.25267791748046875
+[2026-03-29T22:59:43.916] [INFO] debug-file - UP-TO-DATE :entry:default@PreBuild...  
+[2026-03-29T22:59:43.916] [DEBUG] debug-file - Executing task :entry:default@ConfigureCmake
+[2026-03-29T22:59:43.916] [DEBUG] debug-file - entry : default@ConfigureCmake cost memory 0.0146026611328125
+[2026-03-29T22:59:43.916] [DEBUG] debug-file - runTaskFromQueue task cost before running: 87 ms 
+[2026-03-29T22:59:43.916] [INFO] debug-file - Finished :entry:default@ConfigureCmake... after 1 ms 
+[2026-03-29T22:59:43.917] [DEBUG] debug-file - Executing task :entry:default@BuildNativeWithCmake
+[2026-03-29T22:59:43.917] [DEBUG] debug-file - entry : default@BuildNativeWithCmake cost memory 0.014617919921875
+[2026-03-29T22:59:43.917] [DEBUG] debug-file - runTaskFromQueue task cost before running: 87 ms 
+[2026-03-29T22:59:43.917] [INFO] debug-file - Finished :entry:default@BuildNativeWithCmake... after 1 ms 
+[2026-03-29T22:59:43.917] [DEBUG] debug-file - Executing task :entry:default@BuildNativeWithNinja
+[2026-03-29T22:59:43.918] [DEBUG] debug-file - entry : default@BuildNativeWithNinja cost memory 0.0195159912109375
+[2026-03-29T22:59:43.918] [DEBUG] debug-file - runTaskFromQueue task cost before running: 88 ms 
+[2026-03-29T22:59:43.918] [INFO] debug-file - Finished :entry:default@BuildNativeWithNinja... after 1 ms 
+[2026-03-29T22:59:43.920] [DEBUG] debug-file - Executing task :entry:default@ProcessLibs
+[2026-03-29T22:59:43.921] [DEBUG] debug-file - Incremental task entry:default@ProcessLibs pre-execution cost: 1 ms .
+[2026-03-29T22:59:43.921] [DEBUG] debug-file - entry : default@ProcessLibs cost memory 0.0762939453125
+[2026-03-29T22:59:43.921] [INFO] debug-file - UP-TO-DATE :entry:default@ProcessLibs...  
+[2026-03-29T22:59:43.921] [DEBUG] debug-file - Executing task :entry:default@DoNativeStrip
+[2026-03-29T22:59:43.921] [DEBUG] debug-file - Task 'entry:default@DoNativeStrip' cost while wrapping incremental declarations: 1 ms 
+[2026-03-29T22:59:43.922] [DEBUG] debug-file - Incremental task entry:default@DoNativeStrip pre-execution cost: 1 ms .
+[2026-03-29T22:59:43.922] [DEBUG] debug-file - entry : default@DoNativeStrip cost memory 0.06455230712890625
+[2026-03-29T22:59:43.922] [INFO] debug-file - UP-TO-DATE :entry:default@DoNativeStrip...  
+[2026-03-29T22:59:44.172] [DEBUG] debug-file - worker[8] has one work done.
+[2026-03-29T22:59:44.173] [DEBUG] debug-file - CopyResources is end, endTime: 85987255276583
+[2026-03-29T22:59:44.173] [DEBUG] debug-file - default@ColdReloadArkTS work[13] done.
+[2026-03-29T22:59:44.173] [DEBUG] debug-file - A work dispatched to worker[8] failed because unable to get work from ready queue.
+[2026-03-29T22:59:44.482] [DEBUG] debug-file - Ark compile task finished.finished time is 85987565167708
+[2026-03-29T22:59:44.483] [DEBUG] debug-file - worker[4] has one work error.
+[2026-03-29T22:59:44.483] [DEBUG] debug-file - default@ColdReloadArkTS work[12] failed.
+[2026-03-29T22:59:44.483] [ERROR] debug-file - Failed :entry:default@ColdReloadArkTS... 
+[2026-03-29T22:59:44.483] [WARN] debug-file - 
+[33m1 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/LocationService.ets:18:64
+ 'Function.bind' is not supported (arkts-no-func-bind)
+[39m[39m
+[33m2 WARN: [33m[33mArkTS:WARN: For details about ArkTS syntax errors, see FAQs[39m[39m
+[33m3 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/DatabaseService.ets:30:27
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m4 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/DatabaseService.ets:39:11
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m5 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/DatabaseService.ets:54:11
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m6 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/DatabaseService.ets:68:11
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m7 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/DatabaseService.ets:80:11
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m8 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/Index.ets:8:14
+ 'replaceUrl' has been deprecated.
+[39m[39m
+[33m9 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:135:11
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m10 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:135:31
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m11 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:136:13
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m12 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:136:33
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m13 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:137:13
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m14 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:137:33
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m15 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:138:20
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m16 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:138:40
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m17 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:139:18
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m18 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:139:36
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m19 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:140:16
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m20 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:140:34
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m21 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:141:14
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m22 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:141:34
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m23 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:142:15
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m24 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:142:35
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m25 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:143:18
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m26 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:143:36
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m27 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:144:18
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m28 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets:144:36
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m29 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/TripListPage.ets:46:20
+ 'pushUrl' has been deprecated.
+[39m[39m
+[33m30 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/TripListPage.ets:149:24
+ 'pushUrl' has been deprecated.
+[39m[39m
+[33m31 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:100:11
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m32 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:100:31
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m33 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:101:15
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m34 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:101:35
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m35 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:102:13
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m36 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:102:33
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m37 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:103:13
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m38 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:103:33
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m39 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:104:17
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m40 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:104:37
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m41 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:105:18
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m42 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:105:38
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m43 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:106:18
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m44 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:106:36
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m45 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:107:18
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m46 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets:107:36
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m47 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:142:11
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m48 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:142:31
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m49 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:143:15
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m50 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:143:35
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m51 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:144:18
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m52 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:144:36
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m53 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:145:16
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m54 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:145:34
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m55 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:146:17
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m56 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:146:37
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m57 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:148:18
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m58 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:148:36
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m59 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:155:17
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m60 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:155:37
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m61 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:156:18
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m62 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:156:38
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m63 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:157:17
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m64 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:157:37
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m65 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:158:14
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m66 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:158:34
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m67 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:159:16
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m68 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:159:36
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m69 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:160:17
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m70 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:160:37
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m71 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:161:18
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m72 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets:161:36
+ Function may throw exceptions. Special handling is required.
+[39m[39m
+[33m73 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/TripDetailPage.ets:17:27
+ 'getParams' has been deprecated.
+[39m[39m
+[33m74 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/TripDetailPage.ets:209:24
+ 'pushUrl' has been deprecated.
+[39m[39m
+[33m75 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/CreateTripPage.ets:32:18
+ 'back' has been deprecated.
+[39m[39m
+[33m76 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/CreateTripPage.ets:316:12
+ 'back' has been deprecated.
+[39m[39m
+[33m77 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/RecordPage.ets:24:27
+ 'getParams' has been deprecated.
+[39m[39m
+[33m78 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/RecordPage.ets:87:27
+ 'getParams' has been deprecated.
+[39m[39m
+[33m79 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/RecordPage.ets:108:27
+ 'getParams' has been deprecated.
+[39m[39m
+[33m80 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/RecordPage.ets:151:20
+ 'back' has been deprecated.
+[39m[39m
+[33m81 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/PunchRecordPage.ets:32:20
+ 'back' has been deprecated.
+[39m[39m
+[33m82 WARN: [33m[33mArkTS:WARN File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/PunchRecordPage.ets:190:12
+ 'back' has been deprecated.
+[39m[39m
+[33m83 WARN: [33mDuplicate file names detected, which may cause compilation errors. Please check the following files: 
+/Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/TripService.ets
+/Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/RecordService.ets
+/Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/services/CheckInService.ets
+/Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/models/CheckInPoint.ets
+/Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/models/Trip.ets[39m[39m
+[2026-03-29T22:59:44.483] [DEBUG] debug-file - hvigor build process will be closed with an error.
+[2026-03-29T22:59:44.483] [ERROR] debug-file - Error: ArkTS Compiler Error
+[31m1 ERROR: [31m10605038 ArkTS Compiler Error
+Error Message: Object literal must correspond to some explicitly declared class or interface (arkts-no-untyped-obj-literals) At File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/RecordPage.ets:92:36
+[39m
+[39m
+[31m2 ERROR: [31m10505001 ArkTS Compiler Error
+Error Message: Type '{ id: string; tripId: string; startTime: number; endTime: number; duration: number; distance: number; maxSpeed: number; avgSpeed: number; createdAt: number; }' is not assignable to type 'RecordSegment'.
+  Object literal may only specify known properties, and 'duration' does not exist in type 'RecordSegment'. At File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/RecordPage.ets:97:7
+[39m
+[39m
+[31m3 ERROR: [31m10903329 ArkTS Compiler Error
+Error Message: Unknown resource name 'ohos_ic_public_star'. At File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/TripDetailPage.ets:254:22
+[39m
+[39m
+[31m4 ERROR: [31m10903329 ArkTS Compiler Error
+Error Message: Unknown resource name 'ohos_ic_public_activity'. At File: /Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets/pages/RecordPage.ets:223:22
+[39m
+[39m
+[31mCOMPILE RESULT:FAIL {ERROR:5 WARN:83}[39m
+    at runArkPack (/Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/node_modules/@ohos/hvigor-arkts-compose/dist/src/arkts-pack.js:1:5736)
+ArkTSCompilerError: ArkTS Compiler Error
+    at throwArkTsCompilerError (/Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/node_modules/@ohos/hvigor-arkts-compose/dist/src/data/compose-error.js:1:423)
+    at throwErrorIfHasErrorInfo (/Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/node_modules/@ohos/hvigor-arkts-compose/dist/src/plugins/common-plugin.js:1:4478)
+    at Object.handler (/Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/node_modules/@ohos/hvigor-arkts-compose/dist/src/plugins/common-plugin.js:1:2547)
+    at /Applications/DevEco-Studio.app/Contents/tools/hvigor/hvigor-ohos-plugin/node_modules/@ohos/hvigor-arkts-base/node_modules/rollup/dist/shared/rollup.js:27765:40
+[2026-03-29T22:59:44.484] [ERROR] debug-file - BUILD FAILED in 654 ms 
+[2026-03-29T22:59:44.484] [DEBUG] debug-file - Update task entry:default@ColdReloadArkTS input file:/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/loader/default cache by regenerate.
+[2026-03-29T22:59:44.484] [DEBUG] debug-file - Update task entry:default@ColdReloadArkTS input file:/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/res/default/ResourceTable.txt cache by regenerate.
+[2026-03-29T22:59:44.484] [DEBUG] debug-file - Update task entry:default@ColdReloadArkTS input file:/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/res/default/ark_module.json cache by regenerate.
+[2026-03-29T22:59:44.484] [DEBUG] debug-file - Update task entry:default@ColdReloadArkTS input file:/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/res/default/resources/base/profile cache by regenerate.
+[2026-03-29T22:59:44.484] [DEBUG] debug-file - Update task entry:default@ColdReloadArkTS input file:/Users/wang/DevEcoStudioProjects/guijige/entry/src/main/ets cache by regenerate.
+[2026-03-29T22:59:44.485] [DEBUG] debug-file - Update task entry:default@ColdReloadArkTS input file:/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/generated/profile/default/BuildProfile.ets cache by regenerate.
+[2026-03-29T22:59:44.485] [DEBUG] debug-file - Update task entry:default@ColdReloadArkTS output file:/Users/wang/DevEcoStudioProjects/guijige/entry/build/default/intermediates/loader_out/default/ets cache.
+[2026-03-29T22:59:44.485] [DEBUG] debug-file - Incremental task entry:default@ColdReloadArkTS post-execution cost:2 ms .
+[2026-03-29T22:59:44.485] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@PreBuild is up-to-date.
+[2026-03-29T22:59:44.485] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@ProcessLibs is up-to-date.
+[2026-03-29T22:59:44.485] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@DoNativeStrip is up-to-date.
+[2026-03-29T22:59:44.488] [DEBUG] debug-file - Cleanup worker 8.
+[2026-03-29T22:59:44.488] [DEBUG] debug-file - Worker 8 has been cleaned up.
+[2026-03-29T22:59:44.488] [DEBUG] debug-file - Current idle worker size: 1.
+[2026-03-29T22:59:44.488] [DEBUG] debug-file - Current resident worker size: 2.
+[2026-03-29T22:59:44.488] [DEBUG] debug-file - hvigor build process will be closed.
+[2026-03-29T22:59:44.491] [DEBUG] debug-file - session manager: send message to worker process.
+[2026-03-29T22:59:44.491] [DEBUG] debug-file - session manager: send message to worker process.
+[2026-03-29T22:59:44.491] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2026-03-29T22:59:44.492] [DEBUG] debug-file - worker[8] exits with exit code 1.
+[2026-03-29T22:59:44.492] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.

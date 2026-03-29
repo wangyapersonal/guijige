@@ -21,9 +21,9 @@
     "IS_HVIGORFILE_TYPE_CHECK": false,
     "TASK_TIME": {
       "923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf": {
-        "ConfigureCmake": 78875,
-        "BuildNativeWithCmake": 80125,
-        "BuildNativeWithNinja": 337792
+        "ConfigureCmake": 85167,
+        "BuildNativeWithCmake": 87708,
+        "BuildNativeWithNinja": 466708
       }
     },
     "APIS": [
@@ -34,48 +34,24 @@
       "ENABLE_CPP_FUNCTION_LEVEL_INCREMENTAL": false
     },
     "CONFIG_PROPERTIES": {},
-    "TOTAL_TIME": 624112209,
-    "BUILD_ID": "202603292240134580",
+    "TOTAL_TIME": 653870458,
+    "BUILD_ID": "202603292259438300",
     "ERROR_MESSAGE": [
       {
-        "CODE": "10903329",
-        "TIMESTAMP": "1774795214082"
+        "CODE": "10605038",
+        "TIMESTAMP": "1774796384483"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774796384483"
       },
       {
         "CODE": "10903329",
-        "TIMESTAMP": "1774795214082"
+        "TIMESTAMP": "1774796384483"
       },
       {
         "CODE": "10903329",
-        "TIMESTAMP": "1774795214082"
-      },
-      {
-        "CODE": "10903329",
-        "TIMESTAMP": "1774795214082"
-      },
-      {
-        "CODE": "10903329",
-        "TIMESTAMP": "1774795214082"
-      },
-      {
-        "CODE": "10903329",
-        "TIMESTAMP": "1774795214082"
-      },
-      {
-        "CODE": "10903329",
-        "TIMESTAMP": "1774795214082"
-      },
-      {
-        "CODE": "10905210",
-        "TIMESTAMP": "1774795214082"
-      },
-      {
-        "CODE": "10903329",
-        "TIMESTAMP": "1774795214082"
-      },
-      {
-        "CODE": "10903329",
-        "TIMESTAMP": "1774795214082"
+        "TIMESTAMP": "1774796384483"
       }
     ]
   }

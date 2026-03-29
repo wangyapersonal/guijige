@@ -94,14 +94,11 @@ struct RecordPage {
       tripId: tripId,
       startTime: this.trackPoints[0].timestamp,
       endTime: this.trackPoints[this.trackPoints.length - 1].timestamp,
-      duration: this.duration,
       distance: this.distance,
-      maxSpeed: this.speed,
-      avgSpeed: this.speed,
+      trackPoints: this.trackPoints,
       createdAt: Date.now()
     };
     await RecordService.getInstance().createRecord(segment);
-    await RecordService.getInstance().addTrackPoints(this.trackPoints, segment.id);
   }
 
   private async updateTripStatus(): Promise<void> {
@@ -220,7 +217,7 @@ struct RecordPage {
       Column({ space: 24 }) {
         Row() {
           Row({ space: 8 }) {
-            Image($r('sys.media.ohos_ic_public_activity'))
+            Image($r('sys.media.ohos_ic_public_favor'))
               .width(16)
               .height(16)
               .fillColor('#2DD4BF')

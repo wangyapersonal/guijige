@@ -251,7 +251,7 @@ struct TripDetailPage {
         // 一键分享按钮
         Button() {
           Row({ space: 6 }) {
-            Image($r('sys.media.ohos_ic_public_star'))
+            Image($r('sys.media.ohos_ic_public_share'))
               .width(16)
               .height(16)
               .fillColor('#FEF3C7')
