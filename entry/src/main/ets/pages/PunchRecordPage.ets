@@ -167,24 +167,24 @@ struct PunchRecordPage {
   .width('100%')
   .height('100%')
   .backgroundColor('#F3F4F6')
-}
 
-private async saveCheckIn(): Promise<void> {
-  if (!this.locationName) {
-    return;
+  private async saveCheckIn(): Promise<void> {
+    if (!this.locationName) {
+      return;
+    }
+
+    const checkIn: CheckInPoint = {
+      id: generateId(),
+      tripId: '',
+      name: this.locationName,
+      type: CheckInType.MANUAL,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      timestamp: Date.now(),
+      createdAt: Date.now()
+    };
+
+    await CheckInService.getInstance().createCheckIn(checkIn);
+    router.back();
   }
-
-  const checkIn: CheckInPoint = {
-    id: generateId(),
-    tripId: '',
-    name: this.locationName,
-    type: CheckInType.MANUAL,
-    latitude: this.latitude,
-    longitude: this.longitude,
-    timestamp: Date.now(),
-    createdAt: Date.now()
-  };
-
-  await CheckInService.getInstance().createCheckIn(checkIn);
-  router.back();
 }
