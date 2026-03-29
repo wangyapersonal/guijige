@@ -3,14 +3,6 @@ import { router } from '@kit.ArkUI';
 @Entry
 @Component
 struct Index {
-  aboutToAppear(): void {
-    setTimeout(() => {
-      router.replaceUrl({
-        url: 'pages/TripListPage'
-      });
-    }, 2000);
-  }
-
   build() {
     Stack({ alignContent: Alignment.Center }) {
       // 背景渐变
@@ -56,6 +48,11 @@ struct Index {
           radius: 16,
           color: 'rgba(0,0,0,0.1)',
           offsetY: 8
+        })
+        .onClick(() => {
+          router.replaceUrl({
+            url: 'pages/MainTabPage'
+          });
         })
 
         // 服务条款

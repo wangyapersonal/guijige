@@ -1,7 +1,6 @@
 import { router } from '@kit.ArkUI';
 import { Trip } from '../models/Trip';
 import { TripService } from '../services/TripService';
-import { APP_NAME } from '../common/constants/Constants';
 import { TripType } from '../models/Trip';
 
 function generateId(): string {
@@ -10,7 +9,116 @@ function generateId(): string {
 
 @Entry
 @Component
-struct TripListPage {
+export struct MainTabPage {
+  @State currentIndex: number = 0
+
+  @Builder
+  TabBuilder(index: number) {
+    Column() {
+      if (this.currentIndex === index) {
+        Text(this.messageList[index].selectedIcon)
+          .fontSize(24)
+          .fontColor('#0D9488')
+      } else {
+        Text(this.messageList[index].unselectedIcon)
+          .fontSize(24)
+          .fontColor('#9CA3AF')
+      }
+      Text(this.messageList[index].title)
+        .fontSize(10)
+        .lineHeight(14)
+        .fontWeight(500)
+        .margin({ top: 4 })
+    }
+  }
+
+  @State messageList: Array<Record<string, string>> = [
+    {
+      'title': '行程',
+      'unselectedIcon': '\uE6CF',
+      'selectedIcon': '\uE6D0',
+    },
+    {
+      'title': '发现',
+      'unselectedIcon': '\uE6CC',
+      'selectedIcon': '\uE6CD',
+    },
+    {
+      'title': '我的',
+      'unselectedIcon': '\uE6C9',
+      'selectedIcon': '\uE6CA',
+    },
+  ]
+
+  @Builder
+  tripListBuilder() {
+    TripListPage()
+  }
+
+  @Builder
+  discoveryBuilder() {
+    Column() {
+      Text('发现')
+        .fontSize(20)
+        .fontColor('#1F2937')
+    }
+    .width('100%')
+    .height('100%')
+    .justifyContent(FlexAlign.Center)
+  }
+
+  @Builder
+  profileBuilder() {
+    Column() {
+      Text('我的')
+        .fontSize(20)
+        .fontColor('#1F2937')
+    }
+    .width('100%')
+    .height('100%')
+    .justifyContent(FlexAlign.Center)
+  }
+
+  build() {
+    Tabs({ barPosition: BarPosition.End }) {
+      TabContent() {
+        this.tripListBuilder()
+      }
+      .tabBar(this.TabBuilder(0))
+
+      TabContent() {
+        this.discoveryBuilder()
+      }
+      .tabBar(this.TabBuilder(1))
+
+      TabContent() {
+        this.profileBuilder()
+      }
+      .tabBar(this.TabBuilder(2))
+    }
+    .onChange((index: number) => {
+      this.currentIndex = index
+    })
+    .width(340)
+    .height(56)
+    .margin({ left: 24, right: 24, bottom: 16 })
+    .backgroundColor(Color.White)
+    .barMode(BarMode.Fixed)
+    .barOverlap(false)
+    .scrollable(false)
+    .animationDuration(300)
+    .animationCurve(Curve.EaseInOut)
+    .divider({
+      strokeWidth: 0.5,
+      color: '#F1F3F5',
+      startMargin: 0,
+      endMargin: 0
+    })
+  }
+}
+
+@Component
+export struct TripListPage {
   @State trips: Trip[] = [];
 
   async aboutToAppear(): Promise<void> {
@@ -148,18 +256,9 @@ struct TripListPage {
                     angle: 135,
                     colors: [['#0D9488', 0.0], ['#14B8A6', 0.5], ['#10B981', 1.0]]
                   })
-
-                  // 标题
-                  Text(item.name)
-                    .fontSize(20)
-                    .fontWeight(FontWeight.Bold)
-                    .fontColor(Color.White)
-                    .margin({ left: 16, right: 16, bottom: 16 })
-                    .shadow({
-                      radius: 4,
-                      color: 'rgba(0,0,0,0.5)'
-                    })
                 }
+                .height(160)
+                .borderRadius({ topLeft: 24, topRight: 24 })
 
                 // 信息区域
                 Column({ space: 12 }) {
@@ -171,8 +270,6 @@ struct TripListPage {
                     Text(item.destination || '未设置目的地')
                       .fontSize(14)
                       .fontColor('#4B5563')
-                      .maxLines(1)
-                      .textOverflow({ overflow: TextOverflow.Ellipsis })
                   }
                   .alignItems(VerticalAlign.Center)
 
@@ -188,12 +285,16 @@ struct TripListPage {
                   .alignItems(VerticalAlign.Center)
                 }
                 .padding(16)
+                .alignItems(HorizontalAlign.Start)
               }
+              .width('100%')
+              .padding(16)
               .backgroundColor(Color.White)
               .borderRadius(24)
               .shadow({
                 radius: 8,
-                color: 'rgba(0,0,0,0.05)'
+                color: 'rgba(0,0,0,0.04)',
+                offsetY: 2
               })
               .onClick(() => {
                 router.pushUrl({
@@ -206,19 +307,11 @@ struct TripListPage {
             }
           }, (item: Trip) => item.id)
         }
-        .width('100%')
-        .padding({ left: 24, right: 24, top: 24 })
+        .padding({ left: 24, right: 24 })
       }
-
-      Blank()
-
-      // 底部提示
-      Text('没有更多行程了')
-        .fontSize(14)
-        .fontColor('#9CA3AF')
-        .padding({ top: 32, bottom: 32 })
     }
     .width('100%')
+    .height('100%')
     .backgroundColor('#F7F9FA')
   }
 }

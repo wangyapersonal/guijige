@@ -1,6 +1,7 @@
 {
   "src": [
     "pages/Index",
+    "pages/MainTabPage",
     "pages/TripListPage",
     "pages/TripDetailPage",
     "pages/CreateTripPage",
