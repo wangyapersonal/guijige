@@ -21,13 +21,13 @@ struct Index {
 
       // 渐变遮罩
       Column() {
-        LinearGradient({
-          angle: 180,
-          colors: [['rgba(0,0,0,0.2)', 0.0], ['rgba(0,0,0,0.6)', 1.0]]
-        })
       }
       .width('100%')
       .height('100%')
+      .linearGradient({
+        angle: 180,
+        colors: [['rgba(0,0,0,0.2)', 0.0], ['rgba(0,0,0,0.6)', 1.0]]
+      })
 
       // 玻璃态卡片
       Column({ space: 24 }) {
