@@ -122,7 +122,7 @@ struct RecordPage {
   }
 
   build() {
-    Stack({ alignContent: Alignment.TopStart }) {
+    Stack({ alignContent: Alignment.Top }) {
       Column() {
         Blank()
 

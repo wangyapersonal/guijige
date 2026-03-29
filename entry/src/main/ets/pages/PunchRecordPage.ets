@@ -50,7 +50,7 @@ struct PunchRecordPage {
           .height('100%')
           .objectFit(ImageFit.Cover)
           .opacity(0.8)
-          .mixBlendMode(MixBlendMode.MULTIPLY)
+          .blendMode(BlendMode.MULTIPLY)
 
         // 中心定位图标
         Column({ space: 4 }) {
@@ -167,7 +167,6 @@ struct PunchRecordPage {
   .width('100%')
   .height('100%')
   .backgroundColor('#F3F4F6')
-  }
 
   private async saveCheckIn(): Promise<void> {
     if (!this.locationName) {

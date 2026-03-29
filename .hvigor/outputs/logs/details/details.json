@@ -24,25 +24,18 @@
     "IS_HVIGORFILE_TYPE_CHECK": false,
     "TASK_TIME": {
       "923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf": {
-        "CreateModuleInfo": 137167,
-        "ConfigureCmake": 53042,
-        "PreCheckSyscap": 139000,
-        "GeneratePkgContextInfo": 1359250,
-        "ProcessIntegratedHsp": 117041,
-        "BuildNativeWithCmake": 51625,
-        "SyscapTransform": 303084,
-        "ProcessStartupConfig": 256250,
-        "BuildNativeWithNinja": 105417,
-        "GenerateLoaderJson": 1924167,
-        "BuildJS": 466750,
-        "CompileArkTS": 228757084,
-        "GeneratePkgModuleJson": 954417,
-        "ProcessCompiledResources": 168000,
-        "PackageHap": 14234708,
-        "PackingCheck": 1706500,
-        "SignHap": 37504542,
-        "CollectDebugSymbol": 265125,
-        "assembleHap": 67750
+        "PreBuild": 51809250,
+        "CreateModuleInfo": 318625,
+        "ConfigureCmake": 87416,
+        "PreCheckSyscap": 139041,
+        "GeneratePkgContextInfo": 3385708,
+        "ProcessIntegratedHsp": 253958,
+        "BuildNativeWithCmake": 74625,
+        "SyscapTransform": 11322083,
+        "ProcessStartupConfig": 434250,
+        "BuildNativeWithNinja": 326500,
+        "CompileResource": 133521500,
+        "BuildJS": 733834
       }
     },
     "APIS": [
@@ -53,7 +46,257 @@
       "ENABLE_CPP_FUNCTION_LEVEL_INCREMENTAL": false
     },
     "CONFIG_PROPERTIES": {},
-    "TOTAL_TIME": 361118708,
-    "BUILD_ID": "202603290054166060"
+    "BUILD_ID": "202603292203365040",
+    "ERROR_MESSAGE": [
+      {
+        "CODE": "10605008",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10605008",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10605008",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10605038",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10605090",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10605008",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10605008",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10505001",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10905204",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10905204",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10905210",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      },
+      {
+        "CODE": "10903329",
+        "TIMESTAMP": "1774793020408"
+      }
+    ],
+    "TOTAL_TIME": 3905718792
   }
 }
