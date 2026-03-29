@@ -217,7 +217,7 @@ struct RecordPage {
       Column({ space: 24 }) {
         Row() {
           Row({ space: 8 }) {
-            Image($r('sys.media.ohos_ic_public_favor'))
+            Image($r('sys.media.ohos_ic_public_folder'))
               .width(16)
               .height(16)
               .fillColor('#2DD4BF')

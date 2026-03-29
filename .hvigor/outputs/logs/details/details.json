@@ -21,9 +21,9 @@
     "IS_HVIGORFILE_TYPE_CHECK": false,
     "TASK_TIME": {
       "923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf": {
-        "ConfigureCmake": 85167,
-        "BuildNativeWithCmake": 87708,
-        "BuildNativeWithNinja": 466708
+        "ConfigureCmake": 93459,
+        "BuildNativeWithCmake": 82542,
+        "BuildNativeWithNinja": 292041
       }
     },
     "APIS": [
@@ -34,24 +34,12 @@
       "ENABLE_CPP_FUNCTION_LEVEL_INCREMENTAL": false
     },
     "CONFIG_PROPERTIES": {},
-    "TOTAL_TIME": 653870458,
-    "BUILD_ID": "202603292259438300",
+    "TOTAL_TIME": 1269877958,
+    "BUILD_ID": "202603292304425030",
     "ERROR_MESSAGE": [
       {
-        "CODE": "10605038",
-        "TIMESTAMP": "1774796384483"
-      },
-      {
-        "CODE": "10505001",
-        "TIMESTAMP": "1774796384483"
-      },
-      {
         "CODE": "10903329",
-        "TIMESTAMP": "1774796384483"
-      },
-      {
-        "CODE": "10903329",
-        "TIMESTAMP": "1774796384483"
+        "TIMESTAMP": "1774796683773"
       }
     ]
   }
