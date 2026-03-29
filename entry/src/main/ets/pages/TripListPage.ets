@@ -97,14 +97,14 @@ struct TripListPage {
 
                   // 渐变遮罩
                   Column() {
-                    LinearGradient({
-                      angle: 180,
-                      colors: [['rgba(0,0,0,0.6)', 0.0], ['transparent', 1.0]]
-                    })
                   }
                   .width('100%')
                   .height('100%')
                   .borderRadius({ topLeft: 24, topRight: 24 })
+                  .linearGradient({
+                    angle: 180,
+                    colors: [['rgba(0,0,0,0.6)', 0.0], ['transparent', 1.0]]
+                  })
 
                   // 标题
                   Text(item.name)
@@ -121,7 +121,7 @@ struct TripListPage {
                 // 信息区域
                 Column({ space: 12 }) {
                   Row({ space: 8 }) {
-                    Image($r('sys.media.ohos_ic_public_location_on'))
+                    Image($r('sys.media.ohos_ic_public_location'))
                       .width(16)
                       .height(16)
                       .fillColor('#0D9488')

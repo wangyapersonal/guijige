@@ -50,7 +50,7 @@ struct TripDetailPage {
                 .fontColor(Color.White)
 
               Row({ space: 8 }) {
-                Image($r('sys.media.ohos_ic_public_location_on'))
+                Image($r('sys.media.ohos_ic_public_location'))
                   .width(14)
                   .height(14)
                   .fillColor('rgba(255,255,255,0.8)')
@@ -92,12 +92,12 @@ struct TripDetailPage {
                         .shadow({ radius: 4, color: 'rgba(0,0,0,0.05)' })
 
                       if (index === 0) {
-                        Image($r('sys.media.ohos_ic_public_airplane'))
+                        Image($r('sys.media.ohos_ic_public_flight'))
                           .width(14)
                           .height(14)
                           .fillColor('#0D9488')
                       } else {
-                        Image($r('sys.media.ohos_ic_public_location_on'))
+                        Image($r('sys.media.ohos_ic_public_location'))
                           .width(14)
                           .height(14)
                           .fillColor('#0D9488')
@@ -189,7 +189,7 @@ struct TripDetailPage {
               // 添加位置打卡按钮
               Button() {
                 Row({ space: 8 }) {
-                  Image($r('sys.media.ohos_ic_public_location_filled'))
+                  Image($r('sys.media.ohos_ic_public_location'))
                     .width(20)
                     .height(20)
                     .fillColor(Color.White)

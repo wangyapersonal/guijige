@@ -182,9 +182,9 @@ struct RecordPage {
         .width('100%')
         .height('100%')
         .objectFit(ImageFit.Cover)
-        .grayscale(true)
+        .grayscale(1)
         .opacity(0.7)
-        .mixBlendMode(MixBlendMode.SCREEN)
+        .blendMode(BlendMode.SCREEN)
     }
     .width('100%')
     .height('100%')
@@ -213,12 +213,10 @@ struct RecordPage {
           .width(48)
           .height(48)
           .fill('rgba(13, 148, 136, 0.3)')
-          .animateTo(true, 1000)
         Circle()
           .width(32)
           .height(32)
           .fill('rgba(13, 148, 136, 0.4)')
-          .animateTo(true, 1000)
         Circle()
           .width(16)
           .height(16)
@@ -248,12 +246,11 @@ struct RecordPage {
             .fontColor('#2DD4BF')
             .fontWeight(500)
         }
-        .animateTo(true, 1000)
 
         Blank()
 
         Row({ space: 4 }) {
-          Image($r('sys.media.ohos_ic_public_location_on'))
+          Image($r('sys.media.ohos_ic_public_location'))
             .width(12)
             .height(12)
             .fillColor('#14B8A6')
@@ -269,7 +266,7 @@ struct RecordPage {
           .fontSize(48)
           .fontFamily('monospace')
           .fontColor(Color.White)
-          .fontWeight(FontWeight.Light)
+          .fontWeight(FontWeight.Lighter)
           .letterSpacing(4)
           .shadow({ radius: 8, color: 'rgba(0,0,0,0.5)' })
 

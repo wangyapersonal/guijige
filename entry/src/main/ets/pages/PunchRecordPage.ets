@@ -64,7 +64,7 @@ struct PunchRecordPage {
               .borderRadius(16)
               .backdropBlur(10)
               .shadow({ radius: 4, color: 'rgba(0,0,0,0.5)' })
-            Image($r('sys.media.ohos_ic_public_location_filled'))
+            Image($r('sys.media.ohos_ic_public_location'))
               .width(40)
               .height(40)
               .fillColor('#F97316')
@@ -79,7 +79,7 @@ struct PunchRecordPage {
 
           // 重新定位按钮
           Button() {
-            Image($r('sys.media.ohos_ic_public_location_on'))
+            Image($r('sys.media.ohos_ic_public_location'))
               .width(20)
               .height(20)
               .fillColor('#4B5563')
@@ -103,7 +103,7 @@ struct PunchRecordPage {
       Column({ space: 24 }) {
         Row({ space: 16 }) {
           Column() {
-            Image($r('sys.media.ohos_ic_public_location_filled'))
+            Image($r('sys.media.ohos_ic_public_location'))
               .width(24)
               .height(24)
               .fillColor('#F97316')
