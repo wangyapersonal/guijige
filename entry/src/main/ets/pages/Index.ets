@@ -13,20 +13,14 @@ struct Index {
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // 背景图片
-      Image($r('app.media.bg_launch'))
-        .width('100%')
-        .height('100%')
-        .objectFit(ImageFit.Cover)
-
-      // 渐变遮罩
+      // 背景渐变
       Column() {
       }
       .width('100%')
       .height('100%')
       .linearGradient({
-        angle: 180,
-        colors: [['rgba(0,0,0,0.2)', 0.0], ['rgba(0,0,0,0.6)', 1.0]]
+        angle: 135,
+        colors: [['#0D9488', 0.0], ['#14B8A6', 0.5], ['#10B981', 1.0]]
       })
 
       // 玻璃态卡片

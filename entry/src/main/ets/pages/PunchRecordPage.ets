@@ -47,12 +47,11 @@ struct PunchRecordPage {
 
         // 交互地图区域
         Stack({ alignContent: Alignment.Top }) {
-          Image($r('app.media.bg_map'))
-            .width('100%')
-            .height('100%')
-            .objectFit(ImageFit.Cover)
-            .opacity(0.8)
-            .blendMode(BlendMode.MULTIPLY)
+          Column() {
+          }
+          .width('100%')
+          .height('100%')
+          .backgroundColor('#E5E7EB')
 
           // 中心定位图标
           Column({ space: 4 }) {

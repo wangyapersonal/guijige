@@ -280,14 +280,10 @@ struct TripDetailPage {
 
       // 地图背景
       Column() {
-        Image($r('app.media.bg_map'))
-          .width('100%')
-          .height(256)
-          .objectFit(ImageFit.Cover)
-          .opacity(0.6)
       }
       .width('100%')
       .height(256)
+      .backgroundColor('#E5E7EB')
       .borderRadius({ bottomLeft: 40, bottomRight: 40 })
       .linearGradient({
         angle: 180,

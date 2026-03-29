@@ -89,21 +89,14 @@ struct TripListPage {
               Column() {
                 // 封面图区域
                 Stack({ alignContent: Alignment.BottomStart }) {
-                  Image($r('app.media.bg_launch'))
-                    .width('100%')
-                    .height(160)
-                    .objectFit(ImageFit.Cover)
-                    .borderRadius({ topLeft: 24, topRight: 24 })
-
-                  // 渐变遮罩
                   Column() {
                   }
                   .width('100%')
-                  .height('100%')
+                  .height(160)
                   .borderRadius({ topLeft: 24, topRight: 24 })
                   .linearGradient({
-                    angle: 180,
-                    colors: [['rgba(0,0,0,0.6)', 0.0], ['transparent', 1.0]]
+                    angle: 135,
+                    colors: [['#0D9488', 0.0], ['#14B8A6', 0.5], ['#10B981', 1.0]]
                   })
 
                   // 标题
@@ -134,7 +127,7 @@ struct TripListPage {
                   .alignItems(VerticalAlign.Center)
 
                   Row({ space: 8 }) {
-                    Image($r('sys.media.ohos_ic_public_calendar'))
+                    Image($r('sys.media.ohos_ic_public_clock'))
                       .width(14)
                       .height(14)
                       .fillColor('#9CA3AF')

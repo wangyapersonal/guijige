@@ -123,7 +123,7 @@ struct CreateTripPage {
           // 多目的地选择
           Column({ space: 16 }) {
             Row({ space: 8 }) {
-              Image($r('sys.media.ohos_ic_public_location_on'))
+              Image($r('sys.media.ohos_ic_public_location'))
                 .width(16)
                 .height(16)
                 .fillColor('#0D9488')
