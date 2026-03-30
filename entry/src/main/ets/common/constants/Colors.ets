@@ -14,6 +14,9 @@ export class AppColors {
   /** 主色浅色 */
   static readonly PrimaryLight = '#5EEAD4';
 
+  /** 主色更浅色 */
+  static readonly PrimaryLighter = '#99F6E4';
+
   /** 主色半透明 - 10% */
   static readonly PrimaryAlpha10 = 'rgba(20, 184, 166, 0.1)';
 
