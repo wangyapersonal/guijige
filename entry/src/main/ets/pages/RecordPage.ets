@@ -2,12 +2,16 @@ import { LocationService } from '../services/LocationService';
 import { RecordService } from '../services/RecordService';
 import { router } from '@kit.ArkUI';
 import { TrackPoint, RecordSegment } from '../models/RecordSegment';
-import { TripService } from '../services/TripService';
-import { Trip, TripStatus } from '../models/Trip';
 import { AppColors } from '../common/constants/Colors';
 
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}
+
+interface StatsCardData {
+  icon: string;
+  value: string;
+  label: string;
 }
 
 @Entry
@@ -44,18 +48,30 @@ struct RecordPage {
 
   private startTimer(): void {
     this.timerId = setInterval(() => {
-    this.duration++;
-    this.trackPoints = this.locationService.getTrackPoints();
-    this.distance = this.calculateDistance(this.trackPoints);
-    this.speed = this.calculateSpeed(this.distance, this.duration);
-  }, 1000);
+      this.duration++;
+      this.trackPoints = this.locationService.getTrackPoints();
+      this.distance = this.calculateDistance(this.trackPoints);
+      this.speed = this.calculateSpeed(this.distance, this.duration);
+    }, 1000);
   }
 
   private stopTimer(): void {
     if (this.timerId !== -1) {
-    clearInterval(this.timerId);
-    this.timerId = -1;
+      clearInterval(this.timerId);
+      this.timerId = -1;
     }
+  }
+
+  private calculateDistance(points: TrackPoint[]): number {
+    let total = 0;
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1];
+      const curr = points[i];
+      const dx = curr.longitude - prev.longitude;
+      const dy = curr.latitude - prev.latitude;
+      total += Math.sqrt(dx * dx + dy * dy) * 111;
+    }
+    return Math.round(total * 100) / 100;
   }
 
   private calculateSpeed(distance: number, duration: number): number {
@@ -80,165 +96,50 @@ struct RecordPage {
 
     try {
       const params = router.getParams() as Record<string, string>;
-      const tripId = params.tripId;
+      const tripId = params.tripId || 'default';
 
       const segment: RecordSegment = {
         id: generateId(),
-        tripId: tripId || 'default',
+        tripId: tripId,
         startTime: Date.now() - this.duration * 1000,
         endTime: Date.now(),
-        trackPoints: this.trackPoints,
-        totalDistance: this.distance,
-        avgSpeed: this.speed,
+        trackPoints: this.trackPoints
       };
 
       await RecordService.getInstance().createRecordSegment(segment);
-
       router.back();
     } catch (error) {
-    console.error('Failed to save record:', error);
+      console.error('Failed to save record:', error);
     }
   }
 
   @Builder
-  StatsCard() {
+  StatsCard(icon: string, value: string, label: string) {
     Column({ space: 8 }) {
-      Text('00:00:00')
-        .fontSize(32)
-        .fontColor(Color.White)
-        .fontWeight(FontWeight.Bold)
-      
-      Text('00.00 km')
+      Row({ space: 8 }) {
+        Column() {
+        }
+        .width(48)
+        .height(48)
+        .borderRadius(24)
+        .backgroundColor('#14B8A6')
+
+        Image($r(icon))
+          .width(24)
+          .height(24)
+          .fillColor(Color.White)
+      }
+
+      Text(value)
         .fontSize(24)
         .fontColor(Color.White)
         .fontWeight(FontWeight.Bold)
-      
-      Text('0.0 KM/H')
-        .fontSize(24)
-        .fontColor(Color.White)
-        .fontWeight(FontWeight.Bold)
-    }
-    .backgroundColor('rgba(255, 255, 255, 0.9)')
-    .borderRadius(16)
-    .padding(16)
-    .width('30%')
-  }
 
-  build() {
-    Stack() {
-      // 深色背景
-      Column() {
-      }
-      .width('100%')
-      .height('100%')
-      .backgroundColor('#111827')
-
-      // 顶部信息
-      Column({ space: 12 }) {
-        Row({ space: 8 }) {
-          Column() {
-          }
-          .width(48)
-          .height(48)
-          .borderRadius(24)
-          .backgroundColor('#14B8A6')
-          
-          Image($r('sys.media.ohos_ic_public_clock'))
-            .width(24)
-            .height(24)
-            .fillColor(Color.White)
-        }
-        
-        Column({ space: 4 }) {
-          Text(this.formatDuration(this.duration))
-            .fontSize(32)
-            .fontColor(Color.White)
-            .fontWeight(FontWeight.Bold)
-        }
-
-        Row({ space: 8 }) {
-          Column() {
-          }
-          .width(48)
-          .height(48)
-          .borderRadius(24)
-          .backgroundColor('#14B8A6')
-          
-          Image($r('sys.media.ohos_ic_public_location'))
-            .width(24)
-            .height(24)
-            .fillColor(Color.White)
-        }
-        
-        Column({ space: 4 }) {
-          Text(`${this.distance.toFixed(2)} km`)
-            .fontSize(24)
-            .fontColor(Color.White)
-            .fontWeight(FontWeight.Bold)
-        }
-
-        Row({ space: 8 }) {
-          Column() {
-          }
-          .width(48)
-          .height(48)
-          .borderRadius(24)
-          .backgroundColor('#14B8A6')
-          
-          Image($r('sys.media.ohos_ic_public_play'))
-            .width(24)
-            .height(24)
-            .fillColor(Color.White)
-        }
-        
-        Column({ space: 4 }) {
-          Text(`${this.speed.toFixed(1)} KM/H`)
-            .fontSize(24)
-            .fontColor(Color.White)
-            .fontWeight(FontWeight.Bold)
-        }
-      }
-      .width('100%')
-      .padding({ top: 100, left: 24, right: 24 })
-
-      // 底部停止按钮
-      Column() {
-        Row({ space: 8 }) {
-          Image($r('sys.media.ohos_ic_public_play'))
-            .width(32)
-            .height(32)
-            .fillColor(Color.White)
-        }
-        
-        Text('停止')
-          .fontSize(18)
-          .fontColor(Color.White)
-          .fontWeight(FontWeight.Bold)
-      }
-      .width(100%')
-      .height(64)
-      .borderRadius(32)
-      .backgroundColor('#EF4444')
-      .shadow({ radius: 20, color: 'rgba(239, 68, 68, 0.4)' })
-      .onClick(() => {
-        this.showStopDialog = true
-      })
-
-      Text('滑动或点击结束')
-        .fontSize(14)
+      Text(label)
+        .fontSize(12)
         .fontColor('rgba(255, 255, 255, 0.6)')
-        .margin({ top: 16 })
-      }
-      .width('100%')
-      .padding({ left: 24, right: 24, bottom: 24 })
     }
-    .width('100%')
-    .height('100%')
-    .backgroundColor('#111827')
-
-    if (this.showStopDialog) {
-      this.StopDialogBuilder()
-    }
+    .alignItems(HorizontalAlign.Start)
   }
 
   @Builder
@@ -259,7 +160,7 @@ struct RecordPage {
         .onClick(() => {
           this.showStopDialog = false
         })
-        
+
         Blank()
 
         Button() {
@@ -275,76 +176,29 @@ struct RecordPage {
         })
       }
       .width('100%')
-      .padding(24)
-      .backgroundColor('rgba(0, 0, 0, 0.8)')
+    }
+    .width('80%')
+    .padding(24)
+    .backgroundColor(Color.White)
+    .borderRadius(16)
   }
 
   build() {
-    Column() {
+    Stack({ alignContent: Alignment.Bottom }) {
+      // 深色背景
+      Column() {
+      }
+      .width('100%')
+      .height('100%')
+      .backgroundColor('#111827')
+
       // 顶部信息
       Column({ space: 12 }) {
-        Row({ space: 8 }) {
-          Column() {
-          }
-          .width(48)
-          .height(48)
-          .borderRadius(24)
-          .backgroundColor('#14B8A6')
-          
-          Image($r('sys.media.ohos_ic_public_clock'))
-            .width(24)
-            .height(24)
-            .fillColor(Color.White)
-        }
-        
-        Column({ space: 4 }) {
-          Text(this.formatDuration(this.duration))
-            .fontSize(32)
-            .fontColor(Color.White)
-            .fontWeight(FontWeight.Bold)
-        }
+        this.StatsCard('sys.media.ohos_ic_public_clock', this.formatDuration(this.duration), '时长')
 
-        Row({ space: 8 }) {
-          Column() {
-          }
-          .width(48)
-          .height(48)
-          .borderRadius(24)
-          .backgroundColor('#14B8A6')
-          
-          Image($r('sys.media.ohos_ic_public_location'))
-            .width(24)
-            .height(24)
-            .fillColor(Color.White)
-        }
-        
-        Column({ space: 4 }) {
-          Text(`${this.distance.toFixed(2)} km`)
-            .fontSize(24)
-            .fontColor(Color.White)
-            .fontWeight(FontWeight.Bold)
-        }
+        this.StatsCard('sys.media.ohos_ic_public_location', `${this.distance.toFixed(2)} km`, '距离')
 
-        Row({ space: 8 }) {
-          Column() {
-          }
-          .width(48)
-          .height(48)
-          .borderRadius(24)
-          .backgroundColor('#14B8A6')
-          
-          Image($r('sys.media.ohos_ic_public_play'))
-            .width(24)
-            .height(24)
-            .fillColor(Color.White)
-        }
-        
-        Column({ space: 4 }) {
-          Text(`${this.speed.toFixed(1)} KM/H')
-            .fontSize(24)
-            .fontColor(Color.White)
-            .fontWeight(FontWeight.Bold)
-        }
+        this.StatsCard('sys.media.ohos_ic_public_play', `${this.speed.toFixed(1)} KM/H`, '配速')
 
         // GPS 状态
         Row({ space: 8 }) {
@@ -354,58 +208,60 @@ struct RecordPage {
           .height(32)
           .borderRadius(16)
           .backgroundColor('#10B981')
-          
+
           Image($r('sys.media.ohos_ic_public_location'))
             .width(16)
             .height(16)
             .fillColor(Color.White)
         }
-        
+
         Text('GPS 信号良好')
           .fontSize(12)
           .fontColor('#10B981')
       }
-      }
       .width('100%')
       .padding({ top: 100, left: 24, right: 24 })
+      .alignItems(HorizontalAlign.Start)
 
       // 底部停止按钮
-      Column() {
-        Row({ space: 8 }) {
-          Image($r('sys.media.ohos_ic_public_play'))
-            .width(32)
-            .height(32)
-            .fillColor(Color.White)
-        }
-        
-        Text('停止')
-          .fontSize(18)
-          .fontColor(Color.White)
-          .fontWeight(FontWeight.Bold)
-      }
-      .width(100%')
-      .height(64)
-      .borderRadius(32)
-      .backgroundColor('#EF4444')
-      .shadow({ radius: 20, color: 'rgba(239, 68, 68, 0.4)' })
-      .onClick(() => {
-        this.showStopDialog = true
-      })
+      Column({ space: 8 }) {
+        Button() {
+          Row({ space: 8 }) {
+            Image($r('sys.media.ohos_ic_public_play'))
+              .width(32)
+              .height(32)
+              .fillColor(Color.White)
 
-      Text('滑动或点击结束')
-        .fontSize(14)
-        .fontColor('rgba(255, 255, 255, 0.6)')
-        .margin({ top: 16 })
+            Text('停止')
+              .fontSize(18)
+              .fontColor(Color.White)
+              .fontWeight(FontWeight.Bold)
+          }
+        }
+        .width('90%')
+        .height(64)
+        .borderRadius(32)
+        .backgroundColor('#EF4444')
+        .shadow({ radius: 20, color: 'rgba(239, 68, 68, 0.4)' })
+        .onClick(() => {
+          this.showStopDialog = true
+        })
+
+        Text('滑动或点击结束')
+          .fontSize(14)
+          .fontColor('rgba(255, 255, 255, 0.6)')
       }
       .width('100%')
       .padding({ left: 24, right: 24, bottom: 24 })
     }
     .width('100%')
     .height('100%')
-    .backgroundColor('#111827')
-
-    if (this.showStopDialog) {
-      this.StopDialogBuilder()
-    }
+    .bindSheet(this.showStopDialog, this.StopDialogBuilder(), {
+      height: 200,
+      showClose: false,
+      onDisappear: () => {
+        this.showStopDialog = false
+      }
+    })
   }
 }
