@@ -110,12 +110,6 @@ struct TripDetailPage {
           .fontSize(16)
           .fontColor('#1F2937')
           .fontWeight(500)
-
-        if (point.notes) {
-          Text(point.notes)
-            .fontSize(14)
-            .fontColor('#6B7280')
-        }
       }
       .layoutWeight(1)
       .padding(16)
@@ -277,7 +271,7 @@ struct TripDetailPage {
 
       Button() {
         Row({ space: 8 }) {
-          Image($r('sys.media.ohos_ic_public_download'))
+          Image($r('sys.media.ohos_ic_public_save'))
             .width(20)
             .height(20)
             .fillColor(Color.White)
