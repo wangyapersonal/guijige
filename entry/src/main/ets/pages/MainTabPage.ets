@@ -1,5 +1,6 @@
 import { router } from '@kit.ArkUI';
 import { TripListPage } from './TripListPage';
+import { ProfilePage } from './ProfilePage';
 
 @Entry
 @Component
@@ -63,14 +64,7 @@ export struct MainTabPage {
 
   @Builder
   profileBuilder() {
-    Column() {
-      Text('我的')
-        .fontSize(20)
-        .fontColor('#1F2937')
-    }
-    .width('100%')
-    .height('100%')
-    .justifyContent(FlexAlign.Center)
+    ProfilePage()
   }
 
   build() {
