@@ -6,19 +6,14 @@ import { AppColors } from '../common/constants/Colors';
 struct Index {
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // ✅ 1. 青色渐变背景（替代背景图）
+      // ✅ 1. 背景图（Haldon Belvedere 风景图）
       Column() {
       }
       .width('100%')
       .height('100%')
-      .linearGradient({
-        angle: 135,
-        colors: [
-          [AppColors.PrimaryDark, 0.0],
-          [AppColors.Primary, 0.5],
-          [AppColors.PrimaryLight, 1.0]
-        ]
-      })
+      .backgroundImage($r('app.media.splash_background'))
+      .backgroundImageSize({ width: '100%', height: '100%' })
+      .backgroundImagePosition(ImagePosition.Center)
 
       // ✅ 2. 渐变遮罩（增强深度）
       Column() {
@@ -28,9 +23,9 @@ struct Index {
       .linearGradient({
         angle: 180,
         colors: [
-          ['rgba(0, 0, 0, 0.15)', 0.0],
-          ['rgba(0, 0, 0, 0.05)', 0.5],
-          ['rgba(0, 0, 0, 0.3)', 1.0]
+          ['rgba(0, 0, 0, 0.2)', 0.0],
+          ['rgba(0, 0, 0, 0.1)', 0.5],
+          ['rgba(0, 0, 0, 0.4)', 1.0]
         ]
       })
 
