@@ -270,16 +270,10 @@ struct TripDetailPage {
       .height('100%')
 
       Button() {
-        Row({ space: 8 }) {
-          Image($r('sys.media.ohos_ic_public_save'))
-            .width(20)
-            .height(20)
-            .fillColor(Color.White)
-          Text('导出行程')
-            .fontSize(16)
-            .fontColor(Color.White)
-            .fontWeight(500)
-        }
+        Text('导出行程')
+          .fontSize(16)
+          .fontColor(Color.White)
+          .fontWeight(500)
       }
       .width('90%')
       .height(52)
