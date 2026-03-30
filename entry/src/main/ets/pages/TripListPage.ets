@@ -17,7 +17,6 @@ export struct TripListPage {
     try {
       this.trips = await TripService.getInstance().getAllTrips();
 
-      // 测试数据（带封面图）
       if (this.trips.length === 0) {
         const mockTrips: Trip[] = [
           {
@@ -75,9 +74,7 @@ export struct TripListPage {
   @Builder
   TripCard(trip: Trip) {
     Column() {
-      // 封面图区域
       Stack({ alignContent: Alignment.BottomStart }) {
-        // ✅ 真实封面图（Unsplash）
         if (trip.coverImage) {
           Image(trip.coverImage)
             .width('100%')
@@ -85,7 +82,6 @@ export struct TripListPage {
             .objectFit(ImageFit.Cover)
             .borderRadius({ topLeft: 24, topRight: 24 })
         } else {
-          // 备用：渐变色
           Column() {
           }
           .width('100%')
@@ -97,7 +93,6 @@ export struct TripListPage {
           .borderRadius({ topLeft: 24, topRight: 24 })
         }
 
-        // ✅ 优化渐变遮罩（黑色 0.6）
         Column() {
         }
         .width('100%')
@@ -108,7 +103,6 @@ export struct TripListPage {
         })
         .borderRadius({ topLeft: 24, topRight: 24 })
 
-        // ✅ 状态徽章（右上角固定位置）
         Row() {
           Text(trip.status === TripStatus.COMPLETED ? '已完成' : '计划中')
             .fontSize(12)
@@ -121,7 +115,6 @@ export struct TripListPage {
         .position({ x: '100%', y: 16 })
         .translate({ x: '-100%' })
 
-        // ✅ 标题（左下角）
         Text(trip.name)
           .fontSize(20)
           .fontColor(Color.White)
@@ -131,9 +124,7 @@ export struct TripListPage {
       .width('100%')
       .height(192)
 
-      // ✅ 信息区域（优化图标颜色）
       Column({ space: 12 }) {
-        // 地点（青色图标）
         Row({ space: 8 }) {
           Image($r('sys.media.ohos_ic_public_location'))
             .width(16)
@@ -146,7 +137,6 @@ export struct TripListPage {
         }
         .alignItems(VerticalAlign.Center)
 
-        // 时间（金色图标）
         Row({ space: 8 }) {
           Image($r('sys.media.ohos_ic_public_clock'))
             .width(16)
@@ -167,9 +157,9 @@ export struct TripListPage {
     .backgroundColor(Color.White)
     .borderRadius(24)
     .shadow({
-      radius: 8,
-      color: 'rgba(0, 0, 0, 0.04)',
-      offsetY: 2
+      radius: 12,  // ✅ 增强阴影
+      color: 'rgba(0, 0, 0, 0.08)',  // ✅ 增强颜色
+      offsetY: 4
     })
     .onClick(() => {
       router.pushUrl({
@@ -184,7 +174,7 @@ export struct TripListPage {
   build() {
     Stack({ alignContent: Alignment.Bottom }) {
       Column() {
-        // 顶部 Header
+        // ✅ 优化 Header：添加白色背景 + 阴影
         Row() {
           Text('我的行程')
             .fontSize(24)
@@ -214,8 +204,13 @@ export struct TripListPage {
         }
         .width('100%')
         .padding({ left: 24, right: 24, top: 48, bottom: 24 })
+        .backgroundColor(Color.White)  // ✅ 添加白色背景
+        .shadow({  // ✅ 添加阴影
+          radius: 4,
+          color: 'rgba(0, 0, 0, 0.04)',
+          offsetY: 2
+        })
 
-        // 行程列表
         if (this.trips.length === 0) {
           Column() {
             Text('暂无行程')
@@ -241,9 +236,14 @@ export struct TripListPage {
       }
       .width('100%')
       .height('100%')
-      .backgroundColor(AppColors.Background)
+      .linearGradient({  // ✅ 添加背景渐变
+        angle: 135,
+        colors: [
+          ['rgba(20, 184, 166, 0.05)', 0.0],
+          ['rgba(13, 148, 136, 0.05)', 1.0]
+        ]
+      })
 
-      // FAB 按钮
       Button() {
         Image($r('sys.media.ohos_ic_public_play'))
           .width(28)
