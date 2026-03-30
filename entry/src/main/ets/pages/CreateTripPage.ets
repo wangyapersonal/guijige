@@ -18,6 +18,7 @@ struct CreateTripPage {
   @State tripType: TripType = TripType.OTHER;
   @State selectedCountries: string[] = [];
   @State selectedCities: string[] = [];
+  @State selectedCountriesCities: string[] = [];
   @State showCountryPicker: boolean = false;
   @State showCityPicker: boolean = false;
 
@@ -48,6 +49,10 @@ struct CreateTripPage {
       }
     });
     return allCities;
+  }
+
+  private updateSelectedCountriesCities(): void {
+    this.selectedCountriesCities = this.getAllCities();
   }
 
   async createTrip(): Promise<void> {
@@ -300,6 +305,7 @@ struct CreateTripPage {
                           .onClick(() => {
                             this.selectedCountries = this.selectedCountries.filter(c => c !== country);
                             this.selectedCities = [];
+                            this.updateSelectedCountriesCities();
                           })
                       }
                       .padding({ left: 12, right: 8, top: 6, bottom: 6 })
@@ -348,6 +354,7 @@ struct CreateTripPage {
                   .borderRadius(16)
                   .onClick(() => {
                     this.showCountryPicker = true;
+                    this.updateSelectedCountriesCities();
                   })
 
                   if (this.selectedCountries.length > 0) {
@@ -471,6 +478,7 @@ struct CreateTripPage {
             .fontSize(16)
             .fontColor('#14B8A6')
             .onClick(() => {
+              this.updateSelectedCountriesCities();
               this.showCountryPicker = false
             })
         }
@@ -538,10 +546,8 @@ struct CreateTripPage {
         }
         .width('100%')
 
-        let allCities: string[] = this.getAllCities();
-
         List({ space: 8 }) {
-          ForEach(allCities, (city: string) => {
+          ForEach(this.selectedCountriesCities, (city: string) => {
             ListItem() {
               Row({ space: 12 }) {
                 Text(city)
