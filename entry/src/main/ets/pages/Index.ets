@@ -10,20 +10,33 @@ struct Index {
   @State private cardOpacity: number = 0;
   // 卡片Y偏移
   @State private cardTranslateY: number = 30;
+  // 背景图宽度（根据实际图片调整）
+  readonly BG_WIDTH: number = 1080;
+  // 屏幕宽度
+  readonly SCREEN_WIDTH: number = 390;
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // 背景层（单图平移）
+      // 背景层（双图无缝）
       Stack() {
+        // 第一张背景
         Image($r('app.media.splash_background'))
-          .width('120%')  // 宽度大于屏幕，有移动空间
+          .width(this.BG_WIDTH)
           .height('100%')
           .objectFit(ImageFit.Cover)
           .translate({ x: this.bgOffsetX })
+
+        // 第二张背景（接在第一张右边，形成无缝）
+        Image($r('app.media.splash_background'))
+          .width(this.BG_WIDTH)
+          .height('100%')
+          .objectFit(ImageFit.Cover)
+          .translate({ x: this.bgOffsetX + this.BG_WIDTH })
       }
       .width('100%')
       .height('100%')
-      .clip(true)  // 裁掉屏幕外部分
+      .clip(true)  // 裁掉屏幕外部分，只显示窗口
+      .opacity(0.9)  // 半透明更柔和
 
       // 渐变遮罩
       Column() {
@@ -136,7 +149,7 @@ struct Index {
     })
   }
 
-  // 启动背景平移动画（参考示例代码）
+  // 启动背景平移动画（完全参考示例代码）
   startBgAnimation() {
     const uiContext = this.getUIContext();
 
@@ -144,21 +157,21 @@ struct Index {
       // 1) 复位：回到起始点（无动画，瞬间跳）
       this.bgOffsetX = 0;
 
-      // 2) 缓慢左移（动画）
+      // 2) 缓慢左移：移过一整张图（动画）
       uiContext.animateTo({
-        duration: 10000,  // 10秒超慢
-        curve: Curve.Linear,  // 匀速
-        iterations: 1,
+        duration: 30000,      // 30秒超慢（越大越慢）
+        curve: Curve.Linear,  // 匀速（最适合背景）
+        iterations: 1,        // 一次走完
         onFinish: () => {
-          animate();  // 结束后立刻重新开始 → 无限循环
+          animate(); // 结束后立刻重新开始 → 无限循环
         }
       }, () => {
-        // 目标：向左移动 20%（图片宽度 120% - 屏幕 100% = 20%）
-        this.bgOffsetX = -80;
+        // 目标：向左移动一整张图的宽度
+        this.bgOffsetX = -this.BG_WIDTH;
       });
     };
 
-    animate();  // 启动
+    animate(); // 启动
   }
 
   // 启动卡片淡入动画
