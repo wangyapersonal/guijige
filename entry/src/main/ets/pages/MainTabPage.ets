@@ -1,7 +1,6 @@
 import { router } from '@kit.ArkUI';
 import { TripListPage } from './TripListPage';
 import { HomePage } from './HomePage';
-import { ProfilePage } from './ProfilePage';
 
 @Entry
 @Component
@@ -15,92 +14,58 @@ export struct MainTabPage {
       if (this.currentIndex === index) {
         Text(this.messageList[index].selectedIcon)
           .fontSize(24)
-          .fontColor('#0D9488')
+          .fontColor('#14B8A6')
       } else {
         Text(this.messageList[index].unselectedIcon)
           .fontSize(24)
           .fontColor('#9CA3AF')
       }
+      
       Text(this.messageList[index].title)
-        .fontSize(10)
-        .lineHeight(14)
-        .fontWeight(500)
+        .fontSize(12)
+        .fontColor(this.currentIndex === index ? '#14B8A6' : '#9CA3AF')
         .margin({ top: 4 })
     }
+    .width('100%')
+    .height(48)
+    .backgroundColor(Color.Transparent)
+    .onClick(() => {
+      this.currentIndex = index
+    })
   }
 
-  @State messageList: Array<Record<string, string>> = [
-    {
-      'title': '行程',
-      'unselectedIcon': '\uE6CF',
-      'selectedIcon': '\uE6D0',
-    },
-    {
-      'title': '发现',
-      'unselectedIcon': '\uE6CC',
-      'selectedIcon': '\uE6CD',
-    },
-    {
-      'title': '我的',
-      'unselectedIcon': '\uE6C9',
-      'selectedIcon': '\uE6CA',
-    },
+  private messageList: Array<{ title: string; unselectedIcon: string; selectedIcon: string }> = [
+    { title: '行程', unselectedIcon: '📋', selectedIcon: '📋' },
+    { title: '我的', unselectedIcon: '👤', selectedIcon: '👤' }
   ]
 
   @Builder
-  tripListBuilder() {
-    TripListPage()
-  }
-
-  @Builder
-  discoveryBuilder() {
-    HomePage()
-  }
-
-  @Builder
-  profileBuilder() {
-    ProfilePage()
-  }
-
-  build() {
-    Column() {
-      Tabs({ barPosition: BarPosition.End }) {
-        TabContent() {
-          this.tripListBuilder()
-        }
-        .tabBar(this.TabBuilder(0))
-
-        TabContent() {
-          this.discoveryBuilder()
-        }
-        .tabBar(this.TabBuilder(1))
-
-        TabContent() {
-          this.profileBuilder()
-        }
-        .tabBar(this.TabBuilder(2))
+  FABButton() {
+    Button() {
+      Column() {
+        Image($r('sys.media.ohos_ic_public_play'))
+          .width(28)
+          .height(28)
+          .fillColor(Color.White)
       }
-      .onChange((index: number) => {
-        this.currentIndex = index
-      })
-      .width('100%')
-      .layoutWeight(1)
-      .barMode(BarMode.Fixed)
-      .barOverlap(false)
-      .scrollable(false)
-      .animationDuration(300)
-      .animationCurve(Curve.EaseInOut)
-      .divider({
-        strokeWidth: 0.5,
-        color: '#F1F3F5',
-        startMargin: 0,
-        endMargin: 0
-      })
+      .justifyContent(FlexAlign.Center)
+      .alignItems(HorizontalAlign.Center)
     }
-    .width('100%')
-    .height('100%')
-    .backgroundColor('#F7F9FA')
-    .padding({ left: 24, right: 24, top: 16, bottom: 16 })
+    .width(64)
+    .height(64)
+    .borderRadius(32)
+    .linearGradient({
+      angle: 135,
+      colors: [['#14B8A6', 0.0], ['#0D9488', 1.0]]
+    })
+    .shadow({
+      radius: 16,
+      color: 'rgba(20, 184, 166, 0.4)',
+      offsetY: 8
+    })
+    .onClick(() => {
+      this.showActionSheet = true
+    })
     .bindSheet(this.showActionSheet, this.ActionSheetBuilder(), {
       height: 280,
       showClose: false,
@@ -126,13 +91,13 @@ export struct MainTabPage {
               params: {
                 tripId: 'default'
               }
-            })
+            });
           })
 
           this.ActionSheetItem('sys.media.ohos_ic_public_map', '单次打卡', '记录当前位置', () => {
             router.pushUrl({
               url: 'pages/PunchRecordPage'
-            })
+            });
           })
         }
       }
@@ -198,6 +163,34 @@ export struct MainTabPage {
       this.showActionSheet = false
     })
   }
+
+  build() {
+    Stack({ alignContent: Alignment.Bottom }) {
+      Tabs({ barPosition: BarPosition.End, index: this.currentIndex }) {
+        TabContent() {
+          TripListPage()
+        }
+        .tabBar(this.TabBuilder(0))
+
+        TabContent() {
+          HomePage()
+        }
+        .tabBar(this.TabBuilder(1))
+      }
+      .width('100%')
+      .height('100%')
+      .barBackgroundColor(Color.White)
+      .onChange((index: number) => {
+        this.currentIndex = index
+      })
+
+      this.FABButton()
+        .position({ x: '50%', y: '94%' })
+        .translate({ x: '-50%', y: '-50%' })
+        .markAnchor(this.currentIndex === 0 ? '行程' : '我的')
+    }
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#F9FAFB')
+  }
 }
-
-
