@@ -26,35 +26,38 @@ export struct TripListPage {
           {
             id: generateId(),
             name: '巴黎浪漫之旅',
-            type: TripType.LEISURE,
+            type: TripType.OTHER,
             startDate: Date.now() - 86400000 * 5,
             endDate: Date.now() - 86400000 * 2,
             destination: '法国·巴黎',
             notes: '埃菲尔铁塔、卢浮宫、塞纳河游船',
-            status: 'completed',
-            createdAt: Date.now() - 86400000 * 6
+            status: TripStatus.COMPLETED,
+            createdAt: Date.now() - 86400000 * 6,
+            updatedAt: Date.now() - 86400000 * 2
           },
           {
             id: generateId(),
             name: '东京美食探索',
-            type: TripType.FOOD,
+            type: TripType.OTHER,
             startDate: Date.now() - 86400000 * 10,
             endDate: Date.now() - 86400000 * 7,
             destination: '日本·东京',
             notes: '寿司、拉面、居酒屋',
-            status: 'completed',
-            createdAt: Date.now() - 86400000 * 11
+            status: TripStatus.COMPLETED,
+            createdAt: Date.now() - 86400000 * 11,
+            updatedAt: Date.now() - 86400000 * 7
           },
           {
             id: generateId(),
             name: '瑞士雪山徒步',
-            type: TripType.ADVENTURE,
+            type: TripType.WALKING,
             startDate: Date.now() + 86400000 * 7,
             endDate: Date.now() + 86400000 * 14,
             destination: '瑞士',
             notes: '少女峰、马特洪峰',
-            status: 'planned',
-            createdAt: Date.now() - 86400000 * 1
+            status: TripStatus.PLANNING,
+            createdAt: Date.now() - 86400000 * 1,
+            updatedAt: Date.now() - 86400000 * 1
           }
         ];
 

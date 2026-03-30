@@ -15,7 +15,7 @@ struct CreateTripPage {
   @State endDate: number | undefined = undefined;
   @State destination: string = '';
   @State notes: string = '';
-  @State tripType: TripType = TripType.LEISURE;
+  @State tripType: TripType = TripType.OTHER;
 
   private primaryAlpha10 = 'rgba(20, 184, 166, 0.1)';
   private accentAlpha10 = 'rgba(245, 158, 11, 0.1)';
@@ -130,7 +130,7 @@ struct CreateTripPage {
           .border({ width: 2, color: '#E5E7EB', style: BorderStyle.Dashed })
 
           // 行程名称
-          this.FormSection('行程名称', () => {
+          FormSection('行程名称', () => {
             TextInput({ placeholder: '例如：浪漫巴黎之旅' })
               .fontSize(16)
               .fontColor('#1F2937')
@@ -147,9 +147,10 @@ struct CreateTripPage {
           // 行程类型
           FormSection('行程类型', () => {
             Row({ space: 12 }) {
-              TypeChip('休闲旅行', TripType.LEISURE, this.tripType === TripType.LEISURE)
-              TypeChip('美食之旅', TripType.FOOD, this.tripType === TripType.FOOD)
-              TypeChip('冒险探索', TripType.ADVENTURE, this.tripType === TripType.ADVENTURE)
+              TypeChip('自驾', TripType.DRIVING, this.tripType === TripType.DRIVING)
+              TypeChip('骑行', TripType.CYCLING, this.tripType === TripType.CYCLING)
+              TypeChip('徒步', TripType.WALKING, this.tripType === TripType.WALKING)
+              TypeChip('其他', TripType.OTHER, this.tripType === TripType.OTHER)
             }
           })
 
@@ -185,7 +186,7 @@ struct CreateTripPage {
           })
 
           // 目的地
-          this.FormSection('目的地', () => {
+          FormSection('目的地', () => {
             Row({ space: 12 }) {
               Column() {
                 Image($r('sys.media.ohos_ic_public_location'))
@@ -220,7 +221,7 @@ struct CreateTripPage {
           })
 
           // 备注说明
-          this.FormSection('备注说明', () => {
+          FormSection('备注说明', () => {
             TextArea({ placeholder: '添加行程备注（可选）...' })
               .fontSize(14)
               .fontColor('#374151')
