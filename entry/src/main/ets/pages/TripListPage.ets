@@ -13,14 +13,11 @@ export struct TripListPage {
   @State trips: Trip[] = [];
   @State showActionSheet: boolean = false;
 
-  private primaryAlpha10 = 'rgba(20, 184, 166, 0.1)';
-  private primaryAlpha20 = 'rgba(20, 184, 166, 0.2)';
-
   async aboutToAppear(): Promise<void> {
     try {
       this.trips = await TripService.getInstance().getAllTrips();
 
-      // 如果没有数据，添加测试数据
+      // 测试数据（带封面图）
       if (this.trips.length === 0) {
         const mockTrips: Trip[] = [
           {
@@ -32,6 +29,7 @@ export struct TripListPage {
             destination: '法国·巴黎',
             notes: '埃菲尔铁塔、卢浮宫、塞纳河游船',
             status: TripStatus.COMPLETED,
+            coverImage: 'https://images.unsplash.com/photo-1642947392578-b37fbd9a4d45?w=800',
             createdAt: Date.now() - 86400000 * 6,
             updatedAt: Date.now() - 86400000 * 2
           },
@@ -44,6 +42,7 @@ export struct TripListPage {
             destination: '日本·东京',
             notes: '寿司、拉面、居酒屋',
             status: TripStatus.COMPLETED,
+            coverImage: 'https://images.unsplash.com/photo-1648871647634-0c99b483cb63?w=800',
             createdAt: Date.now() - 86400000 * 11,
             updatedAt: Date.now() - 86400000 * 7
           },
@@ -56,6 +55,7 @@ export struct TripListPage {
             destination: '瑞士',
             notes: '少女峰、马特洪峰',
             status: TripStatus.PLANNING,
+            coverImage: 'https://images.unsplash.com/photo-1531366936337-7c912a3de96d?w=800',
             createdAt: Date.now() - 86400000 * 1,
             updatedAt: Date.now() - 86400000 * 1
           }
@@ -75,35 +75,45 @@ export struct TripListPage {
   @Builder
   TripCard(trip: Trip) {
     Column() {
-      // 封面图区域（使用渐变色作为占位符）
+      // 封面图区域
       Stack({ alignContent: Alignment.BottomStart }) {
-        // 封面背景
-        Column() {
+        // ✅ 真实封面图（Unsplash）
+        if (trip.coverImage) {
+          Image(trip.coverImage)
+            .width('100%')
+            .height(192)
+            .objectFit(ImageFit.Cover)
+            .borderRadius({ topLeft: 24, topRight: 24 })
+        } else {
+          // 备用：渐变色
+          Column() {
+          }
+          .width('100%')
+          .height(192)
+          .linearGradient({
+            angle: 135,
+            colors: [[AppColors.Primary, 0.0], [AppColors.PrimaryDark, 1.0]]
+          })
+          .borderRadius({ topLeft: 24, topRight: 24 })
         }
-        .width('100%')
-        .height(180)
-        .linearGradient({
-          angle: 135,
-          colors: [[AppColors.Primary, 0.0], [AppColors.PrimaryDark, 1.0]]
-        })
-        .borderRadius({ topLeft: 24, topRight: 24 })
 
-        // 渐变遮罩
+        // ✅ 优化渐变遮罩（黑色 0.6）
         Column() {
         }
         .width('100%')
-        .height(180)
+        .height(192)
         .linearGradient({
           angle: 180,
-          colors: [['transparent', 0.0], ['rgba(0, 0, 0, 0.4)', 1.0]]
+          colors: [['transparent', 0.0], ['rgba(0, 0, 0, 0.6)', 1.0]]
         })
         .borderRadius({ topLeft: 24, topRight: 24 })
 
-        // 状态徽章
+        // ✅ 状态徽章（右上角固定位置）
         Row() {
-          Text(trip.status === 'completed' ? '已完成' : '计划中')
+          Text(trip.status === TripStatus.COMPLETED ? '已完成' : '计划中')
             .fontSize(12)
             .fontColor(AppColors.Primary)
+            .fontWeight(500)
         }
         .padding({ left: 12, right: 12, top: 6, bottom: 6 })
         .backgroundColor('rgba(255, 255, 255, 0.9)')
@@ -111,19 +121,19 @@ export struct TripListPage {
         .position({ x: '100%', y: 16 })
         .translate({ x: '-100%' })
 
-        // 标题
+        // ✅ 标题（左下角）
         Text(trip.name)
           .fontSize(20)
           .fontColor(Color.White)
           .fontWeight(FontWeight.Bold)
-          .margin({ bottom: 8 })
+          .padding({ left: 16, bottom: 16 })
       }
       .width('100%')
-      .height(180)
-      .padding({ left: 16, right: 16, bottom: 16 })
+      .height(192)
 
-      // 信息区域
+      // ✅ 信息区域（优化图标颜色）
       Column({ space: 12 }) {
+        // 地点（青色图标）
         Row({ space: 8 }) {
           Image($r('sys.media.ohos_ic_public_location'))
             .width(16)
@@ -136,11 +146,12 @@ export struct TripListPage {
         }
         .alignItems(VerticalAlign.Center)
 
+        // 时间（金色图标）
         Row({ space: 8 }) {
           Image($r('sys.media.ohos_ic_public_clock'))
             .width(16)
             .height(16)
-            .fillColor('#9CA3AF')
+            .fillColor('#F59E0B')
 
           Text(`${new Date(trip.startDate).toLocaleDateString()} - ${trip.endDate ? new Date(trip.endDate).toLocaleDateString() : '进行中'}`)
             .fontSize(12)
@@ -183,19 +194,18 @@ export struct TripListPage {
           Blank()
 
           Button() {
-            Column() {
-            }
-            .width(40)
-            .height(40)
-            .borderRadius(20)
-            .linearGradient({
-              angle: 135,
-              colors: [[AppColors.Primary, 0.0], [AppColors.PrimaryDark, 1.0]]
-            })
+            Image($r('sys.media.ohos_ic_public_add'))
+              .width(20)
+              .height(20)
+              .fillColor(Color.White)
           }
           .width(40)
           .height(40)
-          .backgroundColor('transparent')
+          .borderRadius(20)
+          .linearGradient({
+            angle: 135,
+            colors: [[AppColors.Primary, 0.0], [AppColors.PrimaryDark, 1.0]]
+          })
           .onClick(() => {
             router.pushUrl({
               url: 'pages/CreateTripPage'
@@ -285,13 +295,13 @@ export struct TripListPage {
               params: {
                 tripId: 'default'
               }
-            })
+            });
           })
 
           this.ActionSheetItem('sys.media.ohos_ic_public_map', '单次打卡', '记录当前位置', () => {
             router.pushUrl({
               url: 'pages/PunchRecordPage'
-            })
+            });
           })
         }
       }
@@ -353,8 +363,8 @@ export struct TripListPage {
     .backgroundColor('#F9FAFB')
     .borderRadius(16)
     .onClick(() => {
-      action()
-      this.showActionSheet = false
+      action();
+      this.showActionSheet = false;
     })
   }
 }

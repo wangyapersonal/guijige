@@ -20,6 +20,7 @@ export interface Trip {
   endDate?: number;
   notes?: string;
   status: TripStatus;
+  coverImage?: string;  // 封面图 URL
   createdAt: number;
   updatedAt: number;
 }
