@@ -13,7 +13,6 @@ struct Index {
       .height('100%')
       .backgroundImage($r('app.media.splash_background'))
       .backgroundImageSize({ width: '100%', height: '100%' })
-      .backgroundImagePosition(ImagePosition.Center)
 
       // ✅ 2. 渐变遮罩（增强深度）
       Column() {
