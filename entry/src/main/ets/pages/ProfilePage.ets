@@ -232,6 +232,19 @@ export struct ProfilePage {
       }
       .layoutWeight(1)
       .scrollBar(BarState.Off)
+
+      Column({ space: 8 }) {
+        Text('功能开发中')
+          .fontSize(14)
+          .fontColor(AppColors.TextTertiary)
+          .opacity(0.6)
+
+        Text('敬请期待')
+          .fontSize(12)
+          .fontColor(AppColors.TextTertiary)
+          .opacity(0.4)
+      }
+      .padding({ bottom: 32 })
     }
     .width('100%')
     .height('100%')

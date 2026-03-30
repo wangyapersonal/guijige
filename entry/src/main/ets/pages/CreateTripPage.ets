@@ -16,9 +16,29 @@ struct CreateTripPage {
   @State destination: string = '';
   @State notes: string = '';
   @State tripType: TripType = TripType.OTHER;
+  @State selectedCountries: string[] = [];
+  @State selectedCities: string[] = [];
+  @State showCountryPicker: boolean = false;
+  @State showCityPicker: boolean = false;
 
   private primaryAlpha10 = 'rgba(20, 184, 166, 0.1)';
   private accentAlpha10 = 'rgba(245, 158, 11, 0.1)';
+
+  private countries: string[] = ['中国', '日本', '韩国', '泰国', '新加坡', '马来西亚', '法国', '德国', '意大利', '英国', '美国', '加拿大'];
+  private cities: Record<string, string[]> = {
+    '中国': ['北京', '上海', '广州', '深圳', '成都', '杭州', '西安', '厦门'],
+    '日本': ['东京', '大阪', '京都', '北海道', '福冈', '名古屋'],
+    '韩国': ['首尔', '釜山', '济州岛', '仁川', '大邱'],
+    '泰国': ['曼谷', '清迈', '普吉岛', '芭提雅', '甲米'],
+    '新加坡': ['新加坡'],
+    '马来西亚': ['吉隆坡', '槟城', '马六甲', '沙巴'],
+    '法国': ['巴黎', '尼斯', '里昂', '马赛', '普罗旺斯'],
+    '德国': ['柏林', '慕尼黑', '法兰克福', '汉堡', '科隆'],
+    '意大利': ['罗马', '米兰', '威尼斯', '佛罗伦萨', '那不勒斯'],
+    '英国': ['伦敦', '曼彻斯特', '爱丁堡', '利物浦', '牛津'],
+    '美国': ['纽约', '洛杉矶', '旧金山', '芝加哥', '拉斯维加斯'],
+    '加拿大': ['多伦多', '温哥华', '蒙特利尔', '渥太华', '卡尔加里']
+  };
 
   async createTrip(): Promise<void> {
     try {
@@ -26,6 +46,16 @@ struct CreateTripPage {
         console.warn('Trip name is required');
         return;
       }
+
+      // 构建目的地字符串
+      const destinationParts: string[] = [];
+      if (this.selectedCountries.length > 0) {
+        destinationParts.push(this.selectedCountries.join('、'));
+      }
+      if (this.selectedCities.length > 0) {
+        destinationParts.push(this.selectedCities.join('、'));
+      }
+      this.destination = destinationParts.join('·') || '未设置目的地';
 
       const trip: Trip = {
         id: generateId(),
@@ -243,25 +273,98 @@ struct CreateTripPage {
               .borderRadius(16)
               .backgroundColor(this.accentAlpha10)
 
-              TextInput({ text: this.destination, placeholder: '例如：法国·巴黎' })
-                .fontSize(16)
-                .fontColor('#1F2937')
-                .backgroundColor(Color.Transparent)
-                .layoutWeight(1)
-                .onChange((value: string) => {
-                  this.destination = value;
-                })
+              Column({ space: 8 }) {
+                // 已选国家标签
+                if (this.selectedCountries.length > 0) {
+                  Flex({ wrap: FlexWrap.Wrap }) {
+                    ForEach(this.selectedCountries, (country: string) => {
+                      Row({ space: 4 }) {
+                        Text(country)
+                          .fontSize(14)
+                          .fontColor(AppColors.TextPrimary)
 
-              Image($r('sys.media.ohos_ic_public_arrow_right'))
-                .width(20)
-                .height(20)
-                .fillColor('#9CA3AF')
+                        Image($r('sys.media.ohos_ic_public_cancel'))
+                          .width(16)
+                          .height(16)
+                          .fillColor('#9CA3AF')
+                          .onClick(() => {
+                            this.selectedCountries = this.selectedCountries.filter(c => c !== country);
+                            this.selectedCities = [];
+                          })
+                      }
+                      .padding({ left: 12, right: 8, top: 6, bottom: 6 })
+                      .backgroundColor('rgba(20, 184, 166, 0.1)')
+                      .borderRadius(16)
+                    }, (country: string) => country)
+                  }
+                  .width('100%')
+                }
+
+                // 已选城市标签
+                if (this.selectedCities.length > 0) {
+                  Flex({ wrap: FlexWrap.Wrap }) {
+                    ForEach(this.selectedCities, (city: string) => {
+                      Row({ space: 4 }) {
+                        Text(city)
+                          .fontSize(14)
+                          .fontColor(AppColors.TextPrimary)
+
+                        Image($r('sys.media.ohos_ic_public_cancel'))
+                          .width(16)
+                          .height(16)
+                          .fillColor('#9CA3AF')
+                          .onClick(() => {
+                            this.selectedCities = this.selectedCities.filter(c => c !== city);
+                          })
+                      }
+                      .padding({ left: 12, right: 8, top: 6, bottom: 6 })
+                      .backgroundColor('rgba(245, 158, 11, 0.1)')
+                      .borderRadius(16)
+                    }, (city: string) => city)
+                  }
+                  .width('100%')
+                }
+
+                // 添加按钮
+                Row({ space: 8 }) {
+                  Button() {
+                    Text('+ 国家')
+                      .fontSize(14)
+                      .fontColor(AppColors.Primary)
+                  }
+                  .height(32)
+                  .padding({ left: 12, right: 12 })
+                  .backgroundColor('rgba(20, 184, 166, 0.1)')
+                  .borderRadius(16)
+                  .onClick(() => {
+                    this.showCountryPicker = true;
+                  })
+
+                  if (this.selectedCountries.length > 0) {
+                    Button() {
+                      Text('+ 城市')
+                        .fontSize(14)
+                        .fontColor(AppColors.Accent)
+                    }
+                    .height(32)
+                    .padding({ left: 12, right: 12 })
+                    .backgroundColor('rgba(245, 158, 11, 0.1)')
+                    .borderRadius(16)
+                    .onClick(() => {
+                      this.showCityPicker = true;
+                    })
+                  }
+                }
+              }
+              .layoutWeight(1)
+              .alignItems(HorizontalAlign.Start)
             }
             .width('100%')
             .padding(16)
             .backgroundColor('#F9FAFB')
             .borderRadius(16)
             .border({ width: 1, color: '#E5E7EB' })
+            .alignItems(VerticalAlign.Top)
           }
           .width('100%')
           .alignItems(HorizontalAlign.Start)
@@ -326,5 +429,150 @@ struct CreateTripPage {
     .width('100%')
     .height('100%')
     .backgroundColor('#F7F9FA')
+    .bindSheet(this.showCountryPicker, this.CountryPickerBuilder(), {
+      height: 400,
+      showClose: false,
+      onDisappear: () => {
+        this.showCountryPicker = false
+      }
+    })
+    .bindSheet(this.showCityPicker, this.CityPickerBuilder(), {
+      height: 400,
+      showClose: false,
+      onDisappear: () => {
+        this.showCityPicker = false
+      }
+    })
+  }
+
+  @Builder
+  CountryPickerBuilder() {
+    Column({ space: 0 }) {
+      Column({ space: 16 }) {
+        Row() {
+          Text('选择国家')
+            .fontSize(18)
+            .fontColor('#1F2937')
+            .fontWeight(FontWeight.Bold)
+
+          Blank()
+
+          Text('确定')
+            .fontSize(16)
+            .fontColor('#14B8A6')
+            .onClick(() => {
+              this.showCountryPicker = false
+            })
+        }
+        .width('100%')
+
+        List({ space: 8 }) {
+          ForEach(this.countries, (country: string) => {
+            ListItem() {
+              Row({ space: 12 }) {
+                Text(country)
+                  .fontSize(16)
+                  .fontColor('#1F2937')
+                  .layoutWeight(1)
+
+                if (this.selectedCountries.includes(country)) {
+                  Image($r('sys.media.ohos_ic_public_ok'))
+                    .width(20)
+                    .height(20)
+                    .fillColor('#14B8A6')
+                }
+              }
+              .width('100%')
+              .padding(16)
+              .backgroundColor(this.selectedCountries.includes(country) ? 'rgba(20, 184, 166, 0.1)' : '#F9FAFB')
+              .borderRadius(16)
+              .onClick(() => {
+                if (this.selectedCountries.includes(country)) {
+                  this.selectedCountries = this.selectedCountries.filter(c => c !== country);
+                } else {
+                  this.selectedCountries.push(country);
+                }
+              })
+            }
+          }, (country: string) => country)
+        }
+        .width('100%')
+        .layoutWeight(1)
+      }
+      .width('100%')
+      .padding(24)
+    }
+    .width('100%')
+    .backgroundColor(Color.White)
+    .borderRadius({ topLeft: 24, topRight: 24 })
+  }
+
+  @Builder
+  CityPickerBuilder() {
+    Column({ space: 0 }) {
+      Column({ space: 16 }) {
+        Row() {
+          Text('选择城市')
+            .fontSize(18)
+            .fontColor('#1F2937')
+            .fontWeight(FontWeight.Bold)
+
+          Blank()
+
+          Text('确定')
+            .fontSize(16)
+            .fontColor('#14B8A6')
+            .onClick(() => {
+              this.showCityPicker = false
+            })
+        }
+        .width('100%')
+
+        let allCities: string[] = [];
+        this.selectedCountries.forEach(country => {
+          if (this.cities[country]) {
+            allCities = allCities.concat(this.cities[country]);
+          }
+        });
+
+        List({ space: 8 }) {
+          ForEach(allCities, (city: string) => {
+            ListItem() {
+              Row({ space: 12 }) {
+                Text(city)
+                  .fontSize(16)
+                  .fontColor('#1F2937')
+                  .layoutWeight(1)
+
+                if (this.selectedCities.includes(city)) {
+                  Image($r('sys.media.ohos_ic_public_ok'))
+                    .width(20)
+                    .height(20)
+                    .fillColor('#14B8A6')
+                }
+              }
+              .width('100%')
+              .padding(16)
+              .backgroundColor(this.selectedCities.includes(city) ? 'rgba(245, 158, 11, 0.1)' : '#F9FAFB')
+              .borderRadius(16)
+              .onClick(() => {
+                if (this.selectedCities.includes(city)) {
+                  this.selectedCities = this.selectedCities.filter(c => c !== city);
+                } else {
+                  this.selectedCities.push(city);
+                }
+              })
+            }
+          }, (city: string) => city)
+        }
+        .width('100%')
+        .layoutWeight(1)
+      }
+      .width('100%')
+      .padding(24)
+    }
+    .width('100%')
+    .backgroundColor(Color.White)
+    .borderRadius({ topLeft: 24, topRight: 24 })
   }
 }
