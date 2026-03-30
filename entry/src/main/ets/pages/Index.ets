@@ -4,17 +4,46 @@ import { AppColors } from '../common/constants/Colors';
 @Entry
 @Component
 struct Index {
+  @State private bgScale: number = 1.0;
+  @State private cardOpacity: number = 0;
+  @State private cardTranslateY: number = 20;
+
+  aboutToAppear() {
+    // ✅ 1. 背景图放大动画（5秒内从 1.0 放大到 1.1）
+    animateTo({
+      duration: 5000,
+      curve: Curve.EaseInOut,
+      iterations: 1,
+      playMode: PlayMode.Normal,
+      onFinish: () => {}
+    }, () => {
+      this.bgScale = 1.1;
+    });
+
+    // ✅ 2. 卡片淡入动画（延迟 0.5 秒）
+    setTimeout(() => {
+      animateTo({
+        duration: 800,
+        curve: Curve.EaseOut
+      }, () => {
+        this.cardOpacity = 1;
+        this.cardTranslateY = 0;
+      });
+    }, 500);
+  }
+
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // ✅ 1. 背景图（Haldon Belvedere 风景图）
+      // ✅ 1. 背景图（带缩放动画）
       Column() {
       }
       .width('100%')
       .height('100%')
+      .scale({ x: this.bgScale, y: this.bgScale })
       .backgroundImage($r('app.media.splash_background'))
       .backgroundImageSize(ImageSize.Cover)
 
-      // ✅ 2. 渐变遮罩（增强深度）
+      // ✅ 2. 渐变遮罩
       Column() {
       }
       .width('100%')
@@ -28,7 +57,7 @@ struct Index {
         ]
       })
 
-      // 玻璃态卡片
+      // ✅ 3. 玻璃态卡片（带淡入动画）
       Column({ space: 24 }) {
         // Logo 区域（圆形渐变背景）
         Stack() {
@@ -122,6 +151,8 @@ struct Index {
         color: 'rgba(0, 0, 0, 0.15)',
         offsetY: 12
       })
+      .opacity(this.cardOpacity)
+      .translate({ y: this.cardTranslateY })
     }
     .width('100%')
     .height('100%')
