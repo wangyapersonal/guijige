@@ -197,31 +197,31 @@ export struct ProfilePage {
               .width('100%')
 
             this.MenuItem(
-              $r('app.media.ic_favorite'),
+              $r('sys.media.ohos_ic_public_add'),
               '我的收藏',
               '收藏的行程和打卡点'
             )
 
             this.MenuItem(
-              $r('app.media.ic_export'),
+              $r('sys.media.ohos_ic_public_arrow_down'),
               '数据导出',
               '导出 GPX、KML 文件'
             )
 
             this.MenuItem(
-              $r('app.media.ic_gallery'),
+              $r('sys.media.ohos_ic_public_camera'),
               '相册管理',
               '管理行程照片'
             )
 
             this.MenuItem(
-              $r('app.media.ic_feedback'),
+              $r('sys.media.ohos_ic_public_edit'),
               '意见反馈',
               '帮助我们做得更好'
             )
 
             this.MenuItem(
-              $r('app.media.ic_about'),
+              $r('sys.media.ohos_ic_public_arrow_right'),
               '关于我们',
               '版本 1.0.0',
               false
