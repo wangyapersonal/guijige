@@ -4,39 +4,53 @@ import { AppColors } from '../common/constants/Colors';
 @Entry
 @Component
 struct Index {
-  @State private bgTranslateX: number = -100;  // 增大移动距离：-100 → 100
+  @State private bgScale: number = 1.0;
+  @State private bgTranslateX: number = -100;
+  @State private bgRotate: number = 0;
   @State private cardOpacity: number = 0;
   @State private cardTranslateY: number = 20;
 
   aboutToAppear() {
-    // ✅ 1. 背景图横向移动动画（5秒内从 -100 移动到 100，更明显的移动)
+    // ✅ 1. 缩放动画（5秒内 1.0 → 1.15)
     animateTo({
-      duration: 5000,  // 缩短到5秒
-      curve: Curve.Linear
+      duration: 5000,
+      curve: Curve.EaseInOut
     }, () => {
-      this.bgTranslateX = 100;  // 增大移动距离
+      this.bgScale = 1.15;
+      this.bgTranslateX = 0;
+      this.bgRotate = 360;  // 旋转1圈
     });
 
-    // ✅ 2. 卡片淡入动画（延迟 0.3 秒)
-    setTimeout(() => {
-      animateTo({
-        duration: 800,
-        curve: Curve.EaseOut
-      }, () => {
-        this.cardOpacity = 1;
-        this.cardTranslateY = 0;
-      });
-    }, 300);
+    // ✅ 2. 渐变动画（3秒循环，5秒内 0.5 → 0.8)
+    animateTo({
+      duration: 5000,
+      curve: Curve.Linear,
+    }, () => {
+      this.bgRotate = 360;
+      this.bgTranslateX = 100;
+    });
+
+    // ✅ 3. 缩放动画反向（5秒内 1.15 → 1.0）
+    animateTo({
+      duration: 5000,
+      curve: Curve.EaseInOut
+    }, () => {
+      this.bgScale = 1.0;
+      this.bgTranslateX = -100;
+      this.bgRotate = 0;
+    });
   }
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // ✅ 1. 背景图（使用 Image 组件，带横向移动动画）
+      // ✅ 1. 背景图（三重动画：缩放、移动、旋转）
       Image($r('app.media.splash_background'))
         .width('100%')
         .height('100%')
         .objectFit(ImageFit.Cover)
-        .translate({ x: this.bgTranslateX })
+        .scale({ x: this.bgScale, y: this.bgScale })
+        .rotate({ z: this.bgTranslateX })
+        .rotate({ z: this.bgRotate, angle: this.bgRotate })
 
       // ✅ 2. 渐变遮罩
       Column() {
@@ -52,11 +66,10 @@ struct Index {
         ]
       })
 
-      // ✅ 3. 玻璃态卡片（带淡入动画)
+      // ✅ 3. 玻璃态卡片（淡入上移)
       Column({ space: 24 }) {
-        // Logo 区域（圆形渐变背景）
+        // Logo 区域
         Stack() {
-          // 圆形渐变背景
           Column() {
           }
           .width(96)
@@ -72,15 +85,14 @@ struct Index {
             offsetY: 8
           })
 
-          // Logo 图标
           Image($r('app.media.icon'))
             .width(60)
             .height(60)
         }
+
         .width(96)
         .height(96)
 
-        // 品牌名称
         Column({ space: 4 }) {
           Text('轨迹哥')
             .fontSize(32)
@@ -93,13 +105,11 @@ struct Index {
             .letterSpacing(2)
         }
 
-        // 标语
         Text('记录世界的每一个角落')
           .fontSize(14)
           .fontColor(AppColors.TextSecondary)
           .fontWeight(500)
 
-        // 开启旅程按钮
         Button() {
           Row({ space: 8 }) {
             Text('开启旅程')
@@ -130,7 +140,6 @@ struct Index {
           });
         })
 
-        // 服务条款
         Text('继续使用即表示同意服务条款和隐私政策')
           .fontSize(12)
           .fontColor('rgba(255,255,255,0.8)')
