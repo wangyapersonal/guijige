@@ -4,7 +4,7 @@ import { AppColors } from '../common/constants/Colors';
 @Entry
 @Component
 struct Index {
-  @State private bgTranslateX: number = -50;  // 从左边 -50px 开始
+  @State private bgTranslateX: number = -50;
   @State private cardOpacity: number = 0;
   @State private cardTranslateY: number = 20;
 
@@ -12,10 +12,7 @@ struct Index {
     // ✅ 1. 背景图横向移动动画（8秒内从 -50 移动到 50）
     animateTo({
       duration: 8000,
-      curve: Curve.Linear,  // 匀速移动
-      onFinish: () => {
-        // 动画完成后可以反向或重新开始
-      }
+      curve: Curve.Linear
     }, () => {
       this.bgTranslateX = 50;
     });
@@ -34,18 +31,12 @@ struct Index {
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // ✅ 1. 背景图（带横向移动动画）
-      Stack() {
-        Column() {
-        }
+      // ✅ 1. 背景图（使用 Image 组件，带横向移动动画）
+      Image($r('app.media.splash_background'))
         .width('100%')
         .height('100%')
-        .backgroundImage($r('app.media.splash_background'))
-        .backgroundImageSize(ImageSize.Cover)
-      }
-      .width('100%')
-      .height('100%')
-      .translate({ x: this.bgTranslateX })
+        .objectFit(ImageFit.Cover)
+        .translate({ x: this.bgTranslateX })
 
       // ✅ 2. 渐变遮罩
       Column() {
