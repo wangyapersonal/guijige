@@ -11,7 +11,7 @@ struct Index {
   @State private cardTranslateY: number = 20;
 
   aboutToAppear() {
-    // ✅ 1. 缩放动画（5秒内 1.0 → 1.15)
+    // ✅ 1. 缩放动画（5秒内 1.0 → 1.15）
     animateTo({
       duration: 5000,
       curve: Curve.EaseInOut
@@ -21,7 +21,7 @@ struct Index {
       this.bgRotate = 360;  // 旋转1圈
     });
 
-    // ✅ 2. 渐变动画（3秒循环，3次 0.5 → 0.8)
+    // ✅ 2. 渐变动画（3秒循环，3次 0.5 → 0.8 → 0.5)
     animateTo({
       duration: 5000,
       curve: Curve.Linear
@@ -43,12 +43,15 @@ struct Index {
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // ✅ 1. 背景图（使用 Image 组件，      Image($r('app.media.splash_background'))
+      // ✅ 1. 背景图（使用 Image 组件)
+      Image($r('app.media.splash_background'))
         .width('100%')
         .height('100%')
         .objectFit(ImageFit.Cover)
-        .scale({ x: this.bgScale, y: this.bgScale, y: this.bgTranslateX })
-        .rotate({ x: this.bgTranslateX, z: this.bgRotate })
+        .scale({ x: this.bgScale, y: this.bgScale })  // ✅ 修复：分开写
+ x 和 y
+        .translate({ x: this.bgTranslateX })  // ✅ 修复：translate 而不是 scale
+        .rotate({ z: this.bgRotate })  // ✅ 修复：rotate 而不是 rotate
 
       // ✅ 2. 渐变遮罩
       Column() {
