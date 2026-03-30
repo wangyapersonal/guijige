@@ -6,20 +6,32 @@ import { AppColors } from '../common/constants/Colors';
 struct Index {
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // ✅ 1. 添加背景图（Unsplash 风景图）
-      Image('https://images.unsplash.com/photo-1620841611656-0cd634390d48?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY2VuaWMlMjBtb3VudGFpbiUyMGxhbmRzY2FwZSUyMHRyYXZlbHxlbnwxfHx8fDE3NzQ4Mzk0OTd8MA&ixlib=rb-4.1.0&q=80&w=1080')
-        .width('100%')
-        .height('100%')
-        .objectFit(ImageFit.Cover)
+      // ✅ 1. 青色渐变背景（替代背景图）
+      Column() {
+      }
+      .width('100%')
+      .height('100%')
+      .linearGradient({
+        angle: 135,
+        colors: [
+          [AppColors.PrimaryDark, 0.0],
+          [AppColors.Primary, 0.5],
+          [AppColors.PrimaryLight, 1.0]
+        ]
+      })
 
-      // ✅ 2. 渐变遮罩
+      // ✅ 2. 渐变遮罩（增强深度）
       Column() {
       }
       .width('100%')
       .height('100%')
       .linearGradient({
         angle: 180,
-        colors: [['rgba(0, 0, 0, 0.2)', 0.0], ['rgba(0, 0, 0, 0.1)', 0.5], ['rgba(0, 0, 0, 0.4)', 1.0]]
+        colors: [
+          ['rgba(0, 0, 0, 0.15)', 0.0],
+          ['rgba(0, 0, 0, 0.05)', 0.5],
+          ['rgba(0, 0, 0, 0.3)', 1.0]
+        ]
       })
 
       // 玻璃态卡片
@@ -107,11 +119,11 @@ struct Index {
       }
       .padding(40)
       .margin({ left: 24, right: 24 })
-      .borderRadius(24)  // ✅ 3. 修改圆角 48px → 24px
+      .borderRadius(24)
       .backdropBlur(40)
       .backgroundColor('rgba(255, 255, 255, 0.85)')
       .border({ width: 1, color: 'rgba(255, 255, 255, 0.2)' })
-      .shadow({  // ✅ 4. 调整阴影参数
+      .shadow({
         radius: 24,
         color: 'rgba(0, 0, 0, 0.15)',
         offsetY: 12
