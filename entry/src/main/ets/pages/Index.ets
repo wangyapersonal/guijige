@@ -21,16 +21,16 @@ struct Index {
       this.bgRotate = 360;  // 旋转1圈
     });
 
-    // ✅ 2. 渐变动画（3秒循环，5秒内 0.5 → 0.8)
+    // ✅ 2. 渐变动画（3秒循环，3次 0.5 → 0.8)
     animateTo({
       duration: 5000,
-      curve: Curve.Linear,
+      curve: Curve.Linear
     }, () => {
-      this.bgRotate = 360;
       this.bgTranslateX = 100;
+      this.bgRotate = 360;
     });
 
-    // ✅ 3. 缩放动画反向（5秒内 1.15 → 1.0）
+    // ✅ 3. 缩放动画反向（5秒内 1.15 → 1.0)
     animateTo({
       duration: 5000,
       curve: Curve.EaseInOut
@@ -43,14 +43,12 @@ struct Index {
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // ✅ 1. 背景图（三重动画：缩放、移动、旋转）
-      Image($r('app.media.splash_background'))
+      // ✅ 1. 背景图（使用 Image 组件，      Image($r('app.media.splash_background'))
         .width('100%')
         .height('100%')
         .objectFit(ImageFit.Cover)
-        .scale({ x: this.bgScale, y: this.bgScale })
-        .rotate({ z: this.bgTranslateX })
-        .rotate({ z: this.bgRotate, angle: this.bgRotate })
+        .scale({ x: this.bgScale, y: this.bgScale, y: this.bgTranslateX })
+        .rotate({ x: this.bgTranslateX, z: this.bgRotate })
 
       // ✅ 2. 渐变遮罩
       Column() {
@@ -66,7 +64,7 @@ struct Index {
         ]
       })
 
-      // ✅ 3. 玻璃态卡片（淡入上移)
+      // ✅ 3. 玻璃态卡片
       Column({ space: 24 }) {
         // Logo 区域
         Stack() {
@@ -89,9 +87,6 @@ struct Index {
             .width(60)
             .height(60)
         }
-
-        .width(96)
-        .height(96)
 
         Column({ space: 4 }) {
           Text('轨迹哥')
