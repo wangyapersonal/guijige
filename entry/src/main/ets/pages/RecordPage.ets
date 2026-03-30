@@ -103,10 +103,12 @@ struct RecordPage {
         tripId: tripId,
         startTime: Date.now() - this.duration * 1000,
         endTime: Date.now(),
-        trackPoints: this.trackPoints
+        distance: this.distance,
+        trackPoints: this.trackPoints,
+        createdAt: Date.now()
       };
 
-      await RecordService.getInstance().createRecordSegment(segment);
+      await RecordService.getInstance().createRecord(segment);
       router.back();
     } catch (error) {
       console.error('Failed to save record:', error);
