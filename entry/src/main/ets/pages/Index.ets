@@ -4,41 +4,28 @@ import { AppColors } from '../common/constants/Colors';
 @Entry
 @Component
 struct Index {
-  @State private bgScale: number = 1.0;
+  // 背景X偏移量（控制移动）
+  @State private bgOffsetX: number = 0;
+  // 卡片透明度
   @State private cardOpacity: number = 0;
+  // 卡片Y偏移
   @State private cardTranslateY: number = 30;
-
-  aboutToAppear() {
-    // Background zoom animation (3 seconds)
-    animateTo({
-      duration: 3000,
-      curve: Curve.EaseOut
-    }, () => {
-      this.bgScale = 1.1;
-    });
-
-    // Card fade in animation (delay 0.5 seconds)
-    setTimeout(() => {
-      animateTo({
-        duration: 600,
-        curve: Curve.EaseOut
-      }, () => {
-        this.cardOpacity = 1;
-        this.cardTranslateY = 0;
-      });
-    }, 500);
-  }
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // Background image with zoom animation
-      Image($r('app.media.splash_background'))
-        .width('100%')
-        .height('100%')
-        .objectFit(ImageFit.Cover)
-        .scale({ x: this.bgScale, y: this.bgScale })
+      // 背景层（单图平移）
+      Stack() {
+        Image($r('app.media.splash_background'))
+          .width('120%')  // 宽度大于屏幕，有移动空间
+          .height('100%')
+          .objectFit(ImageFit.Cover)
+          .translate({ x: this.bgOffsetX })
+      }
+      .width('100%')
+      .height('100%')
+      .clip(true)  // 裁掉屏幕外部分
 
-      // Gradient overlay
+      // 渐变遮罩
       Column() {
       }
       .width('100%')
@@ -52,9 +39,9 @@ struct Index {
         ]
       })
 
-      // Glass card with fade-in animation
+      // 玻璃态卡片
       Column({ space: 24 }) {
-        // Logo area
+        // Logo 区域
         Stack() {
           Column() {
           }
@@ -143,5 +130,47 @@ struct Index {
     }
     .width('100%')
     .height('100%')
+    .onAppear(() => {
+      this.startBgAnimation();
+      this.startCardAnimation();
+    })
+  }
+
+  // 启动背景平移动画（参考示例代码）
+  startBgAnimation() {
+    const uiContext = this.getUIContext();
+
+    const animate = () => {
+      // 1) 复位：回到起始点（无动画，瞬间跳）
+      this.bgOffsetX = 0;
+
+      // 2) 缓慢左移（动画）
+      uiContext.animateTo({
+        duration: 10000,  // 10秒超慢
+        curve: Curve.Linear,  // 匀速
+        iterations: 1,
+        onFinish: () => {
+          animate();  // 结束后立刻重新开始 → 无限循环
+        }
+      }, () => {
+        // 目标：向左移动 20%（图片宽度 120% - 屏幕 100% = 20%）
+        this.bgOffsetX = -80;
+      });
+    };
+
+    animate();  // 启动
+  }
+
+  // 启动卡片淡入动画
+  startCardAnimation() {
+    setTimeout(() => {
+      animateTo({
+        duration: 600,
+        curve: Curve.EaseOut
+      }, () => {
+        this.cardOpacity = 1;
+        this.cardTranslateY = 0;
+      });
+    }, 500);
   }
 }
