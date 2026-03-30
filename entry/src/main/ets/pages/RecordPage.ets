@@ -4,6 +4,7 @@ import { router } from '@kit.ArkUI';
 import { TrackPoint, RecordSegment } from '../models/RecordSegment';
 import { TripService } from '../services/TripService';
 import { Trip, TripStatus } from '../models/Trip';
+import { AppColors } from '../common/constants/Colors';
 
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
@@ -18,14 +19,27 @@ struct RecordPage {
   @State distance: number = 0;
   @State speed: number = 0;
   @State trackPoints: TrackPoint[] = [];
+  @State isPulsing: boolean = true;
+
   private locationService: LocationService = LocationService.getInstance();
 
   async aboutToAppear(): Promise<void> {
-    const params = router.getParams() as Record<string, string>;
-    const tripId = params.tripId;
-    this.isRecording = true;
-    this.locationService.startContinuousTracking();
-    this.startTimer();
+    try {
+      const params = router.getParams() as Record<string, string>;
+      const tripId = params.tripId;
+      this.isRecording = true;
+      this.locationService.startContinuousTracking();
+      this.startTimer();
+    } catch (error) {
+      console.error('Failed to start recording:', error);
+    }
+  }
+
+  aboutToDisappear() {
+    this.stopTimer();
+    if (this.isRecording) {
+      this.locationService.stopContinuousTracking();
+    }
   }
 
   private startTimer(): void {
@@ -62,7 +76,7 @@ struct RecordPage {
   }
 
   private haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-    const R = 6371; // 地球半径，单位千米
+    const R = 6371;
     const dLat = this.toRadians(lat2 - lat1);
     const dLon = this.toRadians(lon2 - lon1);
     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -84,221 +98,223 @@ struct RecordPage {
   }
 
   private async saveRecord(): Promise<void> {
-    const params = router.getParams() as Record<string, string>;
-    const tripId = params.tripId;
-    if (this.trackPoints.length === 0) {
-      return;
+    try {
+      const params = router.getParams() as Record<string, string>;
+      const tripId = params.tripId;
+      if (this.trackPoints.length === 0) {
+        return;
+      }
+      const segment: RecordSegment = {
+        id: generateId(),
+        tripId: tripId,
+        startTime: this.trackPoints[0].timestamp,
+        endTime: this.trackPoints[this.trackPoints.length - 1].timestamp,
+        distance: this.distance,
+        trackPoints: this.trackPoints,
+        createdAt: Date.now()
+      };
+      await RecordService.getInstance().createRecord(segment);
+    } catch (error) {
+      console.error('Failed to save record:', error);
     }
-    const segment: RecordSegment = {
-      id: generateId(),
-      tripId: tripId,
-      startTime: this.trackPoints[0].timestamp,
-      endTime: this.trackPoints[this.trackPoints.length - 1].timestamp,
-      distance: this.distance,
-      trackPoints: this.trackPoints,
-      createdAt: Date.now()
-    };
-    await RecordService.getInstance().createRecord(segment);
   }
 
   private async updateTripStatus(): Promise<void> {
-    const params = router.getParams() as Record<string, string>;
-    const tripId = params.tripId;
-    const trip = await TripService.getInstance().getTripById(tripId);
-    if (trip) {
-      trip.status = TripStatus.COMPLETED;
-      await TripService.getInstance().updateTrip(trip);
+    try {
+      const params = router.getParams() as Record<string, string>;
+      const tripId = params.tripId;
+      const trip = await TripService.getInstance().getTripById(tripId);
+      if (trip) {
+        trip.status = TripStatus.COMPLETED;
+        await TripService.getInstance().updateTrip(trip);
+      }
+    } catch (error) {
+      console.error('Failed to update trip status:', error);
     }
   }
 
+  @Builder
+  StatCard(icon: Resource, value: string, label: string, color: string) {
+    Column() {
+      Image(icon)
+        .width(24)
+        .height(24)
+        .fillColor(color)
+
+      Text(value)
+        .fontSize(24)
+        .fontColor(Color.White)
+        .fontWeight(FontWeight.Bold)
+        .margin({ top: 8 })
+
+      Text(label)
+        .fontSize(12)
+        .fontColor('rgba(255, 255, 255, 0.6)')
+        .margin({ top: 4 })
+    }
+    .width('100%')
+    .padding(16)
+    .backgroundColor('rgba(255, 255, 255, 0.1)')
+    .borderRadius(16)
+    .backdropBlur(20)
+  }
+
   build() {
-    Stack({ alignContent: Alignment.Top }) {
-      Column() {
-        Blank()
-
-        // 底部控制区域
-        Column({ space: 24 }) {
-          Text('Slide or Click to end')
-            .fontSize(12)
-            .fontColor('rgba(255,255,255,0.6)')
-            .letterSpacing(2)
-            .fontWeight(600)
-
-          Button() {
-            Image($r('sys.media.ohos_ic_public_pause'))
-              .width(36)
-              .height(36)
-              .fillColor('#EF4444')
-          }
-          .type(ButtonType.Normal)
-          .backgroundColor('rgba(239, 68, 68, 0.2)')
-          .borderRadius(48)
-          .width(96)
-          .height(96)
-          .border({ width: 2, color: '#EF4444' })
-          .shadow({ radius: 30, color: 'rgba(239, 68, 68, 0.2)' })
-          .shadow({ radius: 40, color: 'rgba(239, 68, 68, 0.6)' })
-          .onClick(() => {
-            this.isRecording = false;
-            this.locationService.stopContinuousTracking();
-            this.trackPoints = this.locationService.getTrackPoints();
-            this.stopTimer();
-            this.saveRecord();
-            this.updateTripStatus();
-            router.back();
-          })
-
-          Text('结束记录')
-            .fontSize(14)
-            .fontColor('#FCA5A5')
-            .fontWeight(500)
-        }
-        .padding({ top: 32, bottom: 48 })
-        .alignItems(HorizontalAlign.Center)
-        .linearGradient({
-          angle: 180,
-          colors: [['rgba(17, 24, 39, 1)', 0.0], ['rgba(17, 24, 39, 0)', 1.0]]
-        })
-      }
-      .width('100%')
-
-      // 地图背景
+    Stack() {
+      // 深色背景 + 网格
       Column() {
       }
       .width('100%')
       .height('100%')
-      .backgroundColor('#1F2937')
+      .backgroundColor('#111827')
 
-      // 模拟轨迹线
+      // 网格背景（模拟地图）
       Column() {
-        Polyline()
-          .width(300)
-          .height(300)
-          .points([[50,400], [150,350], [120,250], [250,150], [300,180], [280,280]])
-          .strokeWidth(5)
-          .stroke(Color.Red)
-          .fill(Color.Transparent)
-          .strokeDashArray([0])
-          .strokeLineCap(LineCapStyle.Round)
-          .strokeLineJoin(LineJoinStyle.Round)
-          .shadow({ radius: 6, color: 'rgba(13, 148, 136, 0.6)' })
       }
       .width('100%')
       .height('100%')
+      .backgroundImage('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"%3E%3Cpath d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(20, 184, 166, 0.1)" stroke-width="1"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23grid)" /%3E%3C/svg%3E')
 
-      // 脉冲定位点
       Column() {
-        Stack() {
-          Circle()
-            .width(48)
-            .height(48)
-            .fill('rgba(13, 148, 136, 0.3)')
-          Circle()
-            .width(32)
-            .height(32)
-            .fill('rgba(13, 148, 136, 0.4)')
-          Circle()
-            .width(16)
-            .height(16)
-            .fill('#5EEAD4')
-            .border({ width: 2, color: Color.White })
-            .shadow({ radius: 10, color: 'rgba(13, 148, 136, 1)' })
-          Circle()
-            .width(6)
-            .height(6)
-            .fill(Color.White)
-        }
-        .margin({ top: 280, left: 280 })
-      }
-      .width('100%')
-      .height('100%')
-
-      // 顶部玻璃态状态栏
-      Column({ space: 24 }) {
+        // 关闭按钮
         Row() {
-          Row({ space: 8 }) {
-            Image($r('sys.media.ohos_ic_public_location'))
-              .width(16)
-              .height(16)
-              .fillColor('#2DD4BF')
-            Text('正在记录行程轨迹...')
-              .fontSize(14)
-              .fontColor('#2DD4BF')
-              .fontWeight(500)
-          }
-
           Blank()
 
-          Row({ space: 4 }) {
-            Image($r('sys.media.ohos_ic_public_location'))
-              .width(12)
-              .height(12)
-              .fillColor('#14B8A6')
-            Text('GPS 信号良好')
-              .fontSize(12)
-              .fontColor('#9CA3AF')
+          Button() {
+            Image($r('sys.media.ohos_ic_public_close'))
+              .width(24)
+              .height(24)
+              .fillColor(Color.White)
           }
+          .width(40)
+          .height(40)
+          .backgroundColor('rgba(255, 255, 255, 0.1)')
+          .borderRadius(20)
+          .backdropBlur(20)
+          .onClick(() => {
+            router.back();
+          })
         }
         .width('100%')
+        .padding({ left: 24, right: 24, top: 48 })
 
-        Column({ space: 8 }) {
-          Text(this.formatDuration(this.duration))
-            .fontSize(48)
-            .fontFamily('monospace')
+        // 实时记录状态
+        Column({ space: 12 }) {
+          Text('实时记录中...')
+            .fontSize(28)
             .fontColor(Color.White)
-            .fontWeight(FontWeight.Lighter)
-            .letterSpacing(4)
-            .shadow({ radius: 8, color: 'rgba(0,0,0,0.5)' })
+            .fontWeight(FontWeight.Bold)
 
-          Text('持续时间')
-            .fontSize(14)
-            .fontColor('#9CA3AF')
-        }
+          // 统计卡片
+          Row({ space: 12 }) {
+            this.StatCard(
+              $r('sys.media.ohos_ic_public_clock'),
+              this.formatDuration(this.duration),
+              '时长',
+              AppColors.Primary
+            )
 
-        Row({ space: 16 }) {
-          Column({ space: 4 }) {
-            Text(this.distance.toFixed(2))
-              .fontSize(24)
-              .fontColor(Color.White)
-              .fontWeight(FontWeight.Bold)
-            Text('公里 (KM)')
-              .fontSize(12)
-              .fontColor('#9CA3AF')
+            this.StatCard(
+              $r('sys.media.ohos_ic_public_navigation'),
+              this.distance.toFixed(2),
+              '公里',
+              AppColors.Accent
+            )
+
+            this.StatCard(
+              $r('sys.media.ohos_ic_public_flash'),
+              this.speed.toFixed(1),
+              'km/h',
+              '#FCD34D'
+            )
           }
-          .alignItems(HorizontalAlign.Center)
-          .backgroundColor('rgba(255,255,255,0.05)')
-          .borderRadius(16)
-          .padding(16)
-          .border({ width: 1, color: 'rgba(255,255,255,0.05)' })
+          .width('100%')
 
-          Column({ space: 4 }) {
-            Text(this.speed.toFixed(1))
-              .fontSize(24)
+          // GPS 状态
+          Row({ space: 8 }) {
+            Column() {
+            }
+            .width(12)
+            .height(12)
+            .borderRadius(6)
+            .backgroundColor('#EF4444')
+
+            Text('GPS 定位中')
+              .fontSize(14)
               .fontColor(Color.White)
-              .fontWeight(FontWeight.Bold)
-            Text('配速 (KM/H)')
-              .fontSize(12)
-              .fontColor('#9CA3AF')
           }
-          .alignItems(HorizontalAlign.Center)
-          .backgroundColor('rgba(255,255,255,0.05)')
-          .borderRadius(16)
+          .width('100%')
+          .justifyContent(FlexAlign.Center)
           .padding(16)
-          .border({ width: 1, color: 'rgba(255,255,255,0.05)' })
+          .backgroundColor('rgba(255, 255, 255, 0.05)')
+          .borderRadius(16)
+          .backdropBlur(10)
         }
         .width('100%')
+        .padding(24)
+
+        Blank()
+
+        // 结束记录按钮
+        Column() {
+          Stack() {
+            // 脉冲动画效果
+            if (this.isPulsing) {
+              Column() {
+              }
+              .width(160)
+              .height(160)
+              .borderRadius(80)
+              .backgroundColor('rgba(239, 68, 68, 0.3)')
+
+              Column() {
+              }
+              .width(140)
+              .height(140)
+              .borderRadius(70)
+              .backgroundColor('rgba(239, 68, 68, 0.5)')
+              .margin({ top: 10, left: 10 })
+            }
+
+            Button() {
+              Text('结束记录')
+                .fontSize(20)
+                .fontColor(Color.White)
+                .fontWeight(FontWeight.Bold)
+            }
+            .width(128)
+            .height(128)
+            .borderRadius(64)
+            .linearGradient({
+              angle: 135,
+              colors: [['#EF4444', 0.0], ['#DC2626', 1.0]]
+            })
+            .shadow({
+              radius: 40,
+              color: 'rgba(239, 68, 68, 0.5)',
+              offsetY: 0
+            })
+            .onClick(() => {
+              this.isPulsing = false;
+              this.isRecording = false;
+              this.locationService.stopContinuousTracking();
+              this.trackPoints = this.locationService.getTrackPoints();
+              this.stopTimer();
+              this.saveRecord();
+              this.updateTripStatus();
+              router.back();
+            })
+          }
+          .width(160)
+          .height(160)
+        }
+        .width('100%')
+        .padding({ bottom: 48 })
       }
       .width('100%')
-      .padding(24)
-      .padding({ top: 48 })
-      .borderRadius(24)
-      .backgroundColor('rgba(0,0,0,0.4)')
-      .border({ width: 1, color: 'rgba(255,255,255,0.1)' })
-      .backdropBlur(24)
-      .shadow({ radius: 16, color: 'rgba(0,0,0,0.5)' })
+      .height('100%')
     }
     .width('100%')
     .height('100%')
-    .backgroundColor('#111827')
   }
 }
