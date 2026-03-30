@@ -5,54 +5,40 @@ import { AppColors } from '../common/constants/Colors';
 @Component
 struct Index {
   @State private bgScale: number = 1.0;
-  @State private bgTranslateX: number = -100;
-  @State private bgRotate: number = 0;
   @State private cardOpacity: number = 0;
-  @State private cardTranslateY: number = 20;
+  @State private cardTranslateY: number = 30;
 
   aboutToAppear() {
-    // 缩放动画（5秒内 1.0 → 1.15）
+    // Background zoom animation (3 seconds)
     animateTo({
-      duration: 5000,
-      curve: Curve.EaseInOut
+      duration: 3000,
+      curve: Curve.EaseOut
     }, () => {
-      this.bgScale = 1.15;
-      this.bgTranslateX = 0;
-      this.bgRotate = 360;
+      this.bgScale = 1.1;
     });
 
-    // 渐变动画（3秒循环，3次 0.5 → 0.8 → 0.5）
-    animateTo({
-      duration: 5000,
-      curve: Curve.Linear
-    }, () => {
-      this.bgTranslateX = 100;
-      this.bgRotate = 360;
-    });
-
-    // 缩放动画反向（5秒内 1.15 → 1.0）
-    animateTo({
-      duration: 5000,
-      curve: Curve.EaseInOut
-    }, () => {
-      this.bgScale = 1.0;
-      this.bgTranslateX = -100;
-      this.bgRotate = 0;
-    });
+    // Card fade in animation (delay 0.5 seconds)
+    setTimeout(() => {
+      animateTo({
+        duration: 600,
+        curve: Curve.EaseOut
+      }, () => {
+        this.cardOpacity = 1;
+        this.cardTranslateY = 0;
+      });
+    }, 500);
   }
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // 背景图（使用 Image 组件)
+      // Background image with zoom animation
       Image($r('app.media.splash_background'))
         .width('100%')
         .height('100%')
         .objectFit(ImageFit.Cover)
         .scale({ x: this.bgScale, y: this.bgScale })
-        .translate({ x: this.bgTranslateX })
-        .rotate({ angle: this.bgRotate })
 
-      // 渐变遮罩
+      // Gradient overlay
       Column() {
       }
       .width('100%')
@@ -66,9 +52,9 @@ struct Index {
         ]
       })
 
-      // 玻璃态卡片
+      // Glass card with fade-in animation
       Column({ space: 24 }) {
-        // Logo 区域
+        // Logo area
         Stack() {
           Column() {
           }
