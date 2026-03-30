@@ -1,8 +1,8 @@
 import { router } from '@kit.ArkUI';
 import { Trip } from '../models/Trip';
 import { TripService } from '../services/TripService';
-import { APP_NAME } from '../common/constants/Constants';
 import { TripType } from '../models/Trip';
+import { AppColors } from '../common/constants/Colors';
 
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
@@ -10,118 +10,196 @@ function generateId(): string {
 
 @Entry
 @Component
-struct TripListPage {
+export struct TripListPage {
   @State trips: Trip[] = [];
 
+  private primaryAlpha10 = 'rgba(20, 184, 166, 0.1)';
+  private primaryAlpha20 = 'rgba(20, 184, 166, 0.2)';
+
   async aboutToAppear(): Promise<void> {
-    this.trips = await TripService.getInstance().getAllTrips();
-
-    // 如果没有数据，添加测试数据
-    if (this.trips.length === 0) {
-      const mockTrips: Trip[] = [
-        {
-          id: generateId(),
-          name: '巴黎浪漫之旅',
-          type: TripType.LEISURE,
-          startDate: Date.now() - 86400000 * 5,
-          endDate: Date.now() - 86400000 * 2,
-          destination: '巴黎',
-          notes: '埃菲尔铁塔、卢浮宫、塞纳河游船',
-          status: 'completed',
-          createdAt: Date.now() - 86400000 * 6
-        },
-        {
-          id: generateId(),
-          name: '东京美食探索',
-          type: TripType.FOOD,
-          startDate: Date.now() - 86400000 * 10,
-          endDate: Date.now() - 86400000 * 7,
-          destination: '东京',
-          notes: '寿司、拉面、居酒屋',
-          status: 'completed',
-          createdAt: Date.now() - 86400000 * 11
-        },
-        {
-          id: generateId(),
-          name: '瑞士雪山徒步',
-          type: TripType.ADVENTURE,
-          startDate: Date.now() + 86400000 * 7,
-          endDate: Date.now() + 86400000 * 14,
-          destination: '瑞士',
-          notes: '少女峰、马特洪峰',
-          status: 'planned',
-          createdAt: Date.now() - 86400000 * 1
-        }
-      ];
-
-      for (const trip of mockTrips) {
-        await TripService.getInstance().createTrip(trip);
-      }
-
+    try {
       this.trips = await TripService.getInstance().getAllTrips();
+
+      // 如果没有数据，添加测试数据
+      if (this.trips.length === 0) {
+        const mockTrips: Trip[] = [
+          {
+            id: generateId(),
+            name: '巴黎浪漫之旅',
+            type: TripType.LEISURE,
+            startDate: Date.now() - 86400000 * 5,
+            endDate: Date.now() - 86400000 * 2,
+            destination: '法国·巴黎',
+            notes: '埃菲尔铁塔、卢浮宫、塞纳河游船',
+            status: 'completed',
+            createdAt: Date.now() - 86400000 * 6
+          },
+          {
+            id: generateId(),
+            name: '东京美食探索',
+            type: TripType.FOOD,
+            startDate: Date.now() - 86400000 * 10,
+            endDate: Date.now() - 86400000 * 7,
+            destination: '日本·东京',
+            notes: '寿司、拉面、居酒屋',
+            status: 'completed',
+            createdAt: Date.now() - 86400000 * 11
+          },
+          {
+            id: generateId(),
+            name: '瑞士雪山徒步',
+            type: TripType.ADVENTURE,
+            startDate: Date.now() + 86400000 * 7,
+            endDate: Date.now() + 86400000 * 14,
+            destination: '瑞士',
+            notes: '少女峰、马特洪峰',
+            status: 'planned',
+            createdAt: Date.now() - 86400000 * 1
+          }
+        ];
+
+        for (const trip of mockTrips) {
+          await TripService.getInstance().createTrip(trip);
+        }
+
+        this.trips = await TripService.getInstance().getAllTrips();
+      }
+    } catch (error) {
+      console.error('Failed to load trips:', error);
     }
+  }
+
+  @Builder
+  TripCard(trip: Trip) {
+    Column() {
+      // 封面图区域（使用渐变色作为占位符）
+      Stack({ alignContent: Alignment.BottomStart }) {
+        // 封面背景
+        Column() {
+        }
+        .width('100%')
+        .height(180)
+        .linearGradient({
+          angle: 135,
+          colors: [[AppColors.Primary, 0.0], [AppColors.PrimaryDark, 1.0]]
+        })
+        .borderRadius({ topLeft: 24, topRight: 24 })
+
+        // 渐变遮罩
+        Column() {
+        }
+        .width('100%')
+        .height(180)
+        .linearGradient({
+          angle: 180,
+          colors: [['transparent', 0.0], ['rgba(0, 0, 0, 0.4)', 1.0]]
+        })
+        .borderRadius({ topLeft: 24, topRight: 24 })
+
+        // 状态徽章
+        Row() {
+          Text(trip.status === 'completed' ? '已完成' : '计划中')
+            .fontSize(12)
+            .fontColor(AppColors.Primary)
+        }
+        .padding({ left: 12, right: 12, top: 6, bottom: 6 })
+        .backgroundColor('rgba(255, 255, 255, 0.9)')
+        .borderRadius(16)
+        .position({ x: '100%', y: 16 })
+        .translate({ x: '-100%' })
+
+        // 标题
+        Text(trip.name)
+          .fontSize(20)
+          .fontColor(Color.White)
+          .fontWeight(FontWeight.Bold)
+          .margin({ bottom: 8 })
+      }
+      .width('100%')
+      .height(180)
+      .padding({ left: 16, right: 16, bottom: 16 })
+
+      // 信息区域
+      Column({ space: 12 }) {
+        Row({ space: 8 }) {
+          Image($r('sys.media.ohos_ic_public_location'))
+            .width(16)
+            .height(16)
+            .fillColor(AppColors.Primary)
+
+          Text(trip.destination || '未设置目的地')
+            .fontSize(14)
+            .fontColor('#6B7280')
+        }
+        .alignItems(VerticalAlign.Center)
+
+        Row({ space: 8 }) {
+          Image($r('sys.media.ohos_ic_public_clock'))
+            .width(16)
+            .height(16)
+            .fillColor('#9CA3AF')
+
+          Text(`${new Date(trip.startDate).toLocaleDateString()} - ${trip.endDate ? new Date(trip.endDate).toLocaleDateString() : '进行中'}`)
+            .fontSize(12)
+            .fontColor('#9CA3AF')
+        }
+        .alignItems(VerticalAlign.Center)
+      }
+      .width('100%')
+      .padding(16)
+      .alignItems(HorizontalAlign.Start)
+    }
+    .width('100%')
+    .backgroundColor(Color.White)
+    .borderRadius(24)
+    .shadow({
+      radius: 8,
+      color: 'rgba(0, 0, 0, 0.04)',
+      offsetY: 2
+    })
+    .onClick(() => {
+      router.pushUrl({
+        url: 'pages/TripDetailPage',
+        params: {
+          tripId: trip.id
+        }
+      });
+    })
   }
 
   build() {
     Column() {
       // 顶部 Header
-      Column({ space: 12 }) {
-        Row() {
-          Image($r('app.media.icon'))
-            .width(40)
-            .height(40)
+      Row() {
+        Text('我的行程')
+          .fontSize(24)
+          .fontColor(AppColors.TextPrimary)
+          .fontWeight(FontWeight.Bold)
 
-          Blank()
+        Blank()
 
-          Button() {
-            Row({ space: 4 }) {
-              Image($r('sys.media.ohos_ic_public_add'))
-                .width(16)
-                .height(16)
-                .fillColor(Color.White)
-              Text('新建')
-                .fontSize(14)
-                .fontColor(Color.White)
-            }
+        Button() {
+          Column() {
           }
-          .height(32)
-          .padding({ left: 16, right: 16 })
-          .backgroundColor('#0D9488')
-          .borderRadius(16)
-          .shadow({
-            radius: 8,
-            color: 'rgba(13, 148, 136, 0.2)'
-          })
-          .onClick(() => {
-            router.pushUrl({
-              url: 'pages/CreateTripPage'
-            })
+          .width(40)
+          .height(40)
+          .borderRadius(20)
+          .linearGradient({
+            angle: 135,
+            colors: [[AppColors.Primary, 0.0], [AppColors.PrimaryDark, 1.0]]
           })
         }
-        .width('100%')
-        .padding({ left: 24, right: 24 })
-
-        Column({ space: 4 }) {
-          Text('我的行程')
-            .fontSize(24)
-            .fontWeight(FontWeight.Bold)
-            .fontColor('#1F2937')
-          Text('发现世界的精彩，记录每一个瞬间')
-            .fontSize(14)
-            .fontColor('#6B7280')
-        }
-        .alignItems(HorizontalAlign.Start)
-        .width('100%')
-        .padding({ left: 24, right: 24 })
+        .width(40)
+        .height(40)
+        .backgroundColor('transparent')
+        .onClick(() => {
+          router.pushUrl({
+            url: 'pages/CreateTripPage'
+          });
+        })
       }
       .width('100%')
-      .padding({ top: 48, bottom: 24 })
-      .backgroundColor(Color.White)
-      .shadow({
-        radius: 8,
-        color: 'rgba(0,0,0,0.05)',
-        offsetY: 2
-      })
+      .padding({ left: 24, right: 24, top: 48, bottom: 24 })
 
       // 行程列表
       if (this.trips.length === 0) {
@@ -131,94 +209,24 @@ struct TripListPage {
             .fontColor('#9CA3AF')
         }
         .width('100%')
+        .layoutWeight(1)
         .justifyContent(FlexAlign.Center)
       } else {
-        List({ space: 24 }) {
-          ForEach(this.trips, (item: Trip) => {
+        List({ space: 16 }) {
+          ForEach(this.trips, (trip: Trip) => {
             ListItem() {
-              Column() {
-                // 封面图区域
-                Stack({ alignContent: Alignment.BottomStart }) {
-                  Column() {
-                  }
-                  .width('100%')
-                  .height(160)
-                  .borderRadius({ topLeft: 24, topRight: 24 })
-                  .linearGradient({
-                    angle: 135,
-                    colors: [['#0D9488', 0.0], ['#14B8A6', 0.5], ['#10B981', 1.0]]
-                  })
-
-                  // 标题
-                  Text(item.name)
-                    .fontSize(20)
-                    .fontWeight(FontWeight.Bold)
-                    .fontColor(Color.White)
-                    .margin({ left: 16, right: 16, bottom: 16 })
-                    .shadow({
-                      radius: 4,
-                      color: 'rgba(0,0,0,0.5)'
-                    })
-                }
-
-                // 信息区域
-                Column({ space: 12 }) {
-                  Row({ space: 8 }) {
-                    Image($r('sys.media.ohos_ic_public_location'))
-                      .width(16)
-                      .height(16)
-                      .fillColor('#0D9488')
-                    Text(item.destination || '未设置目的地')
-                      .fontSize(14)
-                      .fontColor('#4B5563')
-                      .maxLines(1)
-                      .textOverflow({ overflow: TextOverflow.Ellipsis })
-                  }
-                  .alignItems(VerticalAlign.Center)
-
-                  Row({ space: 8 }) {
-                    Image($r('sys.media.ohos_ic_public_clock'))
-                      .width(14)
-                      .height(14)
-                      .fillColor('#9CA3AF')
-                    Text(`${new Date(item.startDate).toLocaleDateString()} - ${new Date(item.endDate ?? 0).toLocaleDateString()}`)
-                      .fontSize(12)
-                      .fontColor('#9CA3AF')
-                  }
-                  .alignItems(VerticalAlign.Center)
-                }
-                .padding(16)
-              }
-              .backgroundColor(Color.White)
-              .borderRadius(24)
-              .shadow({
-                radius: 8,
-                color: 'rgba(0,0,0,0.05)'
-              })
-              .onClick(() => {
-                router.pushUrl({
-                  url: 'pages/TripDetailPage',
-                  params: {
-                    tripId: item.id
-                  }
-                })
-              })
+              this.TripCard(trip)
             }
-          }, (item: Trip) => item.id)
+          }, (trip: Trip) => trip.id)
         }
         .width('100%')
-        .padding({ left: 24, right: 24, top: 24 })
+        .layoutWeight(1)
+        .padding({ left: 24, right: 24, bottom: 100 })
+        .scrollBar(BarState.Off)
       }
-
-      Blank()
-
-      // 底部提示
-      Text('没有更多行程了')
-        .fontSize(14)
-        .fontColor('#9CA3AF')
-        .padding({ top: 32, bottom: 32 })
     }
     .width('100%')
-    .backgroundColor('#F7F9FA')
+    .height('100%')
+    .backgroundColor(AppColors.Background)
   }
 }
