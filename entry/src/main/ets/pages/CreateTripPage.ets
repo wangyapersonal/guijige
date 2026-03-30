@@ -145,16 +145,16 @@ struct CreateTripPage {
           })
 
           // 行程类型
-          this.FormSection('行程类型', () => {
+          FormSection('行程类型', () => {
             Row({ space: 12 }) {
-              this.TypeChip('休闲旅行', TripType.LEISURE, this.tripType === TripType.LEISURE)
-              this.TypeChip('美食之旅', TripType.FOOD, this.tripType === TripType.FOOD)
-              this.TypeChip('冒险探索', TripType.ADVENTURE, this.tripType === TripType.ADVENTURE)
+              TypeChip('休闲旅行', TripType.LEISURE, this.tripType === TripType.LEISURE)
+              TypeChip('美食之旅', TripType.FOOD, this.tripType === TripType.FOOD)
+              TypeChip('冒险探索', TripType.ADVENTURE, this.tripType === TripType.ADVENTURE)
             }
           })
 
           // 日期选择
-          this.FormSection('出发日期', () => {
+          FormSection('出发日期', () => {
             Row({ space: 12 }) {
               Column() {
                 Image($r('sys.media.ohos_ic_public_calendar'))

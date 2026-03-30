@@ -21,20 +21,20 @@ struct PunchRecordPage {
 
   async saveCheckIn(): Promise<void> {
     try {
-      if (!this.description.trim()) {
-        console.warn('Description is required');
+      if (!this.locationName.trim()) {
+        console.warn('Location name is required');
         return;
       }
 
       const checkIn: CheckInPoint = {
         id: generateId(),
         tripId: 'default',
-        type: CheckInType.SINGLE,
-        location: this.locationName,
+        name: this.locationName,
+        type: CheckInType.MANUAL,
         latitude: this.latitude,
         longitude: this.longitude,
-        description: this.description,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        createdAt: Date.now()
       };
 
       await CheckInService.getInstance().createCheckIn(checkIn);

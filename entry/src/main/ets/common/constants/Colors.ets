@@ -3,6 +3,12 @@
  * 基于 V2 设计规范
  */
 
+export interface CommonShadow {
+  radius: number;
+  color: string;
+  offsetY: number;
+}
+
 export class AppColors {
   // ==================== 主色系 ====================
   /** 主色 - 青色 */
@@ -128,36 +134,42 @@ export class AppColors {
  * 阴影配置
  */
 export class AppShadows {
+  private static readonly shadowType: CommonShadow = {
+    radius: 0,
+    color: '',
+    offsetY: 0
+  };
+
   /** 小阴影 */
-  static readonly Small = {
+  static readonly Small: CommonShadow = {
     radius: 8,
     color: 'rgba(0, 0, 0, 0.04)',
     offsetY: 2
   };
 
   /** 中等阴影 */
-  static readonly Medium = {
+  static readonly Medium: CommonShadow = {
     radius: 12,
     color: 'rgba(0, 0, 0, 0.08)',
     offsetY: 4
   };
 
   /** 大阴影 */
-  static readonly Large = {
+  static readonly Large: CommonShadow = {
     radius: 16,
     color: 'rgba(0, 0, 0, 0.1)',
     offsetY: 8
   };
 
   /** 主色阴影 */
-  static readonly Primary = {
+  static readonly Primary: CommonShadow = {
     radius: 12,
     color: 'rgba(20, 184, 166, 0.2)',
     offsetY: 4
   };
 
   /** 辅助色阴影 */
-  static readonly Accent = {
+  static readonly Accent: CommonShadow = {
     radius: 12,
     color: 'rgba(245, 158, 11, 0.2)',
     offsetY: 4
