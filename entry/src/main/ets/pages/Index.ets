@@ -4,20 +4,20 @@ import { AppColors } from '../common/constants/Colors';
 @Entry
 @Component
 struct Index {
-  @State private bgScale: number = 1.0;
+  @State private bgTranslateX: number = -50;  // 从左边 -50px 开始
   @State private cardOpacity: number = 0;
   @State private cardTranslateY: number = 20;
 
   aboutToAppear() {
-    // ✅ 1. 背景图放大动画（5秒内从 1.0 放大到 1.15）
+    // ✅ 1. 背景图横向移动动画（8秒内从 -50 移动到 50）
     animateTo({
-      duration: 5000,
-      curve: Curve.EaseInOut,
+      duration: 8000,
+      curve: Curve.Linear,  // 匀速移动
       onFinish: () => {
-        // 动画完成
+        // 动画完成后可以反向或重新开始
       }
     }, () => {
-      this.bgScale = 1.15;
+      this.bgTranslateX = 50;
     });
 
     // ✅ 2. 卡片淡入动画（延迟 0.3 秒）
@@ -34,7 +34,7 @@ struct Index {
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      // ✅ 1. 背景图（带缩放动画）
+      // ✅ 1. 背景图（带横向移动动画）
       Stack() {
         Column() {
         }
@@ -45,7 +45,7 @@ struct Index {
       }
       .width('100%')
       .height('100%')
-      .scale({ x: this.bgScale, y: this.bgScale })
+      .translate({ x: this.bgTranslateX })
 
       // ✅ 2. 渐变遮罩
       Column() {
