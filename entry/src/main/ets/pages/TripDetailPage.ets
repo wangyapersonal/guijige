@@ -112,16 +112,10 @@ struct TripDetailPage {
           }
         }
 
-        Text(point.location || '未知位置')
+        Text(point.name || '未知位置')
           .fontSize(16)
           .fontColor('#1F2937')
           .fontWeight(500)
-
-        if (point.description) {
-          Text(point.description)
-            .fontSize(14)
-            .fontColor('#6B7280')
-        }
       }
       .layoutWeight(1)
       .padding(16)

@@ -1,7 +1,7 @@
 import { router } from '@kit.ArkUI';
 import { Trip } from '../models/Trip';
 import { TripService } from '../services/TripService';
-import { TripType } from '../models/Trip';
+import { TripType, TripStatus } from '../models/Trip';
 import { AppColors } from '../common/constants/Colors';
 
 function generateId(): string {

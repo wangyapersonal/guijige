@@ -35,8 +35,9 @@ struct CreateTripPage {
         endDate: this.endDate,
         destination: this.destination,
         notes: this.notes,
-        status: TripStatus.PLANNED,
-        createdAt: Date.now()
+        status: TripStatus.PLANNING,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       };
 
       await TripService.getInstance().createTrip(trip);
@@ -44,36 +45,6 @@ struct CreateTripPage {
     } catch (error) {
       console.error('Failed to create trip:', error);
     }
-  }
-
-  @Builder
-  FormSection(title: string, content: () => void) {
-    Column({ space: 12 }) {
-      Text(title)
-        .fontSize(14)
-        .fontColor('#6B7280')
-        .fontWeight(500)
-
-      content();
-    }
-    .width('100%')
-    .alignItems(HorizontalAlign.Start)
-  }
-
-  @Builder
-  TypeChip(label: string, type: TripType, selected: boolean) {
-    Button() {
-      Text(label)
-        .fontSize(14)
-        .fontColor(selected ? Color.White : '#6B7280')
-    }
-    .height(36)
-    .padding({ left: 20, right: 20 })
-    .backgroundColor(selected ? AppColors.Primary : '#F3F4F6')
-    .borderRadius(18)
-    .onClick(() => {
-      this.tripType = type;
-    })
   }
 
   build() {
@@ -130,7 +101,12 @@ struct CreateTripPage {
           .border({ width: 2, color: '#E5E7EB', style: BorderStyle.Dashed })
 
           // 行程名称
-          FormSection('行程名称', () => {
+          Column({ space: 12 }) {
+            Text('行程名称')
+              .fontSize(14)
+              .fontColor('#6B7280')
+              .fontWeight(500)
+
             TextInput({ placeholder: '例如：浪漫巴黎之旅' })
               .fontSize(16)
               .fontColor('#1F2937')
@@ -142,20 +118,81 @@ struct CreateTripPage {
               .onChange((value: string) => {
                 this.tripName = value;
               })
-          })
+          }
+          .width('100%')
+          .alignItems(HorizontalAlign.Start)
 
           // 行程类型
-          FormSection('行程类型', () => {
+          Column({ space: 12 }) {
+            Text('行程类型')
+              .fontSize(14)
+              .fontColor('#6B7280')
+              .fontWeight(500)
+
             Row({ space: 12 }) {
-              TypeChip('自驾', TripType.DRIVING, this.tripType === TripType.DRIVING)
-              TypeChip('骑行', TripType.CYCLING, this.tripType === TripType.CYCLING)
-              TypeChip('徒步', TripType.WALKING, this.tripType === TripType.WALKING)
-              TypeChip('其他', TripType.OTHER, this.tripType === TripType.OTHER)
+              Button() {
+                Text('自驾')
+                  .fontSize(14)
+                  .fontColor(this.tripType === TripType.DRIVING ? Color.White : '#6B7280')
+              }
+              .height(36)
+              .padding({ left: 20, right: 20 })
+              .backgroundColor(this.tripType === TripType.DRIVING ? AppColors.Primary : '#F3F4F6')
+              .borderRadius(18)
+              .onClick(() => {
+                this.tripType = TripType.DRIVING;
+              })
+
+              Button() {
+                Text('骑行')
+                  .fontSize(14)
+                  .fontColor(this.tripType === TripType.CYCLING ? Color.White : '#6B7280')
+              }
+              .height(36)
+              .padding({ left: 20, right: 20 })
+              .backgroundColor(this.tripType === TripType.CYCLING ? AppColors.Primary : '#F3F4F6')
+              .borderRadius(18)
+              .onClick(() => {
+                this.tripType = TripType.CYCLING;
+              })
+
+              Button() {
+                Text('徒步')
+                  .fontSize(14)
+                  .fontColor(this.tripType === TripType.WALKING ? Color.White : '#6B7280')
+              }
+              .height(36)
+              .padding({ left: 20, right: 20 })
+              .backgroundColor(this.tripType === TripType.WALKING ? AppColors.Primary : '#F3F4F6')
+              .borderRadius(18)
+              .onClick(() => {
+                this.tripType = TripType.WALKING;
+              })
+
+              Button() {
+                Text('其他')
+                  .fontSize(14)
+                  .fontColor(this.tripType === TripType.OTHER ? Color.White : '#6B7280')
+              }
+              .height(36)
+              .padding({ left: 20, right: 20 })
+              .backgroundColor(this.tripType === TripType.OTHER ? AppColors.Primary : '#F3F4F6')
+              .borderRadius(18)
+              .onClick(() => {
+                this.tripType = TripType.OTHER;
+              })
             }
-          })
+          }
+          .width('100%')
+          .alignItems(HorizontalAlign.Start)
 
           // 日期选择
-          FormSection('出发日期', () => {
+          Column({ space: 12 }) {
+            Text('出发日期')
+              .fontSize(14)
+              .fontColor('#6B7280')
+              .fontWeight(500)
+
             Row({ space: 12 }) {
               Column() {
                 Image($r('sys.media.ohos_ic_public_clock'))
@@ -183,10 +220,17 @@ struct CreateTripPage {
             .backgroundColor('#F9FAFB')
             .borderRadius(16)
             .border({ width: 1, color: '#E5E7EB' })
-          })
+          }
+          .width('100%')
+          .alignItems(HorizontalAlign.Start)
 
           // 目的地
-          FormSection('目的地', () => {
+          Column({ space: 12 }) {
+            Text('目的地')
+              .fontSize(14)
+              .fontColor('#6B7280')
+              .fontWeight(500)
+
             Row({ space: 12 }) {
               Column() {
                 Image($r('sys.media.ohos_ic_public_location'))
@@ -218,10 +262,17 @@ struct CreateTripPage {
             .backgroundColor('#F9FAFB')
             .borderRadius(16)
             .border({ width: 1, color: '#E5E7EB' })
-          })
+          }
+          .width('100%')
+          .alignItems(HorizontalAlign.Start)
 
           // 备注说明
-          FormSection('备注说明', () => {
+          Column({ space: 12 }) {
+            Text('备注说明')
+              .fontSize(14)
+              .fontColor('#6B7280')
+              .fontWeight(500)
+
             TextArea({ placeholder: '添加行程备注（可选）...' })
               .fontSize(14)
               .fontColor('#374151')
@@ -234,7 +285,9 @@ struct CreateTripPage {
               .onChange((value: string) => {
                 this.notes = value;
               })
-          })
+          }
+          .width('100%')
+          .alignItems(HorizontalAlign.Start)
         }
         .padding({ left: 24, right: 24, bottom: 120 })
       }
