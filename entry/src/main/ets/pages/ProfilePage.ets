@@ -197,7 +197,7 @@ export struct ProfilePage {
               .width('100%')
 
             this.MenuItem(
-              $r('sys.media.ohos_ic_public_favor_filled'),
+              $r('sys.media.ohos_ic_public_start'),
               '我的收藏',
               '收藏的行程和打卡点'
             )
@@ -221,7 +221,7 @@ export struct ProfilePage {
             )
 
             this.MenuItem(
-              $r('sys.media.ohos_ic_public_help'),
+              $r('sys.media.ohos_ic_public_list'),
               '关于我们',
               '版本 1.0.0',
               false
