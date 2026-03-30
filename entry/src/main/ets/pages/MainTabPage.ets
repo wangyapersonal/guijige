@@ -2,39 +2,19 @@ import { router } from '@kit.ArkUI';
 import { TripListPage } from './TripListPage';
 import { HomePage } from './HomePage';
 
+interface TabItem {
+  title: string;
+  unselectedIcon: string;
+  selectedIcon: string;
+}
+
 @Entry
 @Component
 export struct MainTabPage {
   @State currentIndex: number = 0
   @State showActionSheet: boolean = false
 
-  @Builder
-  TabBuilder(index: number) {
-    Column() {
-      if (this.currentIndex === index) {
-        Text(this.messageList[index].selectedIcon)
-          .fontSize(24)
-          .fontColor('#14B8A6')
-      } else {
-        Text(this.messageList[index].unselectedIcon)
-          .fontSize(24)
-          .fontColor('#9CA3AF')
-      }
-      
-      Text(this.messageList[index].title)
-        .fontSize(12)
-        .fontColor(this.currentIndex === index ? '#14B8A6' : '#9CA3AF')
-        .margin({ top: 4 })
-    }
-    .width('100%')
-    .height(48)
-    .backgroundColor(Color.Transparent)
-    .onClick(() => {
-      this.currentIndex = index
-    })
-  }
-
-  private messageList: Array<{ title: string; unselectedIcon: string; selectedIcon: string }> = [
+  private messageList: TabItem[] = [
     { title: '行程', unselectedIcon: '📋', selectedIcon: '📋' },
     { title: '我的', unselectedIcon: '👤', selectedIcon: '👤' }
   ]
@@ -185,9 +165,6 @@ export struct MainTabPage {
       })
 
       this.FABButton()
-        .position({ x: '50%', y: '94%' })
-        .translate({ x: '-50%', y: '-50%' })
-        .markAnchor(this.currentIndex === 0 ? '行程' : '我的')
     }
     .width('100%')
     .height('100%')
