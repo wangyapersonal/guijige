@@ -20,6 +20,32 @@ export struct MainTabPage {
   ]
 
   @Builder
+  TabBuilder(index: number) {
+    Column() {
+      if (this.currentIndex === index) {
+        Text(this.messageList[index].selectedIcon)
+          .fontSize(24)
+          .fontColor('#14B8A6')
+      } else {
+        Text(this.messageList[index].unselectedIcon)
+          .fontSize(24)
+          .fontColor('#9CA3AF')
+      }
+      
+      Text(this.messageList[index].title)
+        .fontSize(12)
+        .fontColor(this.currentIndex === index ? '#14B8A6' : '#9CA3AF')
+        .margin({ top: 4 })
+    }
+    .width('100%')
+    .height(48)
+    .backgroundColor(Color.Transparent)
+    .onClick(() => {
+      this.currentIndex = index
+    })
+  }
+
+  @Builder
   FABButton() {
     Button() {
       Column() {
