@@ -276,7 +276,7 @@ struct TripDetailPage {
       Column() {
         Button() {
           Row({ space: 8 }) {
-            Image($r('sys.media.ohos_ic_public_download'))
+            Image($r('sys.media.ohos_ic_public_arrow_down'))
               .width(20)
               .height(20)
               .fillColor(Color.White)

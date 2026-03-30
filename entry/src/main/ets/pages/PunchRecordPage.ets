@@ -166,7 +166,7 @@ struct PunchRecordPage {
         // 心情描述
         Column({ space: 8 }) {
           Row({ space: 8 }) {
-            Image($r('sys.media.ohos_ic_public_chat'))
+            Image($r('sys.media.ohos_ic_public_edit'))
               .width(16)
               .height(16)
               .fillColor('#9CA3AF')
