@@ -62,40 +62,44 @@ export struct MainTabPage {
   }
 
   build() {
-    Tabs({ barPosition: BarPosition.End }) {
-      TabContent() {
-        this.tripListBuilder()
-      }
-      .tabBar(this.TabBuilder(0))
+    Column() {
+      Tabs({ barPosition: BarPosition.End }) {
+        TabContent() {
+          this.tripListBuilder()
+        }
+        .tabBar(this.TabBuilder(0))
 
-      TabContent() {
-        this.discoveryBuilder()
-      }
-      .tabBar(this.TabBuilder(1))
+        TabContent() {
+          this.discoveryBuilder()
+        }
+        .tabBar(this.TabBuilder(1))
 
-      TabContent() {
-        this.profileBuilder()
+        TabContent() {
+          this.profileBuilder()
+        }
+        .tabBar(this.TabBuilder(2))
       }
-      .tabBar(this.TabBuilder(2))
+      .onChange((index: number) => {
+        this.currentIndex = index
+      })
+      .width('100%')
+      .layoutWeight(1)
+      .barMode(BarMode.Fixed)
+      .barOverlap(false)
+      .scrollable(false)
+      .animationDuration(300)
+      .animationCurve(Curve.EaseInOut)
+      .divider({
+        strokeWidth: 0.5,
+        color: '#F1F3F5',
+        startMargin: 0,
+        endMargin: 0
+      })
     }
-    .onChange((index: number) => {
-      this.currentIndex = index
-    })
-    .width(340)
-    .height(56)
-    .margin({ left: 24, right: 24, bottom: 16 })
-    .backgroundColor(Color.White)
-    .barMode(BarMode.Fixed)
-    .barOverlap(false)
-    .scrollable(false)
-    .animationDuration(300)
-    .animationCurve(Curve.EaseInOut)
-    .divider({
-      strokeWidth: 0.5,
-      color: '#F1F3F5',
-      startMargin: 0,
-      endMargin: 0
-    })
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#F7F9FA')
+    .padding({ left: 24, right: 24, top: 16, bottom: 16 })
   }
 }
 
