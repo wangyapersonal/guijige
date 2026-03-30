@@ -40,6 +40,16 @@ struct CreateTripPage {
     '加拿大': ['多伦多', '温哥华', '蒙特利尔', '渥太华', '卡尔加里']
   };
 
+  private getAllCities(): string[] {
+    let allCities: string[] = [];
+    this.selectedCountries.forEach(country => {
+      if (this.cities[country]) {
+        allCities = allCities.concat(this.cities[country]);
+      }
+    });
+    return allCities;
+  }
+
   async createTrip(): Promise<void> {
     try {
       if (!this.tripName.trim()) {
@@ -528,12 +538,7 @@ struct CreateTripPage {
         }
         .width('100%')
 
-        let allCities: string[] = [];
-        this.selectedCountries.forEach(country => {
-          if (this.cities[country]) {
-            allCities = allCities.concat(this.cities[country]);
-          }
-        });
+        let allCities: string[] = this.getAllCities();
 
         List({ space: 8 }) {
           ForEach(allCities, (city: string) => {
