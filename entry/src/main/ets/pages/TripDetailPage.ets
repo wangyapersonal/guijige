@@ -14,9 +14,6 @@ struct TripDetailPage {
   @State checkInPoints: CheckInPoint[] = [];
   @State recordSegments: RecordSegment[] = [];
 
-  private primaryAlpha30 = 'rgba(20, 184, 166, 0.3)';
-  private primaryAlpha70 = 'rgba(20, 184, 166, 0.7)';
-
   async aboutToAppear(): Promise<void> {
     try {
       const params = router.getParams() as Record<string, string>;
@@ -32,7 +29,6 @@ struct TripDetailPage {
   @Builder
   TimelineItem(point: CheckInPoint, index: number, isFirst: boolean, isLast: boolean) {
     Row() {
-      // 时间轴线条
       Column() {
         if (!isFirst) {
           Column() {
@@ -45,7 +41,6 @@ struct TripDetailPage {
           })
         }
 
-        // 圆点
         Stack() {
           Column() {
           }
@@ -58,7 +53,7 @@ struct TripDetailPage {
           })
           .shadow({
             radius: 8,
-            color: this.primaryAlpha30,
+            color: 'rgba(20, 184, 166, 0.3)',
             offsetY: 2
           })
 
@@ -93,7 +88,6 @@ struct TripDetailPage {
       .width(32)
       .padding({ top: isFirst ? 0 : 16, bottom: isLast ? 0 : 16 })
 
-      // 内容卡片
       Column({ space: 8 }) {
         Row({ space: 12 }) {
           Text(new Date(point.timestamp).toLocaleTimeString())
@@ -107,8 +101,8 @@ struct TripDetailPage {
                 .fontColor(Color.White)
             }
             .padding({ left: 8, right: 8, top: 4, bottom: 4 })
-            .backgroundColor(AppColors.Accent)
-            .borderRadius(8)
+            .backgroundColor('#F59E0B')
+            .borderRadius(12)
           }
         }
 
@@ -116,6 +110,12 @@ struct TripDetailPage {
           .fontSize(16)
           .fontColor('#1F2937')
           .fontWeight(500)
+
+        if (point.notes) {
+          Text(point.notes)
+            .fontSize(14)
+            .fontColor('#6B7280')
+        }
       }
       .layoutWeight(1)
       .padding(16)
@@ -136,32 +136,43 @@ struct TripDetailPage {
   build() {
     Stack({ alignContent: Alignment.Bottom }) {
       Column() {
-        // 地图背景区域
         Stack({ alignContent: Alignment.BottomStart }) {
-          // 地图背景（使用渐变色占位符）
+          if (this.trip?.coverImage) {
+            Image(this.trip.coverImage)
+              .width('100%')
+              .height(280)
+              .objectFit(ImageFit.Cover)
+          } else {
+            Column() {
+            }
+            .width('100%')
+            .height(280)
+            .linearGradient({
+              angle: 180,
+              colors: [['rgba(20, 184, 166, 0.3)', 0.0], ['rgba(20, 184, 166, 0.7)', 1.0]]
+            })
+          }
+
           Column() {
           }
           .width('100%')
           .height(280)
           .linearGradient({
             angle: 180,
-            colors: [[this.primaryAlpha30, 0.0], [this.primaryAlpha70, 1.0]]
+            colors: [['rgba(20, 184, 166, 0.3)', 0.0], ['rgba(20, 184, 166, 0.7)', 1.0]]
           })
 
-          // 返回按钮和分享按钮
           Row() {
             Button() {
-              Column() {
-              }
-              .width(40)
-              .height(40)
-              .borderRadius(20)
-              .backgroundColor('rgba(255, 255, 255, 0.2)')
-              .backdropBlur(20)
+              Image($r('sys.media.ohos_ic_public_arrow_left'))
+                .width(24)
+                .height(24)
+                .fillColor(Color.White)
             }
             .width(40)
             .height(40)
-            .backgroundColor('transparent')
+            .backgroundColor('rgba(255, 255, 255, 0.2)')
+            .borderRadius(20)
             .onClick(() => {
               router.back();
             })
@@ -174,136 +185,118 @@ struct TripDetailPage {
                   .width(16)
                   .height(16)
                   .fillColor(Color.White)
-
                 Text('一键分享')
                   .fontSize(14)
                   .fontColor(Color.White)
+                  .fontWeight(500)
               }
             }
-            .height(36)
+            .height(40)
             .padding({ left: 16, right: 16 })
-            .backgroundColor(AppColors.Accent)
-            .borderRadius(18)
+            .backgroundColor('#F59E0B')
+            .borderRadius(24)
             .shadow({
-              radius: 12,
-              color: 'rgba(245, 158, 11, 0.3)',
-              offsetY: 4
+              radius: 16,
+              color: 'rgba(245, 158, 11, 0.4)',
+              offsetY: 8
             })
           }
           .width('100%')
           .padding({ left: 24, right: 24, top: 48 })
+          .position({ x: 0, y: 0 })
 
-          // 标题信息
-          Column({ space: 12 }) {
-            Text(this.trip?.name || '行程详情')
-              .fontSize(28)
+          Column({ space: 8 }) {
+            Text(this.trip?.name || '未命名行程')
+              .fontSize(24)
               .fontColor(Color.White)
               .fontWeight(FontWeight.Bold)
 
             Row({ space: 16 }) {
-              Row({ space: 8 }) {
+              Row({ space: 4 }) {
                 Image($r('sys.media.ohos_ic_public_location'))
                   .width(16)
                   .height(16)
-                  .fillColor(Color.White)
-
-                Text(this.trip?.destination || '未设置')
+                  .fillColor('rgba(255, 255, 255, 0.9)')
+                Text(this.trip?.destination || '未设置目的地')
                   .fontSize(14)
                   .fontColor('rgba(255, 255, 255, 0.9)')
               }
 
-              Row({ space: 8 }) {
+              Row({ space: 4 }) {
                 Image($r('sys.media.ohos_ic_public_clock'))
                   .width(16)
                   .height(16)
-                  .fillColor(Color.White)
-
-                Text(`${new Date(this.trip?.startDate || 0).toLocaleDateString()} - ${this.trip?.endDate ? new Date(this.trip.endDate).toLocaleDateString() : '进行中'}`)
+                  .fillColor('rgba(255, 255, 255, 0.9)')
+                Text(`${new Date(this.trip?.startDate || Date.now()).toLocaleDateString()} - ${this.trip?.endDate ? new Date(this.trip.endDate).toLocaleDateString() : '进行中'}`)
                   .fontSize(14)
                   .fontColor('rgba(255, 255, 255, 0.9)')
               }
             }
           }
-          .width('100%')
           .padding({ left: 24, right: 24, bottom: 24 })
           .alignItems(HorizontalAlign.Start)
         }
         .width('100%')
         .height(280)
 
-        // 时间轴内容
-        Scroll() {
-          Column({ space: 0 }) {
-            Text('行程轨迹')
-              .fontSize(18)
-              .fontColor('#1F2937')
-              .fontWeight(FontWeight.Bold)
-              .margin({ bottom: 16 })
+        Column() {
+          Text('行程轨迹')
+            .fontSize(14)
+            .fontColor('#6B7280')
+            .margin({ bottom: 16 })
 
-            if (this.checkInPoints.length === 0) {
-              Column() {
-                Text('暂无轨迹记录')
-                  .fontSize(14)
-                  .fontColor('#9CA3AF')
-              }
-              .width('100%')
-              .padding(32)
-            } else {
-              Column({ space: 0 }) {
-                ForEach(this.checkInPoints, (point: CheckInPoint, index: number) => {
-                  this.TimelineItem(
-                    point,
-                    index,
-                    index === 0,
-                    index === this.checkInPoints.length - 1
-                  );
-                }, (point: CheckInPoint) => point.id);
-              }
-              .width('100%')
+          if (this.checkInPoints.length === 0) {
+            Column() {
+              Text('暂无打卡记录')
+                .fontSize(16)
+                .fontColor('#9CA3AF')
             }
+            .width('100%')
+            .layoutWeight(1)
+            .justifyContent(FlexAlign.Center)
+          } else {
+            List({ space: 0 }) {
+              ForEach(this.checkInPoints, (point: CheckInPoint, index: number) => {
+                ListItem() {
+                  this.TimelineItem(point, index, index === 0, index === this.checkInPoints.length - 1)
+                }
+              }, (point: CheckInPoint) => point.id)
+            }
+            .width('100%')
+            .layoutWeight(1)
+            .scrollBar(BarState.Off)
           }
-          .width('100%')
-          .padding({ left: 24, right: 24, top: 24, bottom: 120 })
         }
+        .width('100%')
         .layoutWeight(1)
-        .scrollBar(BarState.Off)
-        .backgroundColor('#F7F9FA')
+        .padding({ left: 24, right: 24, top: 24, bottom: 100 })
+        .backgroundColor('#F9FAFB')
       }
       .width('100%')
       .height('100%')
 
-      // 底部导出按钮
-      Column() {
-        Button() {
-          Row({ space: 8 }) {
-            Image($r('sys.media.ohos_ic_public_arrow_down'))
-              .width(20)
-              .height(20)
-              .fillColor(Color.White)
-
-            Text('一键导出行程长图')
-              .fontSize(16)
-              .fontColor(Color.White)
-              .fontWeight(500)
-          }
+      Button() {
+        Row({ space: 8 }) {
+          Image($r('sys.media.ohos_ic_public_download'))
+            .width(20)
+            .height(20)
+            .fillColor(Color.White)
+          Text('导出行程')
+            .fontSize(16)
+            .fontColor(Color.White)
+            .fontWeight(500)
         }
-        .width('100%')
-        .height(52)
-        .borderRadius(26)
-        .linearGradient({
-          angle: 135,
-          colors: [[AppColors.Accent, 0.0], ['#F97316', 1.0]]
-        })
-        .shadow({
-          radius: 20,
-          color: 'rgba(245, 158, 11, 0.3)',
-          offsetY: 8
-        })
       }
-      .width('100%')
-      .padding({ left: 24, right: 24, bottom: 32 })
-      .backgroundColor('rgba(255, 255, 255, 0.9)')
-      .backdropBlur(20)
+      .width('90%')
+      .height(52)
+      .backgroundColor('#14B8A6')
+      .borderRadius(26)
+      .shadow({
+        radius: 16,
+        color: 'rgba(20, 184, 166, 0.4)',
+        offsetY: 8
+      })
+      .margin({ bottom: 24 })
     }
     .width('100%')
     .height('100%')
