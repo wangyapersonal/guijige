@@ -4,20 +4,20 @@ import { AppColors } from '../common/constants/Colors';
 @Entry
 @Component
 struct Index {
-  @State private bgTranslateX: number = -50;
+  @State private bgTranslateX: number = -100;  // 增大移动距离：-100 → 100
   @State private cardOpacity: number = 0;
   @State private cardTranslateY: number = 20;
 
   aboutToAppear() {
-    // ✅ 1. 背景图横向移动动画（8秒内从 -50 移动到 50）
+    // ✅ 1. 背景图横向移动动画（5秒内从 -100 移动到 100，更明显的移动)
     animateTo({
-      duration: 8000,
+      duration: 5000,  // 缩短到5秒
       curve: Curve.Linear
     }, () => {
-      this.bgTranslateX = 50;
+      this.bgTranslateX = 100;  // 增大移动距离
     });
 
-    // ✅ 2. 卡片淡入动画（延迟 0.3 秒）
+    // ✅ 2. 卡片淡入动画（延迟 0.3 秒)
     setTimeout(() => {
       animateTo({
         duration: 800,
@@ -52,7 +52,7 @@ struct Index {
         ]
       })
 
-      // ✅ 3. 玻璃态卡片（带淡入动画）
+      // ✅ 3. 玻璃态卡片（带淡入动画)
       Column({ space: 24 }) {
         // Logo 区域（圆形渐变背景）
         Stack() {
