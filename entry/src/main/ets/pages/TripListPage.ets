@@ -8,7 +8,6 @@ function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
 
-@Entry
 @Component
 export struct TripListPage {
   @State trips: Trip[] = [];

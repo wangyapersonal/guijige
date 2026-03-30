@@ -1,5 +1,6 @@
 import { router } from '@kit.ArkUI';
 import { TripListPage } from './TripListPage';
+import { HomePage } from './HomePage';
 import { ProfilePage } from './ProfilePage';
 
 @Entry
@@ -52,14 +53,7 @@ export struct MainTabPage {
 
   @Builder
   discoveryBuilder() {
-    Column() {
-      Text('发现')
-        .fontSize(20)
-        .fontColor('#1F2937')
-    }
-    .width('100%')
-    .height('100%')
-    .justifyContent(FlexAlign.Center)
+    HomePage()
   }
 
   @Builder

@@ -1,7 +1,6 @@
 import { router } from '@kit.ArkUI';
 import { AppColors } from '../common/constants/Colors';
 
-@Entry
 @Component
 export struct ProfilePage {
   @State userName: string = '旅行达人';

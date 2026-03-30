@@ -7,7 +7,6 @@ interface Stat {
   color: string;
 }
 
-@Entry
 @Component
 export struct HomePage {
   @State showMenu: boolean = false;
