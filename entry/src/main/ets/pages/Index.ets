@@ -50,7 +50,7 @@ struct Index {
         .objectFit(ImageFit.Cover)
         .scale({ x: this.bgScale, y: this.bgScale })
         .translate({ x: this.bgTranslateX })
-        .rotate({ z: this.bgRotate })
+        .rotate({ angle: this.bgRotate })
 
       // 渐变遮罩
       Column() {
