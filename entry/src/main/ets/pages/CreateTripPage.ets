@@ -158,7 +158,7 @@ struct CreateTripPage {
           FormSection('出发日期', () => {
             Row({ space: 12 }) {
               Column() {
-                Image($r('sys.media.ohos_ic_public_calendar'))
+                Image($r('sys.media.ohos_ic_public_clock'))
                   .width(20)
                   .height(20)
                   .fillColor(AppColors.Primary)

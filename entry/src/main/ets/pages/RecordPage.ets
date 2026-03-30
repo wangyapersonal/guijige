@@ -215,14 +215,14 @@ struct RecordPage {
             )
 
             this.StatCard(
-              $r('sys.media.ohos_ic_public_navigation'),
+              $r('sys.media.ohos_ic_public_arrow_down'),
               this.distance.toFixed(2),
               '公里',
               AppColors.Accent
             )
 
             this.StatCard(
-              $r('sys.media.ohos_ic_public_flash'),
+              $r('sys.media.ohos_ic_public_arrow_up'),
               this.speed.toFixed(1),
               'km/h',
               '#FCD34D'

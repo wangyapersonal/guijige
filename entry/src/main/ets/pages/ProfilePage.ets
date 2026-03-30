@@ -74,7 +74,7 @@ export struct ProfilePage {
         Blank()
 
         Button() {
-          Image($r('sys.media.ohos_ic_public_settings'))
+          Image($r('sys.media.ohos_ic_public_more'))
             .width(24)
             .height(24)
             .fillColor('#6B7280')
@@ -197,7 +197,7 @@ export struct ProfilePage {
               .width('100%')
 
             this.MenuItem(
-              $r('sys.media.ohos_ic_public_favor'),
+              $r('sys.media.ohos_ic_public_star'),
               '我的收藏',
               '收藏的行程和打卡点'
             )
@@ -209,13 +209,13 @@ export struct ProfilePage {
             )
 
             this.MenuItem(
-              $r('sys.media.ohos_ic_public_album'),
+              $r('sys.media.ohos_ic_public_image'),
               '相册管理',
               '管理行程照片'
             )
 
             this.MenuItem(
-              $r('sys.media.ohos_ic_public_message'),
+              $r('sys.media.ohos_ic_public_chat'),
               '意见反馈',
               '帮助我们做得更好'
             )
